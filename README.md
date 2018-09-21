@@ -10,7 +10,7 @@ The setup and implementation instructions for all samples are provided in the in
 
 | Scenario      | Overview      | Link          |
 | ------------- | ------------- | ------------- |
-| Edge Streaming Aggregation  | It creates two types of streaming aggregations: sliding and jumping. The sliding aggregation can be send to rule engine | TBD  | 
+| Edge Streaming Aggregation  | It creates two types of **streaming aggregations**: sliding (streaming time window - aggregation calculated in every incoming event) and jumping (database like time bucket - aggregation calculated end of every time bucket). The sliding aggregations can be send to rule engine | TBD  | 
 
 
 ## Limitations / Disclaimer
