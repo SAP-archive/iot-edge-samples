@@ -1,6 +1,6 @@
-# SAP IoT Edge Services -  Samples
+# SAP Edge Services -  Samples
 
-The sample scenarios/applications in this repository showcase various extension scenarios to SAP IoT Edge Services. Please check out the branches of the repository for the actual samples.
+The sample scenarios/applications in this repository showcase various extension scenarios to SAP Edge Services. Please check out the branches of the repository for the actual samples.
 
 Note:
 The setup and implementation instructions for all samples are provided in the individual applications branches.
