@@ -6,29 +6,18 @@ The sample scenarios/applications in this repository showcase various extension 
 Note:
 The setup and implementation instructions for all samples are provided in the individual applications branches.
 
-## Requirements
-Requirement for each sample are described in the respective README.
-
 ## Scenario Overview
 
 | Scenario      | Overview      | Link          |
 | ------------- | ------------- | ------------- |
 | Edge Streaming Aggregation  | It creates two types of **streaming aggregations**: sliding (streaming time window - aggregation calculated in every incoming event) and jumping (database like time bucket - aggregation calculated end of every time bucket). The sliding aggregations can be send to rule engine | [streaming-aggregation](https://github.com/SAP/iot-edge-services-samples/tree/streaming-aggregation)  | 
 
-## Download and Installation
-Download and Installation for each sample are described in the respective README.
-
-## Configuration
-Configuration for each sample are described in the respective README.
 
 ## Limitations / Disclaimer
 Note: Sample scenarios/applications are designed to help you get an overall understanding of various extensibility concepts/patterns. SAP recommends not to use these samples for any productive usage. They show basic interaction with an SAP Edge Services system. Topics like authentication, error handling, transactional correctness, security, caching, tests were omitted on purpose for the sake of simplicity. 
 
-## Known Issues
-Known issues for each sample are described in the respective README.
-
 ## How to obtain support
-Support for each sample are described in the respective README.
+These samples are provided "as-is" basis with detail documentation of how to use them. There are no formal support channel for these samples. For more information you can look in to the Edge Services product documentation at http://help.sap.com
 
 ## Copyright and License
 Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved. This file is licensed under the Apache Software License, v. 2 except as noted otherwise in the LICENSE file
