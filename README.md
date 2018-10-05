@@ -16,16 +16,16 @@ Requirement for each sample are described in the respective README.
 | Edge Streaming Aggregation  | It creates two types of **streaming aggregations**: sliding (streaming time window - aggregation calculated in every incoming event) and jumping (database like time bucket - aggregation calculated end of every time bucket). The sliding aggregations can be send to rule engine | [streaming-aggregation](https://github.com/SAP/iot-edge-services-samples/tree/streaming-aggregation)  | 
 
 ## Download and Installation
-Download and Instalation for each sample are described in the respective README.
+Download and Installation for each sample are described in the respective README.
 
 ## Configuration
 Configuration for each sample are described in the respective README.
 
 ## Limitations / Disclaimer
-Note: Sample scenarios/applications are designed to help you get an overall understanding of various extensibility concepts/patterns. SAP recommends not to use these samples for any productive usage. They show basic interaction with an SAP IoT Edge Services system. Topics like authentication, error handling, transactional correctness, security, caching, tests were omitted on purpose for the sake of simplicity. 
+Note: Sample scenarios/applications are designed to help you get an overall understanding of various extensibility concepts/patterns. SAP recommends not to use these samples for any productive usage. They show basic interaction with an SAP Edge Services system. Topics like authentication, error handling, transactional correctness, security, caching, tests were omitted on purpose for the sake of simplicity. 
 
-## Konwn Issues
-Konown issues for each sample are described in the respective README.
+## Known Issues
+Known issues for each sample are described in the respective README.
 
 ## How to obtain support
 Support for each sample are described in the respective README.
