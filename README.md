@@ -17,7 +17,7 @@ The setup and implementation instructions for all samples are provided in the in
 Note: Sample scenarios/applications are designed to help you get an overall understanding of various extensibility concepts/patterns. SAP recommends not to use these samples for any productive usage. They show basic interaction with an SAP Edge Services system. Topics like authentication, error handling, transactional correctness, security, caching, tests were omitted on purpose for the sake of simplicity. 
 
 ## How to obtain support
-These samples are provided "as-is" basis with detail documentation of how to use them. There are no formal support channel for these samples. For more information you can look in to the Edge Services product documentation at http://help.sap.com
+These samples are provided "as-is" basis with detail documentation of how to use them. There are no formal support channel for these samples. For overall technical information you can look in to the Edge Services product documentation at http://help.sap.com
 
 ## Copyright and License
 Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved. This file is licensed under the Apache Software License, v. 2 except as noted otherwise in the LICENSE file
