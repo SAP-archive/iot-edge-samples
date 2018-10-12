@@ -1,0 +1,87 @@
+{
+  "streams": [
+    {
+      "name": "AVGSTREAM",
+      "time": "10SEC",
+      "type": "AVG",
+      "persist": true
+    },
+    {
+      "name": "SUMSTREAM",
+      "time": "10SEC",
+      "type": "SUM",
+      "persist": true
+    },
+    {
+      "name": "COUNTSTREAM",
+      "time": "10SEC",
+      "type": "COUNT"
+    },
+    {
+      "name": "MINSTREAM",
+      "time": "10SEC",
+      "type": "MIN"
+    },
+    {
+      "name": "MAXSTREAM",
+      "time": "10SEC",
+      "type": "MAX"
+    },
+    {
+      "name": "MEDIANSTREAM",
+      "time": "10SEC",
+      "type": "MEDIAN"   
+    },
+    {
+      "name": "SDDEVSTREAM",
+      "time": "10SEC",
+      "type": "SDDEV"
+    },
+    {
+      "name": "COUNTDISTINCTSTREAM",
+      "time": "10SEC",
+      "type": "COUNTDISTINCT"
+    },
+    {
+      "name": "WEIGHTEDAVGSTREAM",
+      "time": "10SEC",
+      "type": "WEIGHTEDAVG"
+    },
+    {
+      "name": "FIRSTVALUESTREAM",
+      "time": "10SEC",
+      "type": "FIRSTVALUE"
+    },
+    {
+      "name": "LASTVALUESTREAM",
+      "time": "10SEC",
+      "type": "LASTVALUE"
+    }
+  ],
+  "rules": [
+    {
+      "ruleId": "AVGSTemperature1",
+      "profileId": "Temperature",
+      "aggr": "AVG"
+    },
+    {
+      "ruleId": "AVGSTemperature2",
+      "profileId": "Temperature",
+      "aggr": "AVG"
+    },
+    {
+      "ruleId": "489eabbf-27a5-4bf0-93f3-fb19e31a0274",
+      "profileId": "864f72d3-2ca1-4ba9-970a-9e063ab4594b",
+      "aggr": "SUM"
+    },
+    {
+      "ruleId": "AVGSTemperature2",
+      "profileId": "Humidity",
+      "aggr": "MAX"
+    }
+  ],
+  "host": "localhost",
+  "port": 9090,
+  "reconnect_interval": 5,
+  "ccx": "aggr.ccx"
+}

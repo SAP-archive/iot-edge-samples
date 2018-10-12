@@ -1,27 +1,23 @@
 # SAP Edge Services -  Samples
 
 ## Description
-The sample scenarios/applications in this repository showcase various extension scenarios to SAP Edge Services. Please check out the branches of the repository for the actual samples.
-
-Note:
-The setup and implementation instructions for all samples are provided in the individual applications branches.
+The sample scenarios/applications in this repository showcase various extension scenarios to SAP Edge Services.
 
 ## Scenario Overview
 
 | Scenario      | Overview      | Link          |
 | ------------- | ------------- | ------------- |
-| Edge Streaming Aggregation  | It creates two types of **streaming aggregations**: sliding (streaming time window - aggregation calculated in every incoming event) and jumping (database like time bucket - aggregation calculated end of every time bucket). The sliding aggregations can be send to rule engine | [streaming-aggregation](https://github.com/SAP/iot-edge-services-samples/tree/streaming-aggregation)  | 
-
-
-## Limitations / Disclaimer
-Note: Sample scenarios/applications are designed to help you get an overall understanding of various extensibility concepts/patterns. SAP recommends not to use these samples for any productive usage. They show basic interaction with an SAP Edge Services system. Topics like authentication, error handling, transactional correctness, security, caching, tests were omitted on purpose for the sake of simplicity. 
+| Edge Streaming Aggregation  | This sample creates two types of streaming aggregations: sliding (streaming time window - aggregation calculated in every incoming event) and jumping (database like time bucket - aggregation calculated end of every time bucket). The sliding aggregations can be sent to the Streaming Service rule engine | [streaming-aggregation](https://github.com/SAP/iot-edge-services-samples/tree/master/streaming-aggregation)  |
+| ------------- | ------------- | ------------- |
+| Edge Persistence Aggregation  | This sample demonstrates use of the Persistence Service Java API.  This sample queries the Persistence Service at an interval.  The query aggregates data stored in the Persistence Service, and feeds this data back into Edge Services. | [persistence-aggregation-max-temp](https://github.com/SAP/iot-edge-services-samples/tree/master/persistence-aggregation-max-temp)  |
 
 ## How to obtain support
-These samples are provided "as-is" basis with detail documentation of how to use them. There are no formal support channel for these samples. For overall technical information you can look in to the Edge Services product documentation at http://help.sap.com
+These samples are provided "as-is" basis with detailed documentation on how to use them. There is no formal support channel for these samples. For related technical information you can look in to the SAP Edge Services product documentation at http://help.sap.com
+
+## Limitations / Disclaimer
+Note: Sample scenarios/applications are designed to help you get an overall understanding of various extensibility concepts/patterns. SAP recommends not to use these samples for any productive usage. They show basic interaction with an SAP Edge Services system. Topics like authentication, error handling, transactional correctness, security, caching, tests were omitted on purpose for the sake of simplicity.
 
 ## Copyright and License
-Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved. This file is licensed under the Apache Software License, v. 2 except as noted otherwise in the LICENSE file
+Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
 
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+License provided by SAP SAMPLE CODE LICENSE AGREEMENT (see https://github.com/SAP/iot-edge-services-samples/tree/master/LICENSE)
