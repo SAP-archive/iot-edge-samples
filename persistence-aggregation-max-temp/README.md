@@ -196,8 +196,6 @@ To actually see the MAX function working correctly, you will need to send in mul
 ## How to obtain support
 These samples are provided "as-is" basis with detailed documentation on how to use them. There is no formal support channel for these samples. For related technical information you can look in to the Edge Services product documentation at http://help.sap.com
 
-## Limitations / Disclaimer
-Note: Sample scenarios/applications are designed to help you get an overall understanding of various extensibility concepts/patterns. SAP recommends not to use these samples for any productive usage. They show basic interaction with an SAP Edge Services system. Topics like authentication, error handling, transactional correctness, security, caching, tests were omitted on purpose for the sake of simplicity.
 
 ## Copyright and License
 Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
