@@ -100,7 +100,7 @@ cd streaming-aggregation
 ```json
 mvn eclipse:eclipse
 ```
-3. The above command will throw errors for streaming libraries. It will also show you the command that you need to run in the command line. Follow those commands to copy all the libraries.
+3. The above command will throw errors for streaming libraries. It will also show you the command that you need to run in the command line. Follow those commands to copy all the libraries. Libraries are in $STREAMING_HOME/libj folder.
 4. Run following command to compile and build the package:
 ```json
 mvn clean install
