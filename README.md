@@ -15,7 +15,16 @@ Take a look at the list below for links to all the separate samples.
 
 ## How to obtain support
 
-These samples are provided "as-is" basis with detailed documentation on how to use them. 
+These samples are provided "as-is" basis with detailed documentation on how to use them.
+
+
+## Product Documentation
+
+Product Documentation for SAP Edge Services is available as follows:
+
+[SAP Edge Services, cloud edition](https://help.sap.com/viewer/p/EDGE_SERVICES)
+
+[SAP Edge Services, on-premise edition](https://help.sap.com/viewer/p/SAP_EDGE_SERVICES_OP)
 
 
 ## Copyright and License

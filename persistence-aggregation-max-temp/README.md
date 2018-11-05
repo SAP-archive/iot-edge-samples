@@ -5,6 +5,8 @@ This is a sample which can be used to implement custom queries using the Persist
 
 If using Edge Services, cloud edition, this sample assumes you are running IoT Services Gateway Edge configured for REST.  It consumes the standard IoT Services model for Temperature.  If you are running the IoT Services Gateway Edge configured for another protocol (ie MQTT), then some features will not work (for example sending aggregated data back into Gateway Edge over REST).
 
+This sample assumes the user has a working knowledge of SAP Edge Services, and is comfortable programming in Java.
+
 ### What it does?
 
 On an interval, this sample queries the stored readings in the Persistence Service.  Any new temperature received since the timestamp of the last query is aggregated to return the MAX value received.
@@ -17,7 +19,11 @@ This sample is packaged as an OSGI bundle. It is deployed to Edge Services, clou
 
 ## Requirements
 
-We assume that Maven is installed in your system. We also assume that you have Edge Services installed and have access to the file system where Persistence Service is installed.
+You must have following installed in your system:
+1. Java JDK 1.8 or above (https://www.java.com/en/download/)
+2. Apache Maven (https://maven.apache.org/download.cgi)
+3. Git command line tool (https://git-scm.com/downloads)
+4. SAP Edge Services (Cloud or On-premise edition)
 
 ### Edge Services, cloud edition
 
@@ -103,8 +109,8 @@ In the constructor of this class, set CLOUD_EDGE_SERVICES = false (line 33)
 
 ### Compile and Package
 
-1. Go to the project root folder where pom.xml file is located.
-2. Edit the pom.xml and ensure that the version number of the Persistence Service jar file matches the JSON.  If it does not match, change the number in the pom.xml
+1. Open a shell / command prompt (on Windows as Administrator) and navigate to the `persistence-aggregation-max-temp` directory.
+2. Edit the provided pom.xml and ensure that the version number of the Persistence Service jar file matches the JSON.  If it does not match, change the number in the pom.xml
 ```json
         <dependency>
             <groupId>com.sap.iot.edgeservices</groupId>
@@ -194,10 +200,12 @@ To actually see the MAX function working correctly, you will need to send in mul
 
 
 ## How to obtain support
-These samples are provided "as-is" basis with detailed documentation on how to use them. There is no formal support channel for these samples. For related technical information you can look in to the Edge Services product documentation at http://help.sap.com
+
+These samples are provided "as-is" basis with detailed documentation on how to use them. 
 
 
 ## Copyright and License
+
 Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
 
-License provided by SAP SAMPLE CODE LICENSE AGREEMENT (see https://github.com/SAP/iot-edge-services-samples/tree/master/LICENSE)
+License provided by [SAP SAMPLE CODE LICENSE AGREEMENT](https://github.com/SAP/iot-edge-services-samples/tree/master/persistence-aggregation-max-temp/LICENSE)

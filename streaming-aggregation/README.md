@@ -6,6 +6,8 @@ This is a streaming aggregation sample which can be used to implement your own a
 
 Once you convert this sample to your own streaming aggregation service, make sure you run thorough testing before deploying to the production landscape. Though this is a Java sample, internally it uses custom rule feature of the Streaming service to compute the aggregation. More in *High Level Design* section.
 
+This sample assumes the user has a working knowledge of SAP Edge Services, and is comfortable programming in Java.  You must be familiar with the Streaming Service Edge Console -> specifically configuring streaming rules.
+
 ### What it does?
 
 It basically creates two types of streaming aggregations. We call it persistence aggregation and streaming rule aggregation.
@@ -71,18 +73,19 @@ This service is not yet wrapped in OSGI container. If you wrap this in OSGI cont
 ## Requirements
 
 You must have following installed in your system:
-1. Java 1.8 or above
-2. Maven
-3. Edge Services (Cloud or On-premise edition)
-4. Git command line tool
-5. Packaging tool (Tar is usually pre-installed in Linux or WinZip for Windows)
-6. You must be familiar to setup streaming rules. For more details: https://help.sap.com/viewer/p/EDGE_SERVICES
+1. Java JDK 1.8 or above (https://www.java.com/en/download/)
+2. Apache Maven (https://maven.apache.org/download.cgi)
+3. Git command line tool (https://git-scm.com/downloads)
+4. SAP Edge Services (Cloud or On-premise edition)
+5. Packaging tool (Tar utility is usually pre-installed in Linux / WinZip or similar for Windows)
 
-You can use on-premise Edge Services or Edge Service cloud edition for this sample.
-
-For on-premise edition you simply need a working install of the Persistence Service and Streaming Service.  These are installed together as described in the Edge Services, on-premise edition online documentation.
+### Edge Services, cloud edition
 
 For cloud edition, you need a working IoT Services Gateway Edge (REST) with the SAP Edge Services Streaming Service installed.
+
+### Edge Services, on-premise edition (3.0 FP02 or newer)
+
+For on-premise edition you simply need a working install of the Persistence Service and Streaming Service.  These are installed together as described in the Edge Services, on-premise edition online documentation.
 
 ## Download and Installation
 
@@ -95,7 +98,7 @@ cd streaming-aggregation
 
 ### Compile and Package
 
-1. Go to the folder where pom.xml file is located.
+1. Open a shell / command prompt (on Windows as Administrator) and navigate to the `streaming-aggregation` directory.
 2. Copy libraries to Maven repository by running following command:
 ```json
 mvn eclipse:eclipse
@@ -118,7 +121,7 @@ copy aggr-cnf.json EdgeAnalytics
 copy target\SampleEdgeAnalytics-null.jar EdgeAnalytics
 mkdir EdgeAnalytics\lib
 copy target\lib\* EdgeAnalytics\lib
-Use WinZip tool to zip the  EdgeAnalytics folder
+Use WinZip or similar tool to zip the EdgeAnalytics folder
 ```
 
 ## Configuration
@@ -213,13 +216,14 @@ For Streaming Aggregation:
 
 ## Known Issues
 
-Currently there is a bug in the Streaming Service which will requires the aggregation service to start before you start the gateway. For any other issues, you can check log file that this aggregation service generates as well as Edge Services log files located at .../dep_iot_edge/log/
+Currently, the on-premise Streaming Service requires the aggregation service to start before you start Edge Services. For any other issues, you can check the log file that this aggregation service generates as well as Edge Services Streaming Service log files located at .../dep_iot_edge/log/
 
 ## How to obtain support
-These samples are provided "as-is" basis with detailed documentation on how to use them. There is no formal support channel for these samples. For related technical information you can look in to the Edge Services product documentation at http://help.sap.com
 
+These samples are provided "as-is" basis with detailed documentation on how to use them. 
 
 ## Copyright and License
+
 Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
 
-License provided by SAP SAMPLE CODE LICENSE AGREEMENT (see https://github.com/SAP/iot-edge-services-samples/tree/master/LICENSE)
+License provided by [SAP SAMPLE CODE LICENSE AGREEMENT](https://github.com/SAP/iot-edge-services-samples/tree/master/streaming-aggregation/LICENSE)
