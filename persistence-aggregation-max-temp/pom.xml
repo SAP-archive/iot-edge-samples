@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.sap.iot.edgeservices</groupId>
             <artifactId>PersistenceService</artifactId>
-            <version>3.1808.0</version>
+            <version>3.1808.1</version>
             <type>bundle</type>
             <scope>provided</scope>
         </dependency>

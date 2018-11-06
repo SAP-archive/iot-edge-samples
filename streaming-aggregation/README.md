@@ -1,93 +1,101 @@
 # Streaming Aggregation Sample
 
-## Description
+## Overview
 
-This is a streaming aggregation sample which can be used to implement your own aggregation needs. There are many reasons why aggregations are important for IOT applications at the edge. While creating rule, instead of every event, you may want to aggregate the last few messages. This is because sensor data are known to be fluctuating. Also, when you run ML/AI models at the edge, you may want to run these models at aggregated data rather than every event. That way your ML/AI will use the less compute resource but delivers the same result.
+This streaming aggregation sample demonstrates different aggregation methods that can be extended to implement other aggregation scenarios. There are many reasons why aggregations are important for IOT applications at the edge. Sensor data is often known to be fluctuating; therefore, it may be desireable to create rules based on aggregated sensor readings, instead of rules based on individual sensor readings. Also, when running ML/AI models at the edge, these models may need to run on aggregated data due to the amount of computing resources or time required to run the model.
 
-Once you convert this sample to your own streaming aggregation service, make sure you run thorough testing before deploying to the production landscape. Though this is a Java sample, internally it uses custom rule feature of the Streaming service to compute the aggregation. More in *High Level Design* section.
+After customizing this sample to your own implementation, make sure to thoroughly test before deploying to production environments. This sample is written in Java, and internally it uses the custom rule feature of the SAP Edge Services Streaming Service to compute the aggregation. More details can be found in *High-Level Design* section.
 
-This sample assumes the user has a working knowledge of SAP Edge Services, and is comfortable programming in Java.  You must be familiar with the Streaming Service Edge Console -> specifically configuring streaming rules.
+This sample assumes the user has a working knowledge of SAP Edge Services and is comfortable programming in Java. The user must be familiar with the Streaming Service, Streaming Service Edge Console, and configuring streaming rules in the Streaming Service.
 
-### What it does?
+## Product Documentation
 
-It basically creates two types of streaming aggregations. We call it persistence aggregation and streaming rule aggregation.
+Product Documentation for SAP Edge Services is available as follows:
+
+[SAP Edge Services, cloud edition](https://help.sap.com/viewer/p/EDGE_SERVICES)
+
+[SAP Edge Services, on-premise edition](https://help.sap.com/viewer/p/SAP_EDGE_SERVICES_OP)
+
+### Description
+
+This sample creates two types of streaming aggregations. These are called *persistence aggregation* and *streaming rule aggregation*.
 
 ### Persistence Aggregation
 
-The aggregations are calculated in time window. For example, if you define a time window of 30 seconds then, aggregations are calculated at the end of 30 seconds. Then the window is cleared, and it starts accumulating event for next 30 seconds. The sample just saves the aggregated data in to a file. You can extend this to save in the persistence service.
+Persistence aggregations are calculated in a time window. For example, if a time window of 30 seconds is defined, then aggregations are calculated at the end of 30 seconds. The window is then cleared, and sensor readings start accumulating for the next 30 seconds. This sample saves the aggregated data to a file. This sample could be extended to save the aggregated data in the SAP Edge Services Persistence Service.
 
 ### Streaming Rule Aggregation
 
-The aggregations are calculated in a time window, but aggregation is generated every time new event arrives. Every second, the time window slides one second and so to removing beginning one second data. The calculated streaming aggregations can be sent back to the same  rule in the streaming service that it came from. The aggregation will go as event of the rule.
+Streaming rule aggregations are calculated in a sliding time window where the aggregation is calculated every time a new reading arrives. For example, if a sliding time window of 30 seconds is defined, then every second, the time window slides forward one second, removing data that is older than 30 seconds. The calculated streaming aggregations can be sent back to the Streaming Service as an event for additional processing.
 
-### How does this Aggregation Service receive input data?
+### Receiving sensor data
 
-The inputs are received from the Streaming rule. You can define a Custom Rule in the Streaming rule engine. In this setup usually, you tell the rule engine which host and port your custom engine is running. In the JSON configuration of this streaming aggregation service, put the same host and port. With this, the aggregation service will bind this port when it starts. And the streaming rule engine sends data to this port. The data transfer to streaming aggregation service and subscription of the aggregated result back to rule engine are handled by the streaming service.
+The sensor readings for this streaming aggregation sample are received from the Streaming Service using the Streaming Service custom rule feature. In the configuration of the custom rule, configure the host and port that the custom streaming project is running. In the JSON configuration of this streaming aggregation sample, put the same host and port - this aggregation sample will bind to this port when it starts. The Streaming Service also will send data to this port. The data transfer to this streaming aggregation sample and the subscription of the aggregated result are handled by the Streaming Service.
 
-### How the aggregations are computed?
+### Computing the streaming aggregations
 
-The streaming aggregation service internally uses streaming engine in another process to compute the aggregation. The aggregation logics  are written in CCL (continuous computation language). Depending on the configuration of the streaming aggregation service, CCL is generated, compiled and run to compute the aggregation.
+This streaming aggregation sample internally uses a streaming engine in a separate process to compute the aggregation. The aggregation logic is written in CCL (continuous computation language). Using the configuration of this streaming aggregation sample, CCL is generated, compiled and executed to compute the aggregation.
 
-### How can I use streaming aggregations in the streaming rule
-The streaming aggregations created in the aggregation service can be brought back to the custom rule of streaming service as an event. If you need the aggregated data then you can use enterprise plugin to send the aggregated to the appropriate target.
+### Using streaming aggregations in the streaming rule
+The streaming aggregations created in this sample can be brought back to the custom rule of SAP Edge Services Streaming Service as an event. To send the aggregated data to an external system, configure a Streaming Service enterprise plugin to send the aggregated data to the external system.
 
-### What is the expected performance?
+### Expected performance
 
-Aggregations are computed using streaming engine and so performance is highly depend on the available memory and compute resources. The streaming aggregation service runs in a separate process and so there is an inherent network delay to get the event from the streaming service to the aggregation service.
+Performance is highly dependent on the configuration of this sample, and the computing hardware running this sample. For example, the number and size of the aggregation time windows defined will impact performance, as will the memory, CPU, network and disk of the host computer.
 
-If your aggregation time buckets are small enough - say it doesn’t capture more than few thousands of events within this time, then you wouldn’t see any performance degradation even if data are continuously input at the same speed.
+For most hardware, if the aggregation time windows are small - less than a few thousand sensor readings (combined) within the configured time windows, then performance should be consistent, assuming new readings continuously arrive at the same speed.
 
-You should test the performance to see if it satisfies your requirements.
+Performance should always be tested using a customer's exact configuration and hardware to ensure it satisfies requirements.
 
-### What are the aggregations it supports?
+### Supported aggregations
 
-The following 11 aggregations are supported by this sample aggregation service:
+The following 11 aggregations are supported by this aggregation sample:
 
 AVG, SUM, COUNT, MIN, MAX, MEDIAN, STDDEV (standard deviation), COUNTDISTINCT (count of distinct values), WEIGHTEDAVG (weighted average), LASTVALUE (last value in the time bucket), and FIRSTVALUE (first value in the time bucket). All the aggregations are grouped by device id, sensor id and profile id.
 
-### High Level Design
+### High-Level Design
 
-Under the hood a CCL is automatically generated by this service and using custom rule feature of streaming engine data are passed to this service.
+This sample leverages the custom rule feature of the Streaming Service. This sample dynamically generates a CCL file that implements the aggregations, and the necessary streams to interact with the Streaming Service.
 
-The streaming aggregation service is mainly control by the JSON configuration file. The JSON configuration file has two type of configurations: streams and rules.
+This streaming aggregation sample is mainly control by the JSON configuration file. The JSON configuration file has two type of configurations: streams and rules.
 
-1.	Streams: This section defines the supported aggregations and whether a persistence aggregation need to be calculated.
-2.	Rules: This section defines what are aggregations are subscribed by a sensor profile and rule.
+1.	Streams: This section defines the supported aggregations and whether a persistence aggregation needs to be calculated.
+2.	Rules: This section defines what are aggregations are subscribed by a sensor profile and a rule.
 
-Depending on the parameters of this JSON configuration, at the start of this service, CCL codes are generated, compiled and started. Once it is started, then the **rule subscription** configuration is published to an internal control stream of this CCL. The CCL can dynamically adjust the rule subscription.
+Depending on the parameters of this JSON configuration, when this sample starts it generates, compiles and starts the CCL file. Once it is started, then the rule subscription configuration is published to an internal control stream of this CCL. The CCL can dynamically adjust the rule subscription.
 
-Once it starts, streaming rule which is configured to send data to custom rule can start sending data to this aggregation  service. The same streaming aggregation service can handle data from many sensor profiles.
+Once it starts, the Streaming Service custom rule which is configured for this sample will send data to this aggregation sample. The same streaming aggregation sample can handle data from many sensor profiles.
 
-Depending on the rule subscription, streaming aggregations are published to a pre-defined stream where the streaming rule engine gets the aggregated data.
+Depending on the rule subscription, streaming aggregations are published to a pre-defined stream where the Streaming Service receives the aggregated data.
 
-The streaming aggregation service has a subscriber which listens to the computed persistence aggregations. When it receives the aggregations, it stores these values in to a CSV file. It can be extended to store in persistence service.
+The streaming aggregation sample has a subscriber which listens to the computed persistence aggregations. When it receives the aggregations, it stores these values into a CSV file. It could be extended to store in the Persistence Service.
 
-### How to change CCL code?
+### Modifying the generated CCL code
 
-CCL code cannot be changed since it is generated from JSON configuration every time the service starts. Most of the simple things you should be able to handle by simply changing JSON configuration file. If required then you should change CCL generator i.e., CclGen.java.
+The generated CCL code cannot be changed since it is generated from the JSON configuration every time the sample starts. In order to extend or modify the generated CCL, the CCL generator written in Java must be modified (CclGen.java).
 
-### How do I deploy this service?
+### Deploying this sample
 
-This service is not yet wrapped in OSGI container. If you wrap this in OSGI container then you can use IoT Service to deploy this to the gateway. For now, this sample you need to manually deploy in the gateway. The sections below describes how you build and run this sample at the gateway. One of the extension of this sample is to wrap this with OSGI and deploy from the cloud.
+This sample must be manually deployed to the computer running SAP Edge Services. The sections below describes how to build, deploy and run this sample. A future enhancement of this sample would involve converting the Java project to an OSGI bundle. As an OSGi bundle, it could be deployed from either the cloud (for SAP Edge Services, cloud edition) or deployed to the Edge Services Runtime (SAP Edge Service, on-premise edition).
 
 ## Requirements
 
-You must have following installed in your system:
+The following must be installed for this sample:
 1. Java JDK 1.8 or above (https://www.java.com/en/download/)
 2. Apache Maven (https://maven.apache.org/download.cgi)
 3. Git command line tool (https://git-scm.com/downloads)
 4. SAP Edge Services (Cloud or On-premise edition)
 5. Packaging tool (Tar utility is usually pre-installed in Linux / WinZip or similar for Windows)
 
-### Edge Services
+### SAP Edge Services
 
 #### Cloud edition
 
-For cloud edition, you need a working IoT Services Gateway Edge (REST) with the SAP Edge Services Streaming Service installed.
+For cloud edition, a working IoT Services Gateway Edge (REST) is required, with the SAP Edge Services Streaming Service installed.
 
 #### On-premise edition (3.0 FP02 or newer)
 
-For on-premise edition you simply need a working install of the Persistence Service and Streaming Service.  These are installed together as described in the Edge Services, on-premise edition online documentation.
+For on-premise edition, a working install of the Persistence Service and Streaming Service is required. These are installed together as described in the SAP Edge Services, on-premise edition online documentation.
 
 ## Download and Installation
 
@@ -105,8 +113,8 @@ cd streaming-aggregation
 ```json
 mvn eclipse:eclipse
 ```
-3. The above command will throw errors for streaming libraries. It will also show you the command that you need to run in the command line. Follow those commands to copy all the libraries. Libraries are in $STREAMING_HOME/libj folder.
-4. Run following command to compile and build the package:
+3. The above command will throw errors for streaming libraries. It will also show the command that needs to run in the command line. Follow those commands to copy all the libraries. Libraries are in $STREAMING_HOME/libj folder.
+4. Run the following command to compile and build the package:
 ```json
 mvn clean install
 ```
@@ -114,7 +122,7 @@ mvn clean install
 ```json
 cp aggr-cnf.json target
 cd target
-tar -cvf ../EdgeAnalytics.tar SampleEdgeAnalytics-null.jar  aggr-cnf.json lib/*.jar
+tar -cvf ../EdgeAnalytics.tar SampleEdgeAnalytics-null.jar aggr-cnf.json lib/*.jar
 ```
 6. Create zip (for Windows) which will include all the 3rd party jars:
 ```json
@@ -128,22 +136,22 @@ Use WinZip or similar tool to zip the EdgeAnalytics folder
 
 ## Configuration
 
-By simply changing the JSON file you can control this streaming aggregation service. There are two sections in the JSON file: streams and rules. The streams section is fixed. This means this section must be there for this service to function properly.
+The JSON file controls the configuration of this streaming aggregation sample. There are two sections in the JSON file: streams and rules. The streams section is fixed. This means this section must be there for this sample to function properly.
 
-Each section in the streams have three fixed and one optional name/value pairs. The properties “name”, “time” and “type” are fixed. The property “persist” is optional. If you put “persist” property for a aggregation then this service will create the aggregation and save in a table.
+Each section in the streams has three fixed and one optional name/value pairs. The properties “name”, “time” and “type” are fixed. The property “persist” is optional. If the “persist” property is true for an aggregation then this sample will create the aggregation and save it in a CSV file.
 
-In the rule section of the JSON file there are three name value pairs you define for each section. These are “ruleId”, “profileId” and “aggr”. This is where you configure which streaming aggregation to send to which streaming rule. You may choose not to have rule section at all. In that case, there will be no streaming aggregations are generated.
+In the rule section of the JSON file there are three name value pairs defined for each section. These are “ruleId”, “profileId” and “aggr”. This is where the streaming aggregation to streaming rule mapping is configurated. The rule section is optional. If omitted, there will be no streaming aggregations generated.
 
-###  Example
-I have two sensor profiles Temperature_0_1 and Humidity_0_1. I have already defined two CUSTOM RULES : “TempAvg”  and “HumdAvg” one for each profile.
+### Example
+I have two sensor profiles Temperature_0_1 and Humidity_0_1. I have already defined two custom rules for each profile: “TempAvg” and “HumdAvg”.
 
-I want to generate AVG and SUM in every 30 seconds for both of these sensor measures and save in the persistence service for later use.
+I want to generate AVG and SUM every 30 seconds for both of these sensor measures and save for future analysis.
 
-I would also like to bring the streaming AVG of Temperature_0_1 to a rule “TempAvg” and AVG of Humidity_0_1 to a rule “HumdAvg”.
+I would also like to bring the AVG of Temperature_0_1 to a rule “TempAvg” and AVG of Humidity_0_1 to a rule “HumdAvg”.
 
 Solution:
 
-1.	First, you configure the streams section of the JSON file. Put “persist”: true as shown below ONLY for the AVG and SUM to indicate the streaming aggregation service to generate and save these persistence aggregations. Also change the value of the “time” to 30 SECONDS for both AVG and SUM.
+1. First, configure the streams section of the JSON file. Put “persist”: true as shown below ONLY for the AVG and SUM to indicate the streaming aggregation sample must generate and save these persistence aggregations. Also, change the value of the “time” to 30 SECONDS for both AVG and SUM.
 ```json
     {
       "name": "AVGSTREAM",
@@ -158,7 +166,7 @@ Solution:
       "persist": true
     },
 ```
-2.	Now you need to configure the rule section to indicate that AVG calculated for sensor profiles Temperature_0_1 and Humidity_0_1 should be sent to rules TempAvg and HumdAvg respectively.
+2. Next, configure the rule section to indicate that AVG calculated for sensor profiles Temperature_0_1 and Humidity_0_1 should be sent to rules TempAvg and HumdAvg respectively.
 ```json
     {
       "ruleId": "TempAvg",
@@ -171,54 +179,54 @@ Solution:
       "aggr": "AVG"
     }
 ```
-3.	Make sure you have Temperature_0_1 and Humidity_0_1 profiles are created in the rule engine. And also make sure to create CUSTOM RULES TempAvg and HumidAvg for each profile.
+3. In the Streaming Service Edge Console, ensure sensor profiles are created for Temperature_0_1 and Humidity_0_1. Also, ensure custom rules TempAvg and HumidAvg are created for each sensor profile. In both custom rules, set the host name as localhost and port as 9090. 
 
-4.	Set the host name as localhost and port as 9090 for CUSTOM RULES. Make sure that host and port are same in the in the JSON file.
+4. In the JSON configuration file for this sample, ensure the host and port are the same as configured in the custom rules.
 
-5.	Once JSON file is changed and saved, you need to restart the streaming aggregation service so that it will regenerate the CCL and start the aggregations.
+5. Once JSON file is saved, restart the streaming aggregation sample so that it will regenerate the CCL and start the aggregations.
 
 ### Deploy and Run
-Here are the steps that you can follow to deploy, run and test it:
+Here are the steps to deploy, run and test:
 
-1. Un-tar the tar file in to a folder
-2. Open the aggr-conf.json file in Notepad
-3. Start your gateway if it is already not running
-4. Login to the Edge Service’s console using browser: https://localhost
-5. If not yet then create a sensor profile: Temperature_0_1
-6. Create a CUSTOM rule called: TempAggregation
+1. Un-tar the tar file to a folder
+2. Open the aggr-conf.json file in a text editor
+3. Start the Streaming Service if it is already not running
+4. Login to the Streaming Service Edge Console using browser: https://localhost
+5. If misssing, create a sensor profile: Temperature_0_1
+6. Create a custom rule called: TempAggregation
 7. Configure the custom rule with host localhost and port 9090
-8. Save it.
+8. Save the custom rule
 9. Copy the sensor profile id and rule id (both are hexadecimal string)
-10. Go back to your aggr-conf.json file in the Notepad and in the bottom find the section called “rules” and change the ruleId and profileId for one of the section
-11. Save it. Exit the notepad.
-12. In the command line, set the STREAMING_HOME. For example, if your "edgeservices" folder is at "c:\Gateway\edgeservices" then your STREAMING_HOME should be set to "C:\Gateway\edgeservices\esp\ESP-5_1"
-13. To run aggregation service from command line:
+10. Go back to the aggr-conf.json file and find the section called “rules” - change the ruleId and profileId
+11. Save the aggr-conf.json file
+12. In the command line, set the STREAMING_HOME. For example, if the "edgeservices" folder is at "c:\Gateway\edgeservices" then STREAMING_HOME should be set to "C:\Gateway\edgeservices\esp\ESP-5_1"
+13. To run aggregation service from the command line:
 ```json
 java -jar SampleEdgeAnalytics-null.jar
 ```
-14. Shutdown the gateway and start again
-15. Open MQTTBox (if you don’t have then download this for Chrome) and send messages to Edge Service’s Temperature_0_1 sensor profile. You can use other methods to send data to Edge Services too.
-16. Check the file for aggregations and events in the UI. If you are using "persist" aggregation then you should see new aggregations are created in the CSV file in the same folder. If you have configured JSON to use aggregations in the rule then you should see the rules events generated in the streaming rule engine.
+14. Restart the Streaming Service
+15. Use a supported method to send data to the Temperature_0_1 sensor profile in SAP Edge Services Streaming Service. (For example, a tool such as MQTTBox or Postman can be used)
+16. Check the file for aggregations and events in the UI. If "persist" aggregation is configurated, then new aggregations are created in the CSV file in the same folder. If streaming aggregations are configured, then view the events generated in the Streaming Service Edge Console.
 
 
 ## Limitations
 
-There are some limitations of what you can do with this aggregation service. Here are the list of functionalities that are supported or not supported:
+There are some limitations of what is possible with this streaming aggregation sample. Here are the list of functionalities that are supported or not supported:
 
 For Persistence Aggregation:
-- You can only define ONE Custom Rule for ONE  sensor profile (sensor data)
-- You can define only one type of aggregation once for each sensor profile. You can not define same aggregation type for a sensor profile twice and provide different time windowing property
+- You can only define ONE custom rule for ONE sensor profile (sensor data)
+- You can define only one type of aggregation once for each sensor profile. You cannot define the same aggregation type for a sensor profile twice and provide different time (window) property
 - You can define one or more unique aggregations for each sensor profile
 
 For Streaming Aggregation:
-- You can only define ONE Custom Rule for ONE  sensor profile (sensor data)
-- You can define only one type of aggregation once for each sensor profile. You can not define same aggregation type for a sensor profile twice and provide different time windowing property
+- You can only define ONE custom rule for ONE sensor profile (sensor data)
+- You can define only one type of aggregation once for each sensor profile. You cannot define the same aggregation type for a sensor profile twice and provide different time (window) property
 - You can define one or more unique aggregations for each sensor profile
-- You can only bring ONE type of aggregation as an event back to streaming rule engine
+- You can only bring ONE type of aggregation as an event back to the Streaming Service
 
 ## Known Issues
 
-Currently, the on-premise Streaming Service requires the aggregation service to start before you start Edge Services. For any other issues, you can check the log file that this aggregation service generates as well as Edge Services Streaming Service log files located at .../dep_iot_edge/log/
+Currently, the on-premise Streaming Service requires this streaming aggregation sample to start before the Streaming Service starts. For any other issues, check the log file that this streaming aggregation sample generates as well as Streaming Service log files located at .../dep_iot_edge/log/
 
 ## How to obtain support
 
