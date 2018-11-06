@@ -5,7 +5,7 @@ This persistence service aggregation sample can be used to implement custom quer
 
 If using Edge Services, cloud edition, this sample assumes the IoT Services Gateway Edge is configured for REST ingestion. It consumes the standard IoT Services model for Temperature. If the IoT Services Gateway Edge is configured for another protocol (ie MQTT), then some features will not work (for example sending aggregated data back into Gateway Edge over REST).
 
-This sample assumes the user has a working knowledge of SAP Edge Services, and is comfortable programming in Java.
+This sample assumes the user has a working knowledge of SAP Edge Services and is comfortable programming in Java.
 
 ## Product Documentation
 

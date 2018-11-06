@@ -2,9 +2,9 @@
 
 ## Overview
 
-This streaming aggregation sample demonstrates different aggregation methods that can be extended to implement other aggregation scenarios. There are many reasons why aggregations are important for IOT applications at the edge. Sensor data is often known to be fluctuating; therefore, it may be desireable to create rules based on aggregated sensor readings, instead of rules based on individual sensor readings. Also, when running ML/AI models at the edge, these models may need to run on aggregated data due to the amount of computing resources or time required to run the model.
+This streaming aggregation sample demonstrates different aggregation methods that can be extended to implement other aggregation scenarios. There are many reasons why aggregations are important for IOT applications at the edge. Sensor data is often known to be fluctuating; therefore, it may be desirable to create rules based on aggregated sensor readings, instead of rules based on individual sensor readings. Also, when running ML/AI models at the edge, these models may need to run on aggregated data due to the amount of computing resources or time required to run the model.
 
-After customizing this sample to your own implementation, make sure to thoroughly test before deploying to production environments. This sample is written in Java, and internally it uses the custom rule feature of the SAP Edge Services Streaming Service to compute the aggregation. More details can be found in *High-Level Design* section.
+After customizing this sample to your own implementation, make sure to thoroughly test before deploying to production environments. This sample is written in Java and internally it uses the custom rule feature of the SAP Edge Services Streaming Service to compute the aggregation. More details can be found in *High-Level Design* section.
 
 This sample assumes the user has a working knowledge of SAP Edge Services and is comfortable programming in Java. The user must be familiar with the Streaming Service, Streaming Service Edge Console, and configuring streaming rules in the Streaming Service.
 
@@ -57,7 +57,7 @@ AVG, SUM, COUNT, MIN, MAX, MEDIAN, STDDEV (standard deviation), COUNTDISTINCT (c
 
 This sample leverages the custom rule feature of the Streaming Service. This sample dynamically generates a CCL file that implements the aggregations, and the necessary streams to interact with the Streaming Service.
 
-This streaming aggregation sample is mainly control by the JSON configuration file. The JSON configuration file has two type of configurations: streams and rules.
+This streaming aggregation sample is mainly control by the JSON configuration file. The JSON configuration file has two types of configurations: streams and rules.
 
 1.	Streams: This section defines the supported aggregations and whether a persistence aggregation needs to be calculated.
 2.	Rules: This section defines what are aggregations are subscribed by a sensor profile and a rule.
@@ -72,11 +72,11 @@ The streaming aggregation sample has a subscriber which listens to the computed 
 
 ### Modifying the generated CCL code
 
-The generated CCL code cannot be changed since it is generated from the JSON configuration every time the sample starts. In order to extend or modify the generated CCL, the CCL generator written in Java must be modified (CclGen.java).
+The generated CCL code cannot be changed since it is generated from the JSON configuration every time the sample starts. To extend or modify the generated CCL, the CCL generator written in Java must be modified (CclGen.java).
 
 ### Deploying this sample
 
-This sample must be manually deployed to the computer running SAP Edge Services. The sections below describes how to build, deploy and run this sample. A future enhancement of this sample would involve converting the Java project to an OSGI bundle. As an OSGi bundle, it could be deployed from either the cloud (for SAP Edge Services, cloud edition) or deployed to the Edge Services Runtime (SAP Edge Service, on-premise edition).
+This sample must be manually deployed to the computer running SAP Edge Services. The sections below describe how to build, deploy and run this sample. A future enhancement of this sample would involve converting the Java project to an OSGI bundle. As an OSGi bundle, it could be deployed from either the cloud (for SAP Edge Services, cloud edition) or deployed to the Edge Services Runtime (SAP Edge Service, on-premise edition).
 
 ## Requirements
 
@@ -138,14 +138,14 @@ Use WinZip or similar tool to zip the EdgeAnalytics folder
 
 The JSON file controls the configuration of this streaming aggregation sample. There are two sections in the JSON file: streams and rules. The streams section is fixed. This means this section must be there for this sample to function properly.
 
-Each section in the streams has three fixed and one optional name/value pairs. The properties “name”, “time” and “type” are fixed. The property “persist” is optional. If the “persist” property is true for an aggregation then this sample will create the aggregation and save it in a CSV file.
+Each section in the streams has three fixed and one optional name/value pairs. The properties “name”, “time” and “type” are fixed. The property “persist” is optional. If the “persist” property is true for an aggregation, then this sample will create the aggregation and save it in a CSV file.
 
 In the rule section of the JSON file there are three name value pairs defined for each section. These are “ruleId”, “profileId” and “aggr”. This is where the streaming aggregation to streaming rule mapping is configurated. The rule section is optional. If omitted, there will be no streaming aggregations generated.
 
 ### Example
 I have two sensor profiles Temperature_0_1 and Humidity_0_1. I have already defined two custom rules for each profile: “TempAvg” and “HumdAvg”.
 
-I want to generate AVG and SUM every 30 seconds for both of these sensor measures and save for future analysis.
+I want to generate AVG and SUM every 30 seconds for both sensor profiles and save for future analysis.
 
 I would also like to bring the AVG of Temperature_0_1 to a rule “TempAvg” and AVG of Humidity_0_1 to a rule “HumdAvg”.
 
@@ -192,7 +192,7 @@ Here are the steps to deploy, run and test:
 2. Open the aggr-conf.json file in a text editor
 3. Start the Streaming Service if it is already not running
 4. Login to the Streaming Service Edge Console using browser: https://localhost
-5. If misssing, create a sensor profile: Temperature_0_1
+5. If missing, create a sensor profile: Temperature_0_1
 6. Create a custom rule called: TempAggregation
 7. Configure the custom rule with host localhost and port 9090
 8. Save the custom rule
@@ -211,7 +211,7 @@ java -jar SampleEdgeAnalytics-null.jar
 
 ## Limitations
 
-There are some limitations of what is possible with this streaming aggregation sample. Here are the list of functionalities that are supported or not supported:
+There are some limitations of what is possible with this streaming aggregation sample:
 
 For Persistence Aggregation:
 - You can only define ONE custom rule for ONE sensor profile (sensor data)
