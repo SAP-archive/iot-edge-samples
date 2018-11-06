@@ -79,11 +79,13 @@ You must have following installed in your system:
 4. SAP Edge Services (Cloud or On-premise edition)
 5. Packaging tool (Tar utility is usually pre-installed in Linux / WinZip or similar for Windows)
 
-### Edge Services, cloud edition
+### Edge Services
+
+#### Cloud edition
 
 For cloud edition, you need a working IoT Services Gateway Edge (REST) with the SAP Edge Services Streaming Service installed.
 
-### Edge Services, on-premise edition (3.0 FP02 or newer)
+#### On-premise edition (3.0 FP02 or newer)
 
 For on-premise edition you simply need a working install of the Persistence Service and Streaming Service.  These are installed together as described in the Edge Services, on-premise edition online documentation.
 
