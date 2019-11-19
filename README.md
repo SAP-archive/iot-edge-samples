@@ -29,6 +29,4 @@ Product Documentation for SAP Edge Services is available as follows:
 
 ## Copyright and License
 
-Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
-
-License provided by [SAP SAMPLE CODE LICENSE AGREEMENT](https://github.com/SAP/iot-edge-services-samples/tree/master/LICENSE)
+Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved. This file is licensed under the SAP Sample Code License except as noted otherwise in the [License](LICENSE) file.
