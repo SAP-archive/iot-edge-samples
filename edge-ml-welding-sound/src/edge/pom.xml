@@ -1,0 +1,116 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>com.sap.iot.edgeservices</groupId>
+    <artifactId>EdgeML</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <bundle.symbolicName>${project.artifactId}</bundle.symbolicName>
+        <bundle.version>${project.version}</bundle.version>
+    </properties>
+
+    <packaging>bundle</packaging>    
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.11.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.11.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.compendium</artifactId>
+            <version>5.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sap.iot.edgeservices</groupId>
+            <artifactId>ConfigService</artifactId>
+            <version>3.1909.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.tensorflow</groupId>
+            <artifactId>tensorflow</artifactId>
+            <version>1.14.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.2.0</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>bundle</goal>
+                        </goals>
+                        <configuration>
+                            <instructions>
+                                <Bundle-Activator>com.sap.iot.edgeservices.edgeml.Activator</Bundle-Activator>
+                                <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                                <Bundle-Version>${bundle.version}</Bundle-Version>
+                                <Bundle-Vendor>SAP</Bundle-Vendor>
+                                <ClassPath>.</ClassPath>
+                                <Embed-Dependency>
+                                    *;scope=compile|runtime
+                                </Embed-Dependency>
+                                <Import-Package>
+                                    com.sap.iot.edgeservices.configservice.service,
+                                    org.osgi.framework,
+                                    org.osgi.service.event,
+                                    org.apache.logging.log4j;version="[2.9.0,4.0.0]",
+                                    org.apache.logging.log4j.core;version="[2.9.0,4.0.0]",
+                                    org.apache.logging.log4j.core.lookup;version="[2.9.0,4.0.0]",
+                                    org.apache.logging.log4j.core.config;version="[2.9.0,4.0.0]",
+                                    org.apache.logging.log4j.core.layout;version="[2.9.0,4.0.0]",
+                                    org.apache.logging.log4j.core.appender;version="[2.9.0,4.0.0]",
+                                    org.apache.logging.log4j.core.appender.rolling;version="[2.9.0,4.0.0]"
+                                </Import-Package>
+                            </instructions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
