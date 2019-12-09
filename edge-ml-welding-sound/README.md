@@ -334,4 +334,4 @@ These samples are provided "as-is" basis with detailed documentation on how to u
 ## Copyright and License
 Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
 
-License provided by [SAP SAMPLE CODE LICENSE AGREEMENT](/LICENSE)
+License provided by [SAP SAMPLE CODE LICENSE AGREEMENT](./LICENSE)
