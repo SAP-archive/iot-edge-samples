@@ -122,7 +122,7 @@ This example, with some modifications, could works with SAP Edge Services, on-pr
 
 Edit the file
 ```json
-src\main\java\com\sap\iot\edgeservices\persistence\sample\custom\PredictValue.java
+src\main\java\com\sap\iot\edgeservices\predictive\sample\custom\PredictValue.java
 ```
 In the definition, set CLOUD_EDGE_SERVICES = false (line 49)
 ```json
@@ -131,7 +131,7 @@ In the definition, set CLOUD_EDGE_SERVICES = false (line 49)
 
 ### Compile and Package
 
-1. Open a shell / command prompt (on Windows as Administrator) and navigate to the `predictive-model-pmml` directory.
+1. Open a shell / command prompt (on Windows as Administrator) and navigate to the `predictive-pmml` directory.
 2. Edit the provided pom.xml and ensure that the version number of the Persistence Service and ConfigService jar files matches the JSON. If it does not match, change the numbers in the pom.xml
 ```json
         <dependency>
@@ -172,7 +172,7 @@ The following inherited dependencies must be satisfied by installing the OSGi ve
 #### SAP Edge Services, cloud edition
 
 1. Use the SAP Edge Services Policy service, navigate to the Services list and create a new custom service.
-2. Use "RGBSERVICE" for the event topic field (or what you have defined at line 56 of the file src\main\java\com\sap\iot\edgeservices\persistence\sample\PredictiveModule.java
+2. Use "RGBSERVICE" for the event topic field (or what you have defined at line 56 of the file src\main\java\com\sap\iot\edgeservices\predictive\sample\PredictiveModule.java
 3. Use the file /target/PredictiveModel-1.0.0.jar file.
 4. Save it.
 5. Go in the Gateways and Group of Gateways list and search for your gateway in the list
