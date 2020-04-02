@@ -1,4 +1,4 @@
-# Persistence Service Aggregation Sample
+# Predictive Service (PMML) Sample
 
 ## Overview
 The implemented scenario is documented [here](https://blogs.sap.com/2019/11/05/implement-predictive-analytics-at-the-edge/)
@@ -35,31 +35,35 @@ For cloud edition, a working IoT Services Gateway Edge (REST) is required, with 
 The following needs to be setup on IoT Services as a data model for the sample to permit the PMML model to analyze correctly the data and to send the results back into the system. To create the entries, login to the IoT Services cockpit with the same tenant that your gateway uses.
 
 1. 	Create the capabilities
-		- **capabilityAlternateId:**	color
-		- **properties:**	
-		| Property Name 	| Property Type 	|
-        |:-------------:	|:-------------:	|
-        | R 	| float 	|
-        | G 	| float 	|
-        | B 	| float 	|
-        
-		- **capabilityAlternateId:**    color prediction
-		- **properties:**
-		| Property Name 	| Property Type 	|
-        |:-------------:	|:-------------:	|
-        | label 	| string 	|
-        | neighbor1 	| float 	|
-        | neighbor2 	| float 	|
-        | neighbor3 	| float 	|
-        
-		- **capabilityAlternateId:** validity color score
-		- **properties:**
-			| Property Name 	| Property Type 	|
-            |:-------------:	|:-------------:	|
-            | index 	| float 	|
+- **capabilityAlternateId:**	color
+- **properties:**
+		
+| Property Name 	| Property Type 	|
+|:-------------:	|:-------------:	|
+| R 	| float 	|
+| G 	| float 	|
+| B 	| float 	|
+---
+- **capabilityAlternateId:**    color prediction
+- **properties:**
+		
+| Property Name 	| Property Type 	|
+|:-------------:	|:-------------:	|
+| label 	| string 	|
+| neighbor1 	| float 	|
+| neighbor2 	| float 	|
+| neighbor3 	| float 	|
+---
+- **capabilityAlternateId:** validity color score
+- **properties:**
+
+| Property Name 	| Property Type 	|
+|:-------------:	|:-------------:	|
+| index 	| float 	|
+
 2. 	Create the sensor type
-		- **sensorType name:**			color sensor type
-		- **sensorTypeAlternateId:**     255
+- **sensorType name:**			color sensor type
+- **sensorTypeAlternateId:**     	255
 		
 3. Add all the capabilities into the **_color sensor type_** Sensor Type
 
@@ -118,7 +122,7 @@ This example, with some modifications, could works with SAP Edge Services, on-pr
 
 Edit the file
 ```json
-src\main\java\com\sap\iot\edgeservices\persistence\sample\custom\PredictValue.java
+src\main\java\com\sap\iot\edgeservices\predictive\sample\custom\PredictValue.java
 ```
 In the definition, set CLOUD_EDGE_SERVICES = false (line 49)
 ```json
@@ -127,7 +131,7 @@ In the definition, set CLOUD_EDGE_SERVICES = false (line 49)
 
 ### Compile and Package
 
-1. Open a shell / command prompt (on Windows as Administrator) and navigate to the `predictive-model-pmml` directory.
+1. Open a shell / command prompt (on Windows as Administrator) and navigate to the `predictive-pmml` directory.
 2. Edit the provided pom.xml and ensure that the version number of the Persistence Service and ConfigService jar files matches the JSON. If it does not match, change the numbers in the pom.xml
 ```json
         <dependency>
@@ -168,7 +172,7 @@ The following inherited dependencies must be satisfied by installing the OSGi ve
 #### SAP Edge Services, cloud edition
 
 1. Use the SAP Edge Services Policy service, navigate to the Services list and create a new custom service.
-2. Use "RGBSERVICE" for the event topic field (or what you have defined at line 56 of the file src\main\java\com\sap\iot\edgeservices\persistence\sample\PredictiveModule.java
+2. Use "RGBSERVICE" for the event topic field (or what you have defined at line 56 of the file src\main\java\com\sap\iot\edgeservices\predictive\sample\PredictiveModule.java
 3. Use the file /target/PredictiveModel-1.0.0.jar file.
 4. Save it.
 5. Go in the Gateways and Group of Gateways list and search for your gateway in the list
@@ -237,4 +241,4 @@ These samples are provided "as-is" basis with detailed documentation on how to u
 
 Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
 
-License provided by [SAP SAMPLE CODE LICENSE AGREEMENT](https://github.com/SAP/iot-edge-services-samples/tree/master/persistence-aggregation-max-temp/LICENSE)
+License provided by [SAP SAMPLE CODE LICENSE AGREEMENT](https://github.com/SAP-samples/iot-edge-services-samples/blob/master/predictive-pmml/LICENSE)
