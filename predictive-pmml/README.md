@@ -1,4 +1,4 @@
-# Predictive Service PMML Sample
+# Predictive Service (PMML) Sample
 
 ## Overview
 The implemented scenario is documented [here](https://blogs.sap.com/2019/11/05/implement-predictive-analytics-at-the-edge/)
