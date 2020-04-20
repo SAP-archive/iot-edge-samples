@@ -1,0 +1,19 @@
+{
+  "predictionSensorTypeAlternateId": "255",
+  "capabilityAlternateId": "color",
+  "predictionSensorAlternateId": "color sensor",
+  "predictionCapabilityAlternateId": "color prediction",
+  "predictionIndexCapabilityAlternateId": "validity color score",
+  "edgePlatformRestEndpoint": "http://localhost:8699/measures/",
+  "plantColorOutOfRangeLimit": "100",
+  "plantScalingForOutOfRange": "1.25",
+  "analysisFrequency": 10000,
+  "predictionOutputFields": [
+    "neighbor(1)",
+    "neighbor(2)",
+    "neighbor(3)"
+  ],
+  "brokerConnectionAddressPort": "127.0.0.1:5555",
+  "pythonRuntimeExecutionCommand": "cmd /c python",
+  "pythonScriptPath": "./trainModel.py"
+}
