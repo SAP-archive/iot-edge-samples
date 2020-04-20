@@ -1,0 +1,31 @@
+{
+  "variance": 1,
+  "pressureScale": 1.25,
+  "ingestionEnabled": true,
+  "filterMeasurements": false,
+  "filterCalculation": false,
+  "externalConfigurationTopic": "configuration",
+  "configurationFile": "C:\\Users\\i333269\\Desktop\\defaultConfiguration.json",
+  "filteredObjects": [
+    {
+      "capabilityAlternateId": "power",
+      "filterType": "msgbus",
+      "condition": "AND"
+    },
+    {
+      "capabilityAlternateId": "snr",
+      "filterType": "ingestion",
+      "condition": "AND"
+    },
+    {
+      "capabilityAlternateId": "pressure",
+      "filterType": "msgbus",
+      "condition": "AND"
+    },
+    {
+      "capabilityAlternateId": "pressure_alert",
+      "filterType": "ingestion",
+      "condition": "AND"
+    }
+  ]
+}
