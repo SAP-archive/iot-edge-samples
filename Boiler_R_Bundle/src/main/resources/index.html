@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>IoT Edge</title>
+    <script id="sap-ui-bootstrap" 
+        type="text/javascript"
+        src="https://sapui5.us1.hana.ondemand.com/resources/sap-ui-core.js"    
+        data-sap-ui-theme="sap_goldreflection" 
+        data-sap-ui-libs="sap.viz,sap.ui.commons,sap.ui.table,sap.ui.ux3,sap.ui.core,sap.m"></script>
+        
+    <link rel="stylesheet" type="text/css" href="css/sensor.css">
+    <link rel="stylesheet" type="text/css" href="css/sensors2.css">
+     
+    <script>
+    
+    "use strict";
+
+    //=======================
+    // CONFIGURATION
+    //=======================
+
+    var resizeComponents = function() {
+        calculateBrowserDimensions();
+        frame.setWidth((browserWidth * 0.5) + "px"); 
+        frame.setHeight((browserHeight * 0.3) + "px");
+        oEventDataTable.setHeight((browserHeight * 0.4) + "px");
+    };
+
+    var calculateBrowserDimensions = function() {
+        browserWidth = $(window).width();
+        browserHeight = $(window).height();
+    };
+
+    $( window ).resize(function() {
+      resizeComponents();
+    });    
+
+    var DATA_WINDOW = 3;          // minutes of data to show
+    var SENSOR_PROFILE_ID = "''"; //"'75a02648-6ce9-11e7-8000-c029b1777c75'";
+    //var odataLinkBase = "/odata";
+    var odataLinkBase = "https://admin:adminadmin@localhost/api/odata";
+
+    var browserWidth = 0;
+    var browserHeight = 0;
+    calculateBrowserDimensions();
+
+    var url = new URL(window.location);
+    //var DEP_ADMIN_CONSOLE = "https://admin:adminadmin@" + location.hostname + "/api/public/sso/basic";
+    var DEP_ADMIN_CONSOLE = "https://admin:adminadmin@localhost/api/public/sso/basic";
+    console.log("DEP_ADMIN_CONSOLE = " + DEP_ADMIN_CONSOLE);
+
+
+    // ==========================
+    // HELPER FUNCTIONS FOR ODATA
+    // ==========================
+    
+    var oHeaders = {
+        "Authorization": "Basic " + btoa('admin' + ":" + 'adminadmin')
+    };
+
+    var generateHistoricalTimestamp = function() {
+        var currdate = new Date(new Date().getTime() - (DATA_WINDOW * 60 * 1000)); //get a timestamp from (DATA_WINDOW) minutes ago
+        var startdate = "" + currdate.getUTCFullYear() 
+                           + "-" +  ("00" + (currdate.getUTCMonth()+1)).substr(-2,2)  
+                           + "-"  + ("00" + currdate.getUTCDate()).substr(-2,2) 
+                           + "T" + ("00" + currdate.getUTCHours()).substr(-2,2) 
+                           + ":" + ("00" + currdate.getUTCMinutes()).substr(-2,2) 
+                           + ":" + ("00" + currdate.getUTCSeconds()).substr(-2,2); 
+        return startdate;
+    };
+
+    var generateOdataFidelityLink = function( sensorProfileId ) {
+        return encodeURI( odataLinkBase 
+                        + "/edgeSensorFidelityReadingsWithNames"
+                        //+ "?SENSOR_PROFILE_ID=" + sensorProfileId
+                        + "?$top=50"
+                        + "&$select=deviceId,readingValue,readingTimestamp,sensorProfileName"
+                        + "&$filter=readingTimestamp ge datetime'" + generateHistoricalTimestamp() + "'"
+                        +     " and sensorProfileName eq 'Temperature_XX'"
+                        + "&$orderby=readingTimestamp desc"
+                        + "&$format=json");
+    }; 
+
+
+    var generateOdataEventsLink = function( sensorProfileId ) {
+        return encodeURI( odataLinkBase 
+                        + "/edgeEventsWithNames"
+                        //+ "?sensorProfileId=" + sensorProfileId
+                        + "?$filter=eventTimestamp ge datetime'" + generateHistoricalTimestamp() + "'"
+                        +     " and sensorProfileName eq 'Temperature_XX'"
+                        + "&$ORDER_BY=eventTimestamp desc"
+                        + "&$top=50"
+                        + "&$format=json");
+    };
+
+    var getMeasureId = function() {
+        return getCookie("measureId");
+    };
+     
+    var setCookie = function(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    };
+
+    var getCookie = function(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }; 
+    
+    //=========================
+    // CREATE THE MODELS
+    //=========================
+    
+    var oModelFidelity = new sap.ui.model.json.JSONModel().attachRequestCompleted(function() {
+        oModelFidelity.refresh( true );
+    });
+    
+    var oEventModel = new sap.ui.model.json.JSONModel().attachRequestCompleted(function() {
+        //console.log("sorting...");
+        // var data = oEventModel.getData();
+        // for (var x in data.d.results) {
+        //     console.log( "data.d.results x = " + x + " with value: ", data.d.results[x]);
+        //     if ( !data.d.results[x].ruleName.startsWith("Critical") ) {
+        //         delete data.d.results[x];
+        //     }
+        // }
+        var data = oEventModel.getData();
+        oEventModel.setData(data);        
+        oEventModel.refresh( true );
+
+        var workOrders = { d : {
+            results : []
+        }};
+
+        for (var x in data.d.results) {
+            console.log( "data.d.results x = " + x + " with value: ", data.d.results[x]);
+            if ( data.d.results[x].ruleName.startsWith("Critical") ||
+                 data.d.results[x].ruleName.startsWith("Cooler") ) {
+                workOrders.d.results.push(data.d.results[x]);
+            }
+        }
+        oWorkOrderModel.setData(workOrders);
+        oWorkOrderModel.refresh(true);        
+    });
+
+    var oWorkOrderModel = new sap.ui.model.json.JSONModel();
+    
+    var odataFidelity = generateOdataFidelityLink(SENSOR_PROFILE_ID);
+    var odataEvents = generateOdataEventsLink(SENSOR_PROFILE_ID);    
+
+    oModelFidelity.loadData(odataFidelity, null, true, "GET", false, false, oHeaders);
+    oEventModel.loadData(odataEvents, null, true, "GET", false, false, oHeaders);
+
+
+    // need to implement something to shoe rate and count now - DC
+
+    sap.ui.getCore().setModel(oModelFidelity);
+    var oSorter = new sap.ui.model.Sorter("deviceId", false);
+
+    // ======================
+    // FLATTEN THE DATA SET
+    // ======================
+        
+    var dataset = new sap.viz.ui5.data.FlattenedDataset({
+            dimensions : [ 
+                {
+                    name  : 'Device ID',
+                    value : '{deviceId}'
+                },
+                {
+                    name  : 'Time',
+                    value : {
+                      path : "readingTimestamp",
+                      formatter: function(fValue){
+                          if (fValue != null) {
+                              var date = new Date(parseInt(fValue.substr(6)));
+                              return date;
+                          } else {
+                              return new Date();
+                          }
+                      } 
+                    },
+                    dataType: 'date'
+                }],
+            measures : [{
+                name: 'Temperature (Celcius)',
+                value: '{readingValue}',
+                dataType: 'number'
+            }],
+            data : {
+                path : "/d/results",
+                sorter : oSorter
+              }
+            
+    });
+
+    var frame = new sap.viz.ui5.controls.VizFrame({
+        height: (browserHeight * 0.3) + "px",
+        vizType: "timeseries_line",
+        //vizType: "line",
+        uiConfig: "{applicationSet:'fiori'}",
+        vizProperties: {
+            title: {
+                text: "",
+                visible: false
+            },
+            valueAxis: {
+                title: {
+                    visible: false, 
+                    text: ""
+                }
+            },
+            //categoryAxis: {
+            //  title: {visible: true}
+            //},
+            timeAxis: {
+                title: {
+                    visible: true
+                },
+                //levels: ["second","minute", "hour"]
+                interval: { unit: 'auto' }
+            },
+            plotArea: { 
+                //colorPalette: ['#e17b24', '#3346ff', '#848f94', '#61a656'  ],
+                //gap: { visible: false },
+                isFixedDataPointSize: false,
+                window: { start: null, end: null },
+                timeAxis: { 
+                    interval: { unit: 'auto' }
+                }
+            },
+            legend: {
+                visible: true,
+                text: "Container",
+                title: {
+                    visible: false
+                }
+            },
+        },
+        
+        width: '100%',
+        dataset: dataset,
+        feeds: [ 
+        {
+            uid: 'timeAxis',
+            type: 'Dimension',
+            values: ['Time']
+        },
+        {
+            uid: 'color',
+            type: 'Dimension',
+            values: ['Device ID']
+        },
+        {   uid: 'valueAxis',
+            type: 'Measure',
+          values: ['Temperature (Celcius)']
+        }
+        ]
+    });
+
+  
+    var oEventDataTable = new sap.ui.table.Table("eventtable", { 
+        height: (browserHeight * 0.4) + "px",
+        width: "100%",
+        headertext: "event messages",
+        headerdesign: sap.m.ListHeaderDesign.Standard,
+        visiblerowcountmode: sap.ui.table.VisibleRowCountMode.Fixed,
+        visiblerowcount: 12,
+        selectionmode: sap.ui.table.SelectionMode.None,
+        columns: [
+                new sap.ui.table.Column("readingdate", { 
+                    sortProperty: "eventTimestamp",  
+                    sortOrder: sap.ui.table.SortOrder.Descending, 
+                    label: new sap.ui.commons.Label({ text: "Time", textalign: "center"}).addStyleClass("eventlabels"), 
+                    template: new sap.ui.commons.TextView({
+                        text: {
+                            path: "eventTimestamp",
+                            formatter: function(value){
+                                // reading_date is a utc milliseconds since epoch value wrapped in /date(...) 
+                                if (value) {
+                                    var start = value.indexOf("(") + 1;
+                                    var datetime = new Date( parseFloat(value.substr(start)) ); //.setutcseconds( value.substring(start+1, end));
+
+                                    return ("00" + datetime.getHours()).substr(-2,2) + ":" + 
+                                           ("00" + datetime.getMinutes()).substr(-2,2) + ":" +
+                                           ("00" + datetime.getSeconds()).substr(-2,2);
+                                }
+                                return "00:00:00";
+                            }
+                        },
+                        textalign: "center"
+                    }),
+                    width: "15%"
+                }),
+                new sap.ui.table.Column("devicetag", { 
+                    label: new sap.ui.commons.Label({ text: "Device", textalign: "center"}).addStyleClass("eventlabels"), 
+                    template: new sap.ui.commons.TextView({ text: "{deviceId}", textalign: "center"}),
+                    width: "30%"
+                }),
+                new sap.ui.table.Column("rulename", { 
+                    label: new sap.ui.commons.Label({ text: "Rule Event", textalign: "center"}).addStyleClass("eventlabels"), 
+                    template: new sap.ui.commons.TextView({ text: "{ruleName}", textalign: "center"}),
+                    width: "40%"
+                }),
+                new sap.ui.table.Column("reading", {
+                    label: new sap.ui.commons.Label({ text: "Reading", textalign: "center"}).addStyleClass("eventlabels"), 
+                    template: new sap.ui.commons.TextView({ text: "{sensorInformation}", textalign: "right"}),
+                    width: "15%"
+                })
+        ]
+    }).addStyleClass("eventtable");
+    
+    oEventDataTable.setModel(oEventModel);
+    oEventDataTable.bindRows("/d/results");
+
+    //var divider = new sap.ui.commons.HorizontalDivider("divider", {}).addStyleClass("divider");
+
+    var bottomhbox = new sap.m.HBox("bottomhbox", {
+        items: [
+            //rateFrame,
+            oEventDataTable
+            ],
+            justifyContent: sap.m.FlexJustifyContent.SpaceAround,
+            width: "100%"
+    }).addStyleClass("bottomhbox");    
+    
+    frame.setWidth( (browserWidth * 0.5) + "px");   // this is due to some weird behaviour with the vbox
+
+    // var oSensorLabel = new sap.m.Label({
+    //     text: "Temperature_26"
+    // }).addStyleClass("asFormLabel");
+
+    var oSensorLabel = new sap.m.Title("sensorLabel", {
+            text: "Cloud-Edge Events",
+            level: sap.ui.core.TitleLevel.H2,
+            layoutData: new sap.m.OverflowToolbarLayoutData({
+                priority: sap.m.OverflowToolbarPriority.NeverOverflow
+            })
+        }).addStyleClass("edgeEventsTitle");
+
+    //====================================
+    // IMAGE AND DETAILS
+    //====================================
+    //
+    //    // PRODUCT DETAILS HBOX
+    //  - Image
+    //  - VBox - label / value pairs (multiple rows)
+    //  - VBox - 2 sensors
+    //  - Vbox - Edge event
+    //  
+    var edgeEvents = new sap.m.VBox("edgeEvents", {
+        items: [
+                new sap.m.HBox({
+                    items: [
+                        new sap.m.HBox({
+                            items: [
+                                new sap.m.Title("edgeEventsTitle", {
+                                    text: "Work Orders Generated",
+                                    level: sap.ui.core.TitleLevel.H2,
+                                    layoutData: new sap.m.OverflowToolbarLayoutData({
+                                        priority: sap.m.OverflowToolbarPriority.NeverOverflow
+                                    })
+                                }).addStyleClass("edgeEventsTitle"),
+                            ]
+                        }).addStyleClass("edgeEventsTitle"),
+                        //new sap.m.HBox({
+                        //    items: [
+                        //        new sap.m.Label({
+                        //            text: "Clear All"
+                        //        }).addStyleClass("edgeEventsClearAll"),
+                        //        new sap.ui.core.Icon({
+                        //            src: "sap-icon://clear-filter"
+                        //        }).addStyleClass("edgeEventsClearAllIcon")
+                        //    ]
+                        //}).addStyleClass("edgeEventsClearAllHBox"),
+                    ],
+                    alignitems: sap.m.FlexAlignItems.Right,
+                }).addStyleClass("edgeEventsTitleBar"),
+                new sap.m.HBox({
+                    items: [
+                        new sap.m.HBox({
+                            items: [
+                                new sap.m.Label({
+                                    text : "Event"
+                                }).addStyleClass("edgeEventsEventSubTitleEvent"),
+                            ]
+                        }).addStyleClass("edgeEventsEventSubTitleEvent"),
+                        new sap.m.HBox({
+                            items: [
+                                new sap.m.Label({
+                                    text: "Action"
+                                }).addStyleClass("edgeEventsEventSubTitleAction"),
+                            ]
+                        }).addStyleClass("edgeEventsEventSubTitleAction"),
+                        new sap.m.HBox({
+                            items: [
+                                new sap.m.Label({
+                                    text: "Date Created"
+                                }).addStyleClass("edgeEventsEventSubTitleDateCreated"),
+                            ]
+                        }).addStyleClass("edgeEventsEventSubTitleDateCreated"),
+                    ]
+                }),
+                new sap.ui.commons.HorizontalDivider({
+                    visible : true
+                }).addStyleClass("edgeEventsDivider"),
+                new sap.m.HBox({
+                    items: [
+                        new sap.m.HBox({
+                            items: [
+                                new sap.ui.core.Icon({
+                                    src: "sap-icon://alert",
+                                    visible : { 
+                                        path : "/d/results/0/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    }
+                                }).addStyleClass("edgeEventsImage"),
+                                new sap.m.Label({
+                                    text : { 
+                                        path : "/d/results/0/ruleName",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return value;
+                                                //return "\"" + value + "\" Event";
+                                            }
+                                            return false;
+                                        }
+                                    },
+                                    visible : { 
+                                        path : "/d/results/0/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    }
+                                    //text: "\"Temperature High\" Event"
+                                }).addStyleClass("edgeEventsEventTitle"),
+                            ],
+                            alignitems: sap.m.FlexAlignItems.Center,
+                        }).addStyleClass("edgeEventsEvent"),
+                        new sap.m.HBox({
+                            items: [
+                                new sap.m.Label({
+                                    text: "Work Order Updated",
+                                    visible : { 
+                                        path : "/d/results/0/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    }
+                                }).addStyleClass("edgeEventsEventDescription"),
+                            ]
+                        }).addStyleClass("edgeEventsEventDescription"),
+                        new sap.m.HBox({
+                            items: [
+                                new sap.m.Label({
+                                    visible : { 
+                                        path : "/d/results/0/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    },
+                                    text : { 
+                                        path : "/d/results/0/eventTimestamp",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                if (value.indexOf("Date") > 0) {
+                                                    var millisStr = value.replace(/[^\d]/g, '')
+                                                    var millis = parseInt(millisStr);
+                                                    if (millis && millis !== "") {
+                                                        var date = new Date(millis)
+                                                        if ( Object.prototype.toString.call(date) === "[object Date]" ) {
+                                                            // it is a date
+                                                            if ( isNaN( date.getTime() ) ) {  // date.valueOf() could also work
+                                                                // date is not valid
+                                                                return millis;
+                                                            } else {
+                                                                // date is valid
+                                                                //return date.toISOString();
+                                                                return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+                                                            }
+                                                        } else {
+                                                            // not a date
+                                                            return millis;
+                                                        }
+                                                    }
+                                                } else {
+                                                    var date = new Date(value)
+                                                    if (Object.prototype.toString.call(date) === "[object Date]") {
+                                                        // it is a date
+                                                        if ( isNaN( date.getTime() ) ) {  // date.valueOf() could also work
+                                                            // date is not valid
+                                                            return value;
+                                                        } else {
+                                                            // date is valid
+                                                            return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+                                                        }
+                                                    } else {
+                                                        // not a date
+                                                        return value;
+                                                    }
+                                                }
+                                            }
+                                            return value;
+                                        }
+                                    }
+                                }).addStyleClass("edgeEventsEventDate"),
+                            ]
+                        }).addStyleClass("edgeEventsEventDate"),
+                        new sap.m.HBox({
+                            items: [
+                                new sap.m.Link({
+                                    text: "Rule Details",
+                                    target: "_blank",
+                                    href: DEP_ADMIN_CONSOLE,
+                                    visible: { 
+                                        path: "/d/results/0/sensorInformation",
+                                        formatter: function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    }
+                                }).addStyleClass("edgeEventsRuleDetails"),
+                                new sap.ui.core.Icon({
+                                    src: "sap-icon://action",
+                                    visible : { 
+                                        path : "/d/results/0/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    }
+                                }).addStyleClass("edgeEventsRuleDetailsIcon")
+                            ]
+                        }).addStyleClass("edgeEventsRuleDetailHBox"),
+                    ]
+                }).addStyleClass("edgeEventsLine"),
+                new sap.m.HBox({
+                    items: [
+                        new sap.m.HBox({
+                            items: [
+                                new sap.m.Label({
+                                    text : { 
+                                        path : "/d/results/0/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return convertTempUnit(parseFloat(value).toFixed(2), DEGREE_UNIT) + DEGREE_SYMBOL;
+                                            }
+                                            return value;
+                                        }
+                                    },
+                                    visible : { 
+                                        path : "/d/results/0/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    }
+                                }).addStyleClass("edgeEventsTemperature"),
+                            ]
+                        }).addStyleClass("edgeEventsTemperature"),
+                        new sap.m.HBox({
+                            items: [
+                                new sap.m.Label({
+                                    visible : { 
+                                        path : "/d/results/0/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    },
+                                    text : { 
+                                        path : "/d/results/0/eventTimestamp",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                if (value.indexOf("Date") > 0) {
+                                                    var millisStr = value.replace(/[^\d]/g, '')
+                                                    var millis = parseInt(millisStr);
+                                                    if (millis && millis !== "") {
+                                                        var date = new Date(millis)
+                                                        if ( Object.prototype.toString.call(date) === "[object Date]" ) {
+                                                            // it is a date
+                                                            if ( isNaN( date.getTime() ) ) {  // date.valueOf() could also work
+                                                                // date is not valid
+                                                                return millis;
+                                                            } else {
+                                                                // date is valid
+                                                                //return date.toISOString();
+                                                                return (date.getHours() + ":" + ("00" + date.getMinutes()).slice(-2) + ":" + ("00" + date.getSeconds()).slice(-2));
+                                                            }
+                                                        } else {
+                                                            // not a date
+                                                            return millis;
+                                                        }
+                                                    }
+                                                } else {
+                                                    var date = new Date(value)
+                                                    if (Object.prototype.toString.call(date) === "[object Date]") {
+                                                        // it is a date
+                                                        if ( isNaN( date.getTime() ) ) {  // date.valueOf() could also work
+                                                            // date is not valid
+                                                            return value;
+                                                        } else {
+                                                            // date is valid
+                                                            return (date.getHours() + ":" + ("00" + date.getMinutes()).slice(-2) + ":" + ("00" + date.getSeconds()).slice(-2));
+                                                        }
+                                                    } else {
+                                                        // not a date
+                                                        return value;
+                                                    }
+                                                }
+                                            }
+                                            return value;
+                                        }
+                                    }
+                                }).addStyleClass("edgeEventsEventTime"),
+                            ]
+                        }).addStyleClass("edgeEventsEventTime"),
+                    ],
+                }).addStyleClass("edgeEventsLine"),
+                new sap.ui.commons.HorizontalDivider({
+                    visible : { 
+                        path : "/d/results/0/sensorInformation",
+                        formatter : function(value) {
+                            if (value) {
+                                return true;
+                            }
+                            return false;
+                        }
+                    }
+                }).addStyleClass("edgeEventsDivider"),
+                new sap.m.HBox({
+                    items: [
+                        new sap.m.HBox({
+                            items: [
+                                new sap.ui.core.Icon({
+                                    src: "sap-icon://alert",
+                                    visible : { 
+                                        path : "/d/results/1/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    }
+                                }).addStyleClass("edgeEventsImage"),
+                                new sap.m.Label({
+                                    text : { 
+                                        path : "/d/results/1/ruleName",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                //return "\"" + value + "\" Event";
+                                                return value;
+                                            }
+                                            return false;
+                                        }
+                                    },
+                                    visible : { 
+                                        path : "/d/results/1/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    }
+                                    //text: "\"Temperature High\" Event"
+                                }).addStyleClass("edgeEventsEventTitle"),
+                            ],
+                            alignitems: sap.m.FlexAlignItems.Center,
+                        }).addStyleClass("edgeEventsEvent"),
+                        new sap.m.HBox({
+                            items: [
+                                new sap.m.Label({
+                                    text: "Work Order Updated",
+                                    visible : { 
+                                        path : "/d/results/1/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    }
+                                }).addStyleClass("edgeEventsEventDescription"),
+                            ]
+                        }).addStyleClass("edgeEventsEventDescription"),
+                        new sap.m.HBox({
+                            items: [
+                                new sap.m.Label({
+                                    visible : { 
+                                        path : "/d/results/1/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    },
+                                    text : { 
+                                        path : "/d/results/1/eventTimestamp",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                if (value.indexOf("Date") > 0) {
+                                                    var millisStr = value.replace(/[^\d]/g, '')
+                                                    var millis = parseInt(millisStr);
+                                                    if (millis && millis !== "") {
+                                                        var date = new Date(millis)
+                                                        if ( Object.prototype.toString.call(date) === "[object Date]" ) {
+                                                            // it is a date
+                                                            if ( isNaN( date.getTime() ) ) {  // date.valueOf() could also work
+                                                                // date is not valid
+                                                                return millis;
+                                                            } else {
+                                                                // date is valid
+                                                                //return date.toISOString();
+                                                                return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+                                                            }
+                                                        } else {
+                                                            // not a date
+                                                            return millis;
+                                                        }
+                                                    }
+                                                } else {
+                                                    var date = new Date(value)
+                                                    if (Object.prototype.toString.call(date) === "[object Date]") {
+                                                        // it is a date
+                                                        if ( isNaN( date.getTime() ) ) {  // date.valueOf() could also work
+                                                            // date is not valid
+                                                            return value;
+                                                        } else {
+                                                            // date is valid
+                                                            return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+                                                        }
+                                                    } else {
+                                                        // not a date
+                                                        return value;
+                                                    }
+                                                }
+                                            }
+                                            return value;
+                                        }
+                                    }
+                                }).addStyleClass("edgeEventsEventDate"),
+                            ]
+                        }).addStyleClass("edgeEventsEventDate"),
+                        new sap.m.HBox({
+                            items: [
+                                new sap.m.Link({
+                                    text: "Rule Details",
+                                    target: "_blank",
+                                    href: DEP_ADMIN_CONSOLE,
+                                    visible: { 
+                                        path: "/d/results/1/sensorInformation",
+                                        formatter: function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    }
+                                }).addStyleClass("edgeEventsRuleDetails"),
+                                new sap.ui.core.Icon({
+                                    src: "sap-icon://action",
+                                    visible : { 
+                                        path : "/d/results/1/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    }
+                                }).addStyleClass("edgeEventsRuleDetailsIcon")
+                            ]
+                        }).addStyleClass("edgeEventsRuleDetailHBox"),
+                    ]
+                }).addStyleClass("edgeEventsLine"),
+                new sap.m.HBox({
+                    items: [
+                        new sap.m.HBox({
+                            items: [
+                                new sap.m.Label({
+                                    text : { 
+                                        path : "/d/results/1/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return convertTempUnit(parseFloat(value).toFixed(2), DEGREE_UNIT) + DEGREE_SYMBOL;
+                                            }
+                                            return value;
+                                        }
+                                    },
+                                    visible : { 
+                                        path : "/d/results/1/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    }
+                                }).addStyleClass("edgeEventsTemperature"),
+                            ]
+                        }).addStyleClass("edgeEventsTemperature"),
+                        new sap.m.HBox({
+                            items: [
+                                new sap.m.Label({
+                                    visible : { 
+                                        path : "/d/results/1/sensorInformation",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    },
+                                    text : { 
+                                        path : "/d/results/1/eventTimestamp",
+                                        formatter : function(value) {
+                                            if (value) {
+                                                if (value.indexOf("Date") > 0) {
+                                                    var millisStr = value.replace(/[^\d]/g, '')
+                                                    var millis = parseInt(millisStr);
+                                                    if (millis && millis !== "") {
+                                                        var date = new Date(millis)
+                                                        if ( Object.prototype.toString.call(date) === "[object Date]" ) {
+                                                            // it is a date
+                                                            if ( isNaN( date.getTime() ) ) {  // date.valueOf() could also work
+                                                                // date is not valid
+                                                                return millis;
+                                                            } else {
+                                                                // date is valid
+                                                                //return date.toISOString();
+                                                                return (date.getHours() + ":" + ("00" + date.getMinutes()).slice(-2) + ":" + ("00" + date.getSeconds()).slice(-2));
+                                                            }
+                                                        } else {
+                                                            // not a date
+                                                            return millis;
+                                                        }
+                                                    }
+                                                } else {
+                                                    var date = new Date(value)
+                                                    if (Object.prototype.toString.call(date) === "[object Date]") {
+                                                        // it is a date
+                                                        if ( isNaN( date.getTime() ) ) {  // date.valueOf() could also work
+                                                            // date is not valid
+                                                            return value;
+                                                        } else {
+                                                            // date is valid
+                                                            return (date.getHours() + ":" + ("00" + date.getMinutes()).slice(-2) + ":" + ("00" + date.getSeconds()).slice(-2));
+                                                        }
+                                                    } else {
+                                                        // not a date
+                                                        return value;
+                                                    }
+                                                }
+                                            }
+                                            return value;
+                                        }
+                                    }
+                                }).addStyleClass("edgeEventsEventTime"),
+                            ]
+                        }).addStyleClass("edgeEventsEventTime"),
+                    ],
+                }).addStyleClass("edgeEventsLine"),
+                new sap.ui.commons.HorizontalDivider({
+                    visible : { 
+                        path : "/d/results/1/sensorInformation",
+                        formatter : function(value) {
+                            if (value) {
+                                return true;
+                            }
+                            return false;
+                        }
+                    }
+                }).addStyleClass("edgeEventsDivider"),
+        ],
+        alignitems: sap.m.FlexAlignItems.Center,
+    }).addStyleClass("edgeEvents");
+
+    edgeEvents.setModel(oWorkOrderModel);
+    //oEventDataTable.bindRows("/d/results");
+
+    var itemDetail = new sap.m.VBox({
+        items: [
+            new sap.m.HBox({
+                items: [
+                    new sap.m.Image("productDetailsImage", {
+                        src: "img/cooler.jpg"
+                        //src: "img/part2a.png"
+                    }).addStyleClass("productDetailsImage"),
+                    new sap.m.VBox({
+                        items: [
+                                new sap.m.Title("itemDetailsTitle", {
+                                    text: "Equipment Details",
+                                    level: sap.ui.core.TitleLevel.H2,
+                                    layoutData: new sap.m.OverflowToolbarLayoutData({
+                                        priority: sap.m.OverflowToolbarPriority.NeverOverflow
+                                    })
+                                }).addStyleClass("itemDetailsTitle"),
+                                new sap.m.HBox({
+                                    items: [
+                                        new sap.m.HBox({
+                                            items: [
+                                                new sap.m.Label({
+                                                    text: "Equipment:"
+                                                }).addStyleClass("itemDetailsLabel"),
+                                            ]
+                                        }).addStyleClass("itemDetailsLabel"),
+                                        new sap.m.HBox({
+                                            items: [
+                                                new sap.m.Label({
+                                                    text: "10006739"
+                                                }).addStyleClass("itemDetailsValue")
+                                            ]
+                                        }).addStyleClass("itemDetailsValue"),
+                                    ]
+                                }),
+                                new sap.m.HBox({
+                                    items: [
+                                        new sap.m.HBox({
+                                            items: [
+                                                new sap.m.Label({
+                                                    text: "Eq. Desc:"
+                                                }).addStyleClass("itemDetailsLabel"),
+                                            ]
+                                        }).addStyleClass("itemDetailsLabel"),
+                                        new sap.m.HBox({
+                                            items: [
+                                                new sap.m.Label({
+                                                    text: "Smart Cooler / Freezer"
+                                                }).addStyleClass("itemDetailsValue")
+                                            ]
+                                        }).addStyleClass("itemDetailsValue"),
+                                    ]
+                                }),
+                                new sap.m.HBox({
+                                    items: [
+                                        new sap.m.HBox({
+                                            items: [
+                                                new sap.m.Label({
+                                                    text: "Func. Location:"
+                                                }).addStyleClass("itemDetailsLabel"),
+                                            ]
+                                        }).addStyleClass("itemDetailsLabel"),
+                                        new sap.m.HBox({
+                                            items: [
+                                                new sap.m.Label({
+                                                    text: "SU-SC-AU-OP"
+                                                }).addStyleClass("itemDetailsValue")
+                                            ]
+                                        }).addStyleClass("itemDetailsValue"),
+                                    ]
+                                }),
+                                new sap.m.HBox({
+                                    items: [
+                                        new sap.m.HBox({
+                                            items: [
+                                                new sap.m.Label({
+                                                    text: "Manufacturer:"
+                                                }).addStyleClass("itemDetailsLabel"),
+                                            ]
+                                        }).addStyleClass("itemDetailsLabel"),
+                                        new sap.m.HBox({
+                                            items: [
+                                                new sap.m.Label({
+                                                    text: "Fulton"
+                                                }).addStyleClass("itemDetailsValue")
+                                            ]
+                                        }).addStyleClass("itemDetailsValue"),
+                                    ]
+                                }),
+                                new sap.m.HBox({
+                                    items: [
+                                        new sap.m.HBox({
+                                            items: [
+                                                new sap.m.Label({
+                                                    text: "Cost Center:"
+                                                }).addStyleClass("itemDetailsLabel"),
+                                            ]
+                                        }).addStyleClass("itemDetailsLabel"),
+                                        new sap.m.HBox({
+                                            items: [
+                                                new sap.m.Label({
+                                                    text: "U600-2350"
+                                                }).addStyleClass("itemDetailsValue")
+                                            ]
+                                        }).addStyleClass("itemDetailsValue"),
+                                    ]
+                                })
+                        ],
+                        alignitems: sap.m.FlexAlignItems.Center,
+                    }).addStyleClass("itemLineDetails")
+                ],
+                alignitems: sap.m.FlexAlignItems.Center,
+            }),
+            edgeEvents
+        ], // end of vbox
+        alignitems: sap.m.FlexAlignItems.Center,
+    }).addStyleClass("itemDetails");
+
+
+
+    
+    var leftvbox = new sap.m.VBox("leftvbox", {
+        items: [
+            oSensorLabel,
+            frame,
+            //divider,
+            new sap.m.Title("edgeRawEventsTitle", {
+                text: "Cloud-Edge Events",
+                level: sap.ui.core.TitleLevel.H2,
+                layoutData: new sap.m.OverflowToolbarLayoutData({
+                    priority: sap.m.OverflowToolbarPriority.NeverOverflow
+                })
+            }).addStyleClass("edgeEventsTitle"),
+            bottomhbox
+        ],
+        alignitems: sap.m.FlexAlignItems.Center,
+        height: "95%",
+        width: "90%"
+    }).addStyleClass("leftvbox");
+
+    var rightvbox = new sap.m.VBox("rightvbox", {
+        items: [
+            itemDetail
+        ],
+        alignitems: sap.m.FlexAlignItems.Center,
+        height: "95%",
+        width: "90%"
+    }).addStyleClass("leftvbox");
+
+    var mainvbox = new sap.m.HBox("mainhbox",{
+        items: [
+            leftvbox,
+            rightvbox,
+        ],
+        alignitems: sap.m.FlexAlignItems.Stretch,
+        height: "100%",
+        width: "100%"
+    });
+    
+    var oshell = new sap.ui.ux3.Shell("myshell", {
+        appTitle: "SAP Leonardo Edge Services - edge visualization", 
+        appIcon: "img/sap_new.png",
+        showLogoutButton:false,
+        showTools:false,
+        worksetItems: []
+    });
+
+    
+    oshell.placeAt("content");
+    oshell.setContent(mainvbox);
+
+    
+    // refresh the data for every 1 secs
+    setInterval(
+        function(){
+            //code to refresh model
+            var measureId = getMeasureId();
+            if ( measureId === "" ) {
+                console.log("measureId not set... ");
+                return;
+            }
+
+            oSensorLabel.setText("Temperature_" + measureId);
+
+            // get the fidelity data again
+            odataFidelity = generateOdataFidelityLink(SENSOR_PROFILE_ID).replace("Temperature_XX", "Temperature_" + measureId);
+            //oModelFidelity.loadData(odataFidelity);
+            oModelFidelity.loadData(odataFidelity, null, true, "GET", false, false, oHeaders);
+            //uri, null, true, "GET", false, false, oHeaders
+
+            // get the events data again
+            odataEvents = generateOdataEventsLink(SENSOR_PROFILE_ID).replace("Temperature_XX", "Temperature_" + measureId);
+            //oEventModel.loadData(odataEvents);
+            oEventModel.loadData(odataEvents, null, true, "GET", false, false, oHeaders);
+            
+        },1000);
+    
+    </script>
+
+</head>
+<body class="sapuibody">
+    <!-- this is where you place the ui5 button -->
+    <div id="content"></div>
+</body>
+</html>

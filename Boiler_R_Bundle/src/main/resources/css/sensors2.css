@@ -1,0 +1,476 @@
+/* Main page title */
+div.sapMPageWithHeader header.sapMPageHeader .sapMTitle {
+    text-shadow: none !important;
+    color: white !important;
+    font-style: normal !important;
+}
+
+/* Background around title */
+div.sapMBarContainer {
+    background-color: #444443 !important;
+}
+
+/* Add space between titlebar and first set of text */
+div.pageContent {
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* Add space after dividers */
+.sapMFlexItemAlignAuto .divider {
+    width: 100% !important;
+    height: 5px !important;
+    border-color: #E7E5E2;
+    padding-bottom: 1rem;
+}
+
+/* Bold and increase font on m.Title objects */
+h1.sapMTitle span {
+    font-weight: bold;
+    font-size: 1.0rem;
+    color: #666666;
+}
+
+h2.sapMTitle span {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+h3.sapMTitle span {
+    font-weight: bold;
+    font-size: 1.0rem;
+}
+
+div.headerDivider {
+     border-left:1px solid #E7E5E2; 
+     padding-right: 1rem;
+}
+
+div.pageTitle {
+    width: 85%;
+    min-width: 50rem;
+}
+
+div.logicProcessing {
+    /*width: 15%;
+    min-width: 10rem;*/
+    margin-left:auto; 
+    margin-right:0;
+}
+
+span.logicProcessingIcon {
+    /*padding-left: 25rem;*/
+    /*color: #007DA9 !important;*/
+}
+
+div.playToggleButton {
+    /*width: 15%;
+    min-width: 10rem;*/
+    margin-left:auto; 
+    margin-right:0;
+}
+label.logicProcessingTitle {
+    padding-left: 0.5rem;
+    font-weight: normal;
+    font-size: 1rem;
+    /*color: #007DA9 !important;*/
+}
+
+label.logicProcessingSource {
+    padding-left: 0.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    /*color: #007DA9 !important;*/
+    color: #3399FF !important;
+}
+
+div.productDetails {
+    width: 100%;
+    padding-left: 1rem;
+}
+
+div.productImage {
+    width: 20%;
+    min-width: 20rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+div.sapMFlexItem img.productDetailsImage {
+    min-width: 20rem;
+    /*max-width: 15rem;*/
+    width: 100%;
+    padding-right: 1rem;
+}
+
+div.itemDetails.sapMVBox {
+    width: 90%;
+    min-width: 30rem;
+    margin-left: 2rem;
+}
+
+
+div.itemLineDetails.sapMFlexItem {
+    width: 50%;
+  /*  min-width: 7rem; */
+    margin-left: 2rem;
+}
+
+h2.itemDetailsTitle {
+    padding-bottom: 0.5rem;
+}
+
+div.itemDetailsLabel {
+    width: 100%;
+    min-width: 5rem;
+    max-width: 7rem;
+    padding-right: 0.5rem;
+    padding-left: 0rem;
+    padding-top: 0.5rem;
+}
+
+div.itemDetailsLabel div {
+    width: 100%;
+}
+
+label.itemDetailsLabel {
+    font-size: 0.9rem;
+    /*color: #FBFDFE;*/
+    /*display:block; */
+    text-align: right !important;
+    width: 100%;
+    /*padding-right: 0.5rem;*/
+}
+
+div.itemDetailsValue {
+    width: 50%;
+}
+
+label.itemDetailsValue {
+    font-size: 0.9rem;
+    color: #444443;
+    display:block; 
+    min-width: 8rem; 
+    text-align: left !important;
+    padding-top: 0.5rem;
+}
+
+div.sensorList {
+    width: 25%;
+    min-width: 7rem;
+}
+
+label.sensorName {
+    padding-top: 0.5rem;
+}
+
+span.sensorImage {
+    padding-top: 1rem;
+    width: 0.5rem;
+    padding-right: 1rem;
+}
+
+label.sensorValue {
+    padding-top: 0.5rem;
+    font-size: 2rem;
+    color: #007DA9 !important;
+}
+
+label.sensorUnits {
+    font-size: 0.8rem;
+    color: #007DA9 !important;
+}
+
+hr.sensorDivider {
+    width: 10rem !important;
+    height: 5px !important;
+    margin-left: 0px;
+    border-color: #E7E5E2;
+    padding-bottom: 1rem;
+}
+
+div.edgeEvents {
+    width: 100%;
+    min-width: 35rem;
+    margin-top: 3rem;
+}
+
+div.edgeEventsLine {
+    width: 100%;
+    min-width: 35rem;
+    /*background-color: #FAFAF9;*/
+}
+
+div.edgeEventsEventSubTitleEvent {
+    width: 45%;
+    min-width: 25rem;
+}
+
+label.edgeEventsEventSubTitleEvent {
+    padding-left: 0.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #666460 !important;
+}
+
+div.edgeEventsEventSubTitleAction {
+    width: 25%;
+    min-width: 15rem;
+}
+
+label.edgeEventsEventSubTitleAction {
+    /*padding-left: 12.2rem;*/
+    font-weight: bold;
+    font-size: 1rem;
+    color: #666460 !important;
+}
+
+div.edgeEventsEventSubTitleDateCreated {
+    width: 20%;
+    min-width: 17rem;
+}
+
+label.edgeEventsEventSubTitleDateCreated {
+    /*padding-left: 8.8rem;*/
+    font-weight: bold;
+    font-size: 1rem;
+    color: #666460 !important;
+}
+
+div.edgeEventsEvent {
+    width: 45%;
+    min-width: 15rem;
+}
+
+div.edgeEventsTitleBar {
+    width: 100%;
+    min-width: 30rem;
+}
+
+div.edgeEventsTitle {
+    width: 90%;
+    min-width: 12rem;
+}
+
+h2.edgeEventsTitle {
+    padding-bottom: 1rem;
+}
+
+span.edgeEventsImage {
+    width: 1rem;
+    color: #D8252F !important;
+    font-size: 1.5rem;
+    padding-right: 1rem;
+}
+
+label.edgeEventsEventTitle {
+    padding-left: 1rem;
+    font-size: 1.1rem;
+    color: #D8252F !important;
+}
+
+h2.edgeEventsTitle {
+    padding-bottom: 1rem;
+}
+
+div.edgeEventsEventDescription {
+    width: 25%;
+    min-width: 15rem;
+}
+
+label.edgeEventsEventDescription {
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-style: italic;
+    color: #D8252F !important;
+}
+
+div.edgeEventsEventDate {
+    width: 7%;
+    min-width: 7rem;
+}
+
+label.edgeEventsEventDate {
+    font-size: 1rem;
+    /*padding-left: 1rem;*/
+    padding-top: .25rem;
+}
+
+div.edgeEventsTemperature {
+    width: 70%;
+    min-width: 30rem;
+}
+
+label.edgeEventsTemperature {
+    padding-left: 3rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-style: italic;
+    color: #D8252F !important;
+}
+
+div.edgeEventsEventTime {
+    width: 30%;
+    min-width: 17rem;
+}
+
+label.edgeEventsEventTime {
+    font-size: 1rem;
+    /*padding-left: 20.6rem;*/
+    padding-top: .25rem;
+}
+
+hr.edgeEventsDivider {
+    width: 100%;
+    min-width: 35rem !important;
+    height: 5px !important;
+    margin-left: 0px;
+    border-color: #E7E5E2;
+    padding-bottom: 1rem;
+}
+
+div.edgeEventsRuleDetailHBox {
+    width: 13%;
+    min-width: 10rem;
+    /*
+    background-color: #FAFAF9;
+    padding-top: 1rem;
+    margin-left: auto;
+    margin-right: 0;
+    */
+}
+
+a.edgeEventsRuleDetails {
+    padding-top: 0.25rem;
+    /*padding-left: 3rem;*/
+    font-weight: bold;
+    font-size: 1rem;
+    color: #007DA9 !important;
+}
+
+a.edgeEventsRuleDetails:visited {
+    padding-top: 0.25rem;
+    /*padding-left: 3rem;*/
+    font-weight: bold;
+    color: #007DA9 !important;
+}
+
+label.edgeEventsRuleDetails {
+    padding-top: 0.25rem;
+    /*padding-left: 3rem;*/
+    font-weight: bold;
+    color: #007DA9 !important;
+}
+
+span.edgeEventsRuleDetailsIcon {
+    padding-left: 0.5rem;
+    color: #007DA9 !important;
+}
+
+label.edgeEventsClearAll {
+    padding-left: 25rem;
+    padding-right: 1rem;
+    font-weight: bold;
+    color: #007DA9 !important;
+}
+
+span.edgeEventsClearAllIcon {
+    color: #007DA9 !important;
+}
+
+div.chartsHBox {
+    padding-left: 1rem;
+}
+
+div.chartStatsVBox {
+    padding-right: 3rem;
+}
+div.chartStats {
+    position: relative;
+    min-height: 5rem;
+    width: 33%;
+}
+
+div.chartStatsFirstLine {
+  /*
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  */
+  min-height: 3rem;
+}
+
+span.chartImage {
+    padding-top: 1rem;
+    width: 1rem;
+    font-size: 1.5rem;
+    padding-right: 1rem;
+}
+
+label.chartValue {
+    padding-top: 0.5rem;
+    font-size: 3rem;
+    color: #00CC33 !important;
+}
+
+label.chartUnits {
+    padding-left: 0.5rem;
+    padding-top: 2.3rem;
+    font-size: 1rem;
+    color: #00CC33;
+}
+
+label.chartValueBlue {
+    color: #3399FF !important;
+}
+
+label.chartUnitsBlue {
+    color: #3399FF;
+}
+
+label.chartUnitsRed {
+    color: #D8252F !important;
+}
+
+label.chartUnitsGrey {
+    color: #999999 !important;
+}
+
+label.chartDesc {
+    position: relative;
+    font-weight: bold;
+    font-size: 1.2rem;
+    /*padding-left: 2rem;*/
+    /*padding-bottom: 1.5rem;*/
+}
+
+label.chartSensorCount {
+    position: relative;
+    font-weight: normal;
+    font-size: 1rem;
+    font-style: italic;
+    color: #434343;
+    /*padding-left: 2rem;*/
+    padding-bottom: 1.5rem;   
+}
+
+.play {
+    float:left;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    width:18px;
+    height:24px;
+    border-top:12px solid transparent;
+    border-left:18px solid #000;
+    border-bottom:12px solid transparent
+}
+
+.pause {
+    width: 4px;
+    height: 16px;
+    border-right: 4px solid #000;
+    border-left: 4px solid #000;
+}

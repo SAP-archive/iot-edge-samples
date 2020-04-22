@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.sybase.jdbc4:jconn4:16.0.02.06.26829">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/sybase/jdbc4/jconn4/16.0.02.06.26829/jconn4-16.0.02.06.26829.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/sybase/jdbc4/jconn4/16.0.02.06.26829/jconn4-16.0.02.06.26829-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/sybase/jdbc4/jconn4/16.0.02.06.26829/jconn4-16.0.02.06.26829-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
