@@ -63,7 +63,7 @@ public class CalculateFFT extends Calculation {
     public CalculateFFT(PersistenceClient persistenceClient) {
         super(persistenceClient);
 
-        BoilerPredictiveActivator.printlnDebug("CalculateFFT:ctor - called");
+        BoilerPredictiveActivator.printlnDebug("CalculateFFT - called");
 
         OSArch = OSChecker.getOSArch();
 
@@ -98,7 +98,6 @@ public class CalculateFFT extends Calculation {
 
     private void getPredictiveSampleDataToOutFile(File outFile, Integer temperature, Integer pressure) {
 
-    System.out.println("getPredictiveSampleDataToOutFile: outfile: " + outFile + " temp: " + temperature + " pressure: " + pressure);
     Date date = new Date();
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile)))) {
             writer.write("Temperature, Pressure, ReadingTime\n");
@@ -111,12 +110,10 @@ public class CalculateFFT extends Calculation {
     }
 
     public Integer calculatePredictiveValue(Integer temperature, Integer pressure) throws IOException {
-        System.out.println("Boiler_R: Prediction calculation begins: temp" + temperature + " pressure " + pressure);
+
+        BoilerPredictiveActivator.printlnDebug("Boiler_R: Prediction calculation begins: temp" + temperature + " pressure " + pressure);
         getPredictiveSampleDataToOutFile(rInput, temperature, pressure);
         ProcessResults processResults;
-
-        BoilerPredictiveActivator.printlnDebug("Cmd function executing");
-        BoilerPredictiveActivator.println("Cmd function executing 11");
 
         List<String> cmd = Arrays.asList(
             rBin.getAbsolutePath(),
@@ -125,7 +122,7 @@ public class CalculateFFT extends Calculation {
             rInput.getAbsolutePath()
         );
 
-        System.out.println("Cmd file executed");
+        BoilerPredictiveActivator.println("Cmd file executed");
 
         processResults = executeProcess(cmd, true, rDir);
 
@@ -159,8 +156,7 @@ public class CalculateFFT extends Calculation {
         Integer val = 0;
         if(efficiencyFloat != null) {
             val = Math.toIntExact((Math.round(Double.valueOf(efficiencyFloat) * 100) / 100));
-            System.out.println("val: " + val);
-            BoilerPredictiveActivator.printlnDebug("val: " + val);
+            BoilerPredictiveActivator.printlnDebug("Efficiency value: " + val);
         }
 
         return val;
@@ -362,7 +358,7 @@ public class CalculateFFT extends Calculation {
 
 
     // selects the sample data from the persistance database which is constantly being updated
-    private int getSampleDataToOutputFileJSON(File outFile, File fetchTimeFile) {
+    /*private int getSampleDataToOutputFileJSON(File outFile, File fetchTimeFile) {
         PSStatementObject stmt;
         String fetchTime = null;
         String measureId = null;
@@ -484,7 +480,7 @@ public class CalculateFFT extends Calculation {
         BoilerPredictiveActivator.printlnDebug("getSampleDataToOutputFileJSON returning rowCount:" + rowCount);
         //BoilerPredictiveActivator.println("getSampleDataToOutputFileJSON returning rowCount:" + rowCount);
         return rowCount;
-    }
+    }*/
 
     /*
      * This version uses the MEASURE_PROPERTY table and loops through the values
@@ -771,7 +767,7 @@ public class CalculateFFT extends Calculation {
     */
 
     // go to the database and see if any of the configurations have changed
-    private void updateConfigurations() {
+    /*private void updateConfigurations() {
         requiredSamples.update(persistenceClient);
         timeVariance.update(persistenceClient);
     }
@@ -871,7 +867,7 @@ public class CalculateFFT extends Calculation {
         //BoilerPredictiveActivator.println(sql);
 
         return sql;
-    }
+    }*/
 
     /*
      * This one uses the MEASURE_PROPERTY table, but it is too slow.
@@ -990,7 +986,7 @@ public class CalculateFFT extends Calculation {
     }
     */
 
-    private String getSqlForMeasureValues( String requiredCount, String deviceAddress, String profileId, String objectId ) {
+    /*private String getSqlForMeasureValues( String requiredCount, String deviceAddress, String profileId, String objectId ) {
         String sql = "SELECT TOP " + requiredCount
                 + "          CAST(m.MEASURE_VALUE AS  VARCHAR(34)) MEASURE_VALUE,  "
                 + "          m.DATE_RECEIVED, "
@@ -1005,7 +1001,7 @@ public class CalculateFFT extends Calculation {
         BoilerPredictiveActivator.printlnDebug(sql);
 
         return sql;
-    }
+    }*/
 
     // create a table to store the results (if you want... ) not implemented in this sample
     private boolean createFFTTable() {
@@ -1036,7 +1032,7 @@ public class CalculateFFT extends Calculation {
     }
 
     // send the results back into IOTS using a different sensorType/capability for processing again
-    private void streamResults(String measuresUrl, String device, String sensorTypeAlternateId, String capabilityAlternateId, String sensorAlternateId, String readings, File inputFile, int rowCount) {
+    /*private void streamResults(String measuresUrl, String device, String sensorTypeAlternateId, String capabilityAlternateId, String sensorAlternateId, String readings, File inputFile, int rowCount) {
         String jsonPayload = null;
         String lineNum = null;
         String efficientyFloat = null;
@@ -1052,7 +1048,7 @@ public class CalculateFFT extends Calculation {
 
         readingDates = new String[rowCount];
 
-        /*
+        *//*
          * Line example with 3 values, Temperature, Pressure, ReadingTime:
          *     32.0, 60.0, 1538590241894
          *
@@ -1068,7 +1064,7 @@ public class CalculateFFT extends Calculation {
          *     (?<readingTime>\\d+)         - Match digits call the group "readingTime"
          *     \\s*                         - Ignore whitespace
          *     $                            - Match the end of the string
-         */
+         *//*
         final Pattern datePattern = Pattern.compile(
             "^(?<temperatureFloat>[2-9.]+),\\s*(?<pressureFloat>[0-9.]+),\\s*(?<readingTime>\\d+)\\s*$"
         );
@@ -1104,7 +1100,7 @@ public class CalculateFFT extends Calculation {
             BoilerPredictiveActivator.println("streamResults input io error:" + ioe4.getMessage());
         }
 
-        /* 
+        *//*
          * Output from R:
          *    "efficiency"
          *    "3" 30.8770967770818
@@ -1120,7 +1116,7 @@ public class CalculateFFT extends Calculation {
          *     (?<efficiencyFloat>[2-9.]+) - Match digits and periods and if found call the group "efficientyFloat"
          *     \\s*                      - Ignore whitespace
          *     $                         - Match the end of the string
-         */
+         *//*
         final Pattern efficiencyPattern = Pattern.compile(
             "^(" + '"' + ")?(?<lineNum>\\d+)(" + '"' + ")?\\s*(?<efficiencyFloat>[0-9.]+)\\s*$"
         );
@@ -1174,7 +1170,7 @@ public class CalculateFFT extends Calculation {
                 BoilerPredictiveActivator.printlnDebug("streamResults no match on efficiencyLine:" + efficiencyLine);
             }
         }
-    }
+    }*/
 
     private void sendPayload(URI uri, String payload) throws Exception {
         String protocol = uri.getScheme();

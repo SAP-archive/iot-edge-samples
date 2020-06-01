@@ -13,7 +13,7 @@ import java.io.IOException;
 public class PredictiveController extends ServerResource {
 
   @Post("json")
-  public Integer postConfigData(JsonRepresentation entity) throws JSONException, IOException {
+  public JSONObject postConfigData(JsonRepresentation entity) throws JSONException, IOException {
 
     CalculateFFT calculateFFT = new CalculateFFT(null);
     File rDir = new File("BoilerPredictiveModel", "boiler-R");
@@ -23,10 +23,19 @@ public class PredictiveController extends ServerResource {
     JSONObject object = entity.getJsonObject();
     Integer temperature = (Integer) object.get("temperature");
     Integer pressure = (Integer) object.get("pressure");
-    Integer value = calculateFFT.calculatePredictiveValue(temperature, pressure);
+    Boolean isBoilerRunning = (Boolean) object.get("isRunning");
 
+    Integer value = 0;
+    object = new JSONObject();
+    if (isBoilerRunning) {
+      value = calculateFFT.calculatePredictiveValue(temperature, pressure);
+      object.put("PredictionOutput", 0);
+    } else {
+      object.put("PredictionOutput", 1);
+    }
+    object.put("PredictionConfidence", value);
     System.out.println("Efficiency value " + value);
 
-    return value;
+    return object;
   }
 }
