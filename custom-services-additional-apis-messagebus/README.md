@@ -86,7 +86,7 @@ cd custom-services-additional-apis-messagebus
 ```json
 mvn install:install-file -Dfile=ConfigService-3.2002.0.jar -DgroupId=com.sap.iot.edgeservices -DartifactId=ConfigService -Dversion=3.2002.0 -Dpackaging=jar
 ```
-    NOTE: if the version number has changed, substitute 3.1912.0 in the above command for the appropriate version number as found in the filename.
+    NOTE: if the version number has changed, substitute 3.2002.0 in the above command for the appropriate version number as found in the filename.
 
 ### Customize the source
 
