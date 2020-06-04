@@ -184,7 +184,7 @@ iot/edge/v1/tenant/<tenantId>/gateway/<gatewayId>/measures/in
 #### SAP Edge Services, cloud edition
 
 1. Use the SAP Edge Services Policy service, navigate to the Services list and create new custom services.
-2. Use "EXTERNALFLOW" for the event topic field (or what you have defined at line 46 of the file 2. Use "EXTERNALFLOW" for the event topic field (or what you have defined at line 6 of the file ./external-flow-configuration/src/main/java/com/sap/iotservices/gateway/interceptor/ExternalFlowActivator.java for the project external-flow-configuration; use any other unique value for the other projects
+2. Use "EXTERNALFLOW" for the event topic field (or what you have defined at line 6 of the file ./external-flow-configuration/src/main/java/com/sap/iotservices/gateway/interceptor/ExternalFlowActivator.java for the project external-flow-configuration; use any other unique value for the other projects
 3. Use the jar file inside the folder /targetof each single project.
 4. Save it.
 5. Go in the Gateways and Group of Gateways list and search for your gateway in the list
