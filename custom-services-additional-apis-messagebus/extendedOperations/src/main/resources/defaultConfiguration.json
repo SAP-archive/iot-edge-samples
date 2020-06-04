@@ -1,0 +1,12 @@
+{
+  "businessPartner": "8FA7D41CD4C448BF9A27962E9055C141",
+  "earliestStartDateTime": "2019-12-05T12:28:57.550000Z",
+  "dueDateTime": "2019-12-05T14:28:57.550000Z",
+  "durationInMinutes": "60",
+  "priority": "HIGH",
+  "subject": "High temperature on robot_t1",
+  "status": "-5",
+  "problemType": "-1",
+  "origin": "-1",
+  "remarks": "High temperature on robot_t1"
+}
