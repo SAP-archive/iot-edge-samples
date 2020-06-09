@@ -23,11 +23,11 @@ public class PredictiveController extends ServerResource {
     JSONObject object = entity.getJsonObject();
     Integer temperature = (Integer) object.get("temperature");
     Integer pressure = (Integer) object.get("pressure");
-    Boolean isBoilerRunning = (Boolean) object.get("isRunning");
+    Integer isBoilerRunning = (Integer) object.get("isRunning");
 
     Integer value = 0;
     object = new JSONObject();
-    if (isBoilerRunning) {
+    if (isBoilerRunning > 30) {
       value = calculateFFT.calculatePredictiveValue(temperature, pressure);
       object.put("PredictionOutput", 0);
     } else {
