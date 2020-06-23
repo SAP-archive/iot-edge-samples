@@ -236,7 +236,7 @@ If a new configuration is uploaded the old configuration is discarded (it's not 
 
 ### SAP Edge Services, cloud edition
 
-1. Use a supported method to send data to IoT Services Gateway Edge. For example, send data to the SAP IoT Edge Platform MQTT by using a tool like Paho App.
+1. Use a supported method to send data to SAP IoT Edge Platform. For example, send data to the SAP IoT Edge Platform MQTT by using a tool like Paho App.
 ```json
 MESSAGE:       {
 				"capabilityAlternateId": "power",

@@ -13,7 +13,7 @@ Product Documentation for SAP Edge Services is available as follows:
 
 On an interval, this execute a prediction based on the KNN algorithm, to identify if the measured color is an expected color.
 
-The predictions (both punctual and a global index) values are then fed back into the IoT Services Gateway Edge via REST as a different capability. This capability is then visible in the IoT Services Cockpit.
+The predictions (both punctual and a global index) values are then fed back into the SAP IoT Edge Platform via REST as a different capability. This capability is then visible in SAP IoT.
 
 ### Deploying this sample
 
@@ -30,9 +30,9 @@ The following must be installed for this sample:
 
 ### SAP Edge Services, cloud edition
 
-For cloud edition, a working IoT Services Gateway Edge (REST) is required, with the SAP Edge Services Persistence Service installed.
+For cloud edition, a working SAP IoT Edge Platform (REST) is required, with the SAP Edge Services Persistence Service installed.
 
-The following needs to be setup on IoT Services as a data model to permit the predictive module to analyze correctly the data and to send the results back into the system. To create the entries, login to the IoT Services cockpit with the same tenant that your gateway uses.
+The following needs to be setup on SAP IoT as a data model to permit the predictive module to analyze correctly the data and to send the results back into the system. To create the entries, use the APIs of SAP IoT.
 
 1. 	Create the capabilities
 - **capabilityAlternateId:**	color
@@ -81,7 +81,7 @@ cd predictive-python
 #### SAP Edge Services Persistence Service
 
 1. Ensure that from the Policy Service, the Persistence Service is installed on your gateway.
-2. Access the files of the device running the IoT Services Gateway Edge
+2. Access the files of the device running the SAP IoT Edge Platform
 3. cd /gateway_folder/custombundles
 4. Copy the file PersistenceService-3.1912.0.jar to the project root of this sample.
    NOTE: the version number may change, in which case, the version number in the pom.xml file will need to be updated
@@ -94,7 +94,7 @@ mvn install:install-file -Dfile=PersistenceService-3.1912.0.jar -DgroupId=com.sa
 #### SAP Edge Services Configuration Service
 
 1. Ensure that from the Policy Service, the Persistence Service is installed on your gateway.
-2. Access the files of the device running the IoT Services Gateway Edge
+2. Access the files of the device running the SAP IoT Edge Platform
 3. cd /gateway_folder/custombundles
 4. Copy the file ConfigService-3.1912.0.jar to the project root of this sample.
    NOTE: the version number may change, in which case, the version number in the pom.xml file will need to be updated
@@ -200,7 +200,7 @@ If a new configuration is uploaded the old configuration is discarded (it's not 
 
 ### SAP Edge Services, cloud edition
 
-1. Use a supported method to send data to IoT Services Gateway Edge. For example, send data to the SAP IoT Services Gateway Edge using a tool like Postman.
+1. Use a supported method to send data to SAP IoT Edge Platform. For example, send data to the SAP IoT Edge Platform using a tool like Postman.
 ```json
 URL:        http://<server>:8699/measures/colordevice
 HEADERS:    Content-type: application/json
@@ -217,10 +217,10 @@ BODY:       {
 ```
 To actually see the predicted values created correctly, read the measurements inside the other capabilities.
 
-2. Login to the IoT Services Cockpit
-3. Navigate to your gateway
-4. select the device for color device
-5. graph the results for
+1. Open SAP IoT
+2. Get your access token for the APIs
+3. select the Thing for color device
+4. grab the results for the device with
 ```json
 sensorAlternateId:            color sensor
 capabilityAlternateId:        color prediction

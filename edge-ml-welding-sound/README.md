@@ -169,7 +169,7 @@ The training pipeline will automatically upload the the trained model to the S3 
 
 ### Overview
 
-The current implementation of this sample is built as a \*.JAR file that can be run at the edge inside of an OSGi runtime, such as the SAP IoT Service Edge Platform. This bundle can be managed and deployed to a running instance of SAP IoT Edge Platform on the edge machine by SAP Edge Services' Policy Service.
+The current implementation of this sample is built as a \*.JAR file that can be run at the edge inside of an OSGi runtime, such as the SAP SAP IoT Edge Platform. This bundle can be managed and deployed to a running instance of SAP IoT Edge Platform on the edge machine by SAP Edge Services' Policy Service.
 
 ### Requirements
 Doc: https://help.sap.com/viewer/a1c5f93025864b6f9a867a12caf6dd06/1911/en-US/13c486e5502f46d8a482aeeb450ea932.html
@@ -231,7 +231,7 @@ The current implementation of the Edge Machine Learning proof of concept (PoC) i
 
 ### Installation
 Prerequisites:
-- Set up an SAP IoT Service Edge Platform on the target machine. For instructions, please refer to the following JAM page: https://jam4.sapjam.com/wiki/show/XaRvWNbDMggAVtAdhpQ1qp
+- Set up an SAP IoT Edge Platform on the target machine. For instructions, please refer to the following JAM page: https://jam4.sapjam.com/wiki/show/XaRvWNbDMggAVtAdhpQ1qp
 - A built `EdgeML-<VERSION>.jar` file
 - Edge Services Streaming Service is deployed to and running on the Edge Platform
 
@@ -239,7 +239,7 @@ Prerequisites:
 1. Log into SAP Edge Services Policy Service.
 
 2. Click on the **Settings** tile. In the **Settings** tile:
-    - Set the SAP IoT Service credentials to match the IoT Service instance that your edge platform is registered with (please refer to the above JAM link if you have no done so already!).
+    - Set the  SAP IoT credentials to match the SAP IoT tenant that your edge platform is registered with (please refer to the above JAM link if you have no done so already!).
     - Ensure that the "*Allow upload of Custom Services (OSGi bundles) to my IoT Edge Platforms*" option is checked. 
     - Save your settings.
 
