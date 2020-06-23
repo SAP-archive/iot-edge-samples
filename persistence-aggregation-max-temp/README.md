@@ -3,7 +3,7 @@
 ## Overview
 This persistence service aggregation sample can be used to implement custom queries using the SAP Edge Services Persistence Service Java API. This sample implements a MAX aggregation. This sample works with both SAP Edge Services, cloud edition and SAP Edge Services, on-premise edition.
 
-If using Edge Services, cloud edition, this sample assumes the IoT Services Gateway Edge is configured for REST ingestion. It consumes the standard IoT Services model for Temperature. If the IoT Services Gateway Edge is configured for another protocol (ie MQTT), then some features will not work (for example sending aggregated data back into Gateway Edge over REST).
+If using Edge Services, cloud edition, this sample assumes the SAP IoT Edge Platform is configured for REST ingestion. It consumes the standard SAP IoT model for Temperature. If the SAP IoT Edge Platform is configured for another protocol (ie MQTT), then some features will not work (for example sending aggregated data back into Gateway Edge over REST).
 
 This sample assumes the user has a working knowledge of SAP Edge Services and is comfortable programming in Java.
 
@@ -19,11 +19,11 @@ Product Documentation for SAP Edge Services is available as follows:
 
 On an interval, this persistence service aggregation sample queries the stored readings in the Persistence Service. Any new temperature received since the timestamp of the last query is aggregated to return the MAX value received.
 
-If using SAP Edge Services, cloud edition, then the aggregated (MAX) value is then fed back into the IoT Services Gateway Edge via REST as a new capability. This capability is then visible in the IoT Services Cockpit.
+If using SAP Edge Services, cloud edition, then the aggregated (MAX) value is then fed back into the SAP IoT Edge Platform via REST as a new capability. This capability is then visible in the SAP IoT Cockpit.
 
 ### Deploying this sample
 
-This sample is packaged as an OSGI bundle. It is deployed to SAP Edge Services, cloud edition using the IoT Services cockpit. It is deployed to SAP Edge Services, on-premise edition by placing the OSGI bundle in the EdgeServicesRuntime/plugins folder and modifying the EdgeServicesRuntime/configuration/config.ini file.
+This sample is packaged as an OSGI bundle. It is deployed to SAP Edge Services, cloud edition using the SAP IoT cockpit. It is deployed to SAP Edge Services, on-premise edition by placing the OSGI bundle in the EdgeServicesRuntime/plugins folder and modifying the EdgeServicesRuntime/configuration/config.ini file.
 
 ## Requirements
 
@@ -35,9 +35,9 @@ The following must be installed for this sample:
 
 ### SAP Edge Services, cloud edition
 
-For cloud edition, a working IoT Services Gateway Edge (REST) is required, with the SAP Edge Services Persistence Service installed.
+For cloud edition, a working SAP IoT Edge Platform (REST) is required, with the SAP Edge Services Persistence Service installed.
 
-The following needs to be setup on IoT Services as a data model for the sample to send the results back into the system. To create the entries, login to the IoT Services cockpit with the same tenant that your gateway uses.
+The following needs to be setup on SAP IoT as a data model for the sample to send the results back into the system. To create the entries, login to the SAP IoT cockpit with the same tenant that your gateway uses.
 
 1. Create the capability
 	 - capabilityAlternateId	PSMTResult
@@ -67,7 +67,7 @@ cd persistence-aggregation-max-temp
 #### SAP Edge Services, cloud edition
 
 1. Ensure that from the Policy Service, the Persistence Service is installed on your gateway.
-2. Access the files of the device running the IoT Services Gateway Edge
+2. Access the files of the device running the SAP IoT Edge Platform
 3. cd /gateway_folder/plugins
 4. Copy the file osgi-bundle-PersistenceService-3.1808.1.jar to the project root of this sample.
    NOTE: the version number may change, in which case, the version number in the pom.xml file will need to be updated
@@ -137,7 +137,7 @@ mvn clean install
 
 #### SAP Edge Services, cloud edition
 
-1. Use the IoT Services cockpit to navigate to your gateway.
+1. Use the SAP IoT cockpit to navigate to your gateway.
 2. In Bundle Management, upload the /target/PersistenceSampleMaxTemperature-1.0.0.jar file.
 
 #### SAP Edge Services, on-premise edition
@@ -159,7 +159,7 @@ NOTE: a backslash was added to the previous last line and there must not be any 
 
 ### SAP Edge Services, cloud edition
 
-1. Use a supported method to send data to IoT Services Gateway Edge. For example, send data to the IoT Services Gateway Edge using a tool like Postman.
+1. Use a supported method to send data to SAP IoT Edge Platform. For example, send data to the SAP IoT Edge Platform using a tool like Postman.
 ```json
 URL:        http://<server>:8699/measures/fridge2
 HEADERS:    Content-type: application/json
@@ -172,10 +172,11 @@ BODY:       {
 ```
 To actually see the MAX function working correctly, send in multiple samples within 10 seconds for the sample to choose a maximum.
 
-2. Login to the IoT Services Cockpit
-3. Navigate to your gateway
-4. select the device for fridge2
-5. graph the results for
+
+1. Open SAP IoT
+2. Get your access token for the APIs
+3. select the Thing for device fridge2
+4. grab the results for the device with
 ```json
 sensorType name:            PSMT
 capabilityAlternateId:      PSMTResult
