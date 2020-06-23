@@ -78,11 +78,6 @@
     		<version>1.9.4</version>
 		</dependency>
 		<dependency>
-    		<groupId>commons-beanutils</groupId>
-    		<artifactId>commons-beanutils-core</artifactId>
-    		<version>1.9.4</version>
-		</dependency>
-		<dependency>
     		<groupId>org.apache.ws.commons.util</groupId>
     		<artifactId>ws-commons-util</artifactId>
     		<version>1.0.2</version>
