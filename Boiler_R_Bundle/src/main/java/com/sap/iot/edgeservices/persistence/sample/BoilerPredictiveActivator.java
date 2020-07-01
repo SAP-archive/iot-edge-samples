@@ -48,10 +48,6 @@ import java.util.Set;
  */
 @Component
 public class BoilerPredictiveActivator implements BundleActivator, ServiceListener {
-    ////////////////////
-    // class fields
-    ////////////////////
-    //private static final Logger logger = LoggerFactory.getLogger(BoilerPredictiveActivator.class);
 
 
     private static IPersistenceService service;          // handle to the Persistence Service which this sample depends on
@@ -67,24 +63,13 @@ public class BoilerPredictiveActivator implements BundleActivator, ServiceListen
     //public static String LOG_LEVEL_STRING = "INFO";
     public static String LOG_LEVEL_STRING = "DEBUG";
 
-    ////////////////////
-    // public methods
-    ////////////////////
 
-    /*
-     * Helper function used by the entire application
-     * TODO: replace with log4j
-     */
     public static void printlnDebug(String str) {
         if ( LOG_LEVEL_STRING.equals("DEBUG") ) {
             System.out.println("BOILER_R: (D)" + str);
         }
     }
 
-    /*
-     * Helper function used by the entire application
-     * TODO: replace with log4j
-     */
     public static void println(String str) {
         System.out.println("BOILER_R: " + str);
     }
@@ -108,10 +93,7 @@ public class BoilerPredictiveActivator implements BundleActivator, ServiceListen
         loadConfigProperties(configProperties);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-     */
+
     public void stop(BundleContext context) throws Exception {
         BoilerPredictiveActivator.printlnDebug("---- BoilerPredictiveActivator.stop");
         if (BoilerPredictiveActivator.engine != null) {
