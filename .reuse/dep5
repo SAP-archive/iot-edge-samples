@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: iot-edge-services-samples
+Source: https://github.com/SAP-samples/iot-edge-services-samples.git
+
+Files: *
+Copyright: 2021 SAP SE or an SAP affiliate company and iot-edge-services-samples contributors
+License: Apache-2.0
+

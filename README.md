@@ -1,5 +1,7 @@
 # SAP Edge Services -  Samples
 
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/iot-edge-services-samples)](https://api.reuse.software/info/github.com/SAP-samples/iot-edge-services-samples)
+
 ## Description
 
 Multiple samples for [SAP Edge Services](https://www.sap.com/products/edge-services.html), the Intelligent Edge Computing software that provides "microservices at the edge" for Internet of Things (IoT).
