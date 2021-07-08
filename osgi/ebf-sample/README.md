@@ -28,14 +28,14 @@ The final folder structure should look like this, using the 2108.0 version as an
 </pre>
 ### Connect to the Edge Database
 #### SAP Edge Services, On-premise Edition
-If the edge machine is running Linux, first set up the SQL Anywhere environment:
-`source /opt/sqlanywhere/bin64/sa_config.sh`
-Execute the following command, substituting your edge database's connection information for the placeholders:
+If the edge machine is running Linux, first set up the SQL Anywhere environment:\
+`source /opt/sqlanywhere/bin64/sa_config.sh`\
+Execute the following command, substituting your edge database's connection information for the placeholders:\
 `dbisql -nogui -c "server=DEP_rem_<plant number>;uid=<uid>;pwd=<pwd>;"`
 #### SAP Edge Services, Cloud Edition
-Locate the `cfg` folder in the `edgeservices/businessessentials` directory mentioned above.
-Execute the following command, substituting your edge database's `cfg` folder path for the placeholder:
+Locate the `cfg` folder in the `edgeservices/businessessentials` directory mentioned above.\
+Execute the following command, substituting your edge database's `cfg` folder path for the placeholder:\
 `dbisql -nogui @<cfg_dir>/dbconnect.cfg`
 ### Apply the Sample UI to the Edge Database
-Execute the .sql file included with the sample UI download, substituting your edge database's root directory for the placeholder.
+Execute the .sql file included with the sample UI download, substituting your edge database's root directory for the placeholder.\
 `READ <edge_deployment_folder>/reports/ebf_sample_ui_2108_0/ebf_sample_ui_2108_0.sql;`
