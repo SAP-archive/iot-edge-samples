@@ -1,8 +1,0 @@
-#dep-fiori-manifest-detail .sapUxAPObjectPageHeaderContentItem .sapMSlt:not(.sapUxAPHierarchicalSelect) {
-    height: 2.425rem;
-}
-
-#dep-fiori-manifest-detail .sapUxAPObjectPageHeaderContentItem .sapMSlt:not(.sapUxAPHierarchicalSelect) .sapMSltLabel,
-#dep-fiori-manifest-detail .sapUxAPObjectPageHeaderContentItem .sapMSlt:not(.sapUxAPHierarchicalSelect) .sapMSltArrow {
-    line-height: 2.425rem;
-}

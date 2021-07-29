@@ -1,9 +1,0 @@
-<mvc:View
-    controllerName="dep.fiori.goodsissuecostcenter.app.main"
-    class="dep-fiori"
-    displayBlock="true"
-    height="100%"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <App id="content"></App>
-</mvc:View>
