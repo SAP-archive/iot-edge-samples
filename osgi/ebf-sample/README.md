@@ -38,4 +38,4 @@ Execute the following command, substituting your edge database's `cfg` folder pa
 `dbisql -nogui @<cfg_dir>/dbconnect.cfg`
 ### Apply the Sample UI to the Edge Database
 Execute the .sql file included with the sample UI download, substituting your edge database's root directory for the placeholder.\
-`READ <edge_deployment_folder>/reports/ebf_sample_ui_2108_0/ebf_sample_ui_2108_0.sql;`
+`READ '<edge_deployment_folder>/reports/ebf_sample_ui_2108_0/ebf_sample_ui_2108_0.sql;'`
