@@ -1,0 +1,161 @@
+<c:View
+        controllerName="dep.fiori.manifest.block.items"
+        xmlns="sap.ui.table"
+        xmlns:m="sap.m"
+        xmlns:c="sap.ui.core"
+        height="100%">
+            <TreeTable
+                id="hierarchyTable"
+                rows="{manifestItems>/}"
+                ariaLabelledBy="title"
+                selectionMode="None">
+                <extension>
+                    <m:Toolbar>
+                        <m:Title text="{i18n>Manifest.items} ({i18n>PO.Header})" />
+                        <m:ToolbarSpacer />
+                        <m:Title text="{i18n>Header.location}:" class="sapUiSmallMarginEnd" />
+                        <m:Select
+                            items="{locations>/}"
+                            selectedKey="{selectedLocation>/LGORT}">
+                            <c:Item text="{locations>LGORT}" key="{locations>LGORT}" />
+                        </m:Select>
+                        <m:Button
+                            text="{i18n>Manifest.receive}"
+                            type="Emphasized"
+                            press="onReceive" />
+                        <!-- <m:Button id="receiveAll" text="{i18n>Manifest.receiveAll}" press="onReceiveAll" /> -->
+                        <!-- <m:Button text="Collapse all" press="onCollapseAll" /> -->
+                    </m:Toolbar>
+                </extension>
+
+                <columns>
+                    <Column>
+                        <m:Label
+                            text="{i18n>Order.number}"
+                            tooltip="{i18n>Order.number}" />
+                        <template>
+                            <m:Text text="{manifestItems>EBELN}" wrapping="false" class="identifierTextBlue" />
+                        </template>
+                    </Column>
+                    <Column>
+                        <m:Label
+                            text="{i18nGlobal>General.date}"
+                            tooltip="{i18nGlobal>General.date}" />
+                        <template>
+                            <m:Text text="{
+                                path: 'manifestItems>BEDAT',
+                                formatter: 'dep.fiori.lib.util.Utilities.formatters.date'}" />
+                        </template>
+                    </Column>
+                    <Column>
+                        <m:Label
+                            text="{i18nGlobal>General.description}"
+                            tooltip="{i18nGlobal>General.description}" />
+                        <template>
+                            <m:Text
+                                text="{= ${manifestItems>NAME1} || ${manifestItems>TXZ01} }"
+                                tooltip="{= ${manifestItems>NAME1} || ${manifestItems>TXZ01} }" />
+                        </template>
+                    </Column>
+                    <Column hAlign="Begin">
+                        <m:Label
+                            text="{i18n>Item.number}"
+                            tooltip="{i18n>Item.number}" />
+                        <template>
+                            <m:Text text="{manifestItems>EBELP}" wrapping="false" class="identifierTextBlue" />
+                        </template>
+                    </Column>
+                    <Column hAlign="Begin">
+                        <m:Label
+                            text="{i18nGlobal>General.material}"
+                            tooltip="{i18nGlobal>General.material}" />
+                        <template>
+                            <m:Text text="{manifestItems>MATNR}" />
+                        </template>
+                    </Column>
+                    <Column>
+                        <m:Label
+                            text="{i18n>Order.quantity}"
+                            tooltip="{i18n>Order.quantity}" />
+                        <template>
+                            <m:Text text="{manifestItems>MENGE}" />
+                        </template>
+                    </Column>
+                    <Column hAlign="End">
+                        <m:Label
+                            text="{i18n>Order.backorder}"
+                            tooltip="{i18n>Order.backorder}" />
+                        <template>
+                             <m:Text text="{manifestItems>BACKORDER_QTY}" />
+                        </template>
+                    </Column>
+                    <Column
+                        hAlign="End">
+                        <m:Label
+                            text="{i18n>Order.receipt101}"
+                            tooltip="{i18n>Order.receipt101}" />
+                        <template>
+                            <m:Input
+                                value="{manifestItems>ERFMG_101}"
+                                change="onChange"
+                                placeholder="0"
+                                type="Number"
+                                textAlign="Right"
+                                editable="{
+                                    path: 'manifestItems>',
+                                    formatter: '.receive101Formatter'
+                                }"
+                                visible="{= !!${manifestItems>EBELP} }"
+                                valueState="{= ${manifestItems>ERFMG_101} > ${manifestItems>BACKORDER_QTY} ? 'Error' : 'None' }"
+                                valueStateText="{
+                                    path: 'manifestItems>BACKORDER_QTY',
+                                    formatter: '.errorStateFormatter'
+                                }" />
+                        </template>
+                    </Column>
+                    <Column
+                        
+                        hAlign="End">
+                        <m:Label
+                            text="{i18n>Order.available}"
+                            tooltip="{i18n>Order.available}" />
+                        <template>
+                             <m:Text
+                                text="{manifestItems>AVAIL_QTY}" />
+                        </template>
+                    </Column>
+                    <Column
+                        hAlign="End">
+                        <m:Label
+                            text="{i18n>Order.receipt343}"
+                            tooltip="{i18n>Order.receipt343}" />
+                        <template>
+                            <m:Input
+                                value="{manifestItems>ERFMG_343}"
+                                change="onChange"
+                                placeholder="0"
+                                type="Number"
+                                textAlign="Right"
+                                editable="{
+                                    path: 'manifestItems>',
+                                    formatter: '.receive343Formatter'
+                                }"
+                                visible="{= !!${manifestItems>EBELP} }"
+                                valueState="{= ${manifestItems>ERFMG_343} > ${manifestItems>AVAIL_QTY} ? 'Error' : 'None' }"
+                                valueStateText="{
+                                    path: 'manifestItems>AVAIL_QTY',
+                                    formatter: '.errorStateFormatter'
+                                }" />
+                        </template>
+                    </Column>
+                    <Column width="auto">
+                        <m:Label
+                            text="{i18n>Order.uom}"
+                            tooltip="{i18n>Order.uom}" />
+                        <template>
+                             <m:Text text="{manifestItems>MEINS}" />
+                        </template>
+                    </Column>
+                </columns>
+            </TreeTable>
+</c:View>

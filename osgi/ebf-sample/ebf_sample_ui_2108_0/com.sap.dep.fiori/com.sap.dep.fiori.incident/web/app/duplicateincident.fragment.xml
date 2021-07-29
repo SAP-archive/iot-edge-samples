@@ -1,0 +1,37 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog
+        id="duplicate-incident-dialog"
+        class="dep-fiori"
+        title="{i18n>DuplicateInc.title}"
+        type="Message">
+
+        <Text text="{i18n>DuplicateInc.description}"/>
+        <f:SimpleForm
+            layout="ResponsiveGridLayout"
+            maxContainerCols="2"
+            labelSpanS="5"
+            columnsS="1">
+            <Label text="{i18nGlobal>General.title}" />
+            <Text text="{/TITLE}" />
+            <Label text="{i18nGlobal>General.location}" />
+            <Text text="{/PLANT_LOC_CODE}" />
+        </f:SimpleForm>
+
+        <beginButton>
+            <Button
+                id="btnDuplicateIncDialogOk"
+                text="{i18nGlobal>General.ok}"
+                press="duplicateIncDialogOk"/>
+        </beginButton>
+
+        <endButton>
+            <Button
+                text="{i18n>DuplicateInc.view}"
+                press="duplicateIncDialogView"/>
+        </endButton>
+    </Dialog>
+</c:FragmentDefinition>

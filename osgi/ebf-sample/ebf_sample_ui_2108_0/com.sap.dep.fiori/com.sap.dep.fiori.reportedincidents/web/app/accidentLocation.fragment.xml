@@ -1,0 +1,44 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog title="{i18n>Location.title}">
+
+        <endButton>
+            <Button text="{i18nGlobal>General.cancel}" press="accidentLocationDialogCancel"/>
+        </endButton>
+
+        <SearchField width="100%" placeholder="{i18n>Location.searchPlaceholder} ..." liveChange="accidentLocationFilter"/>
+
+        <Table id="accidentLocationTable" inset="true" mode="sap.m.ListMode.None" includeItemInSelection="false" items="{/}">
+
+            <columns>
+                <Column demandPopin="true">
+                    <Label text="{i18n>Location.categoryLabel}"/>
+                </Column>
+                <Column demandPopin="true">
+                    <Label text="{i18n>Location.locationLabel}"/>
+                </Column>
+                <!--<Column minScreenWidth="Desktop" demandPopin="true">
+                    <Label text="{i18n>Location.locationClassificationLabel}"/>
+                </Column>
+                <Column minScreenWidth="Desktop" demandPopin="true">
+                    <Label text="{i18n>Location.organizationalUnitLabel}"/>
+                </Column>-->
+            </columns>
+
+            <items>
+                <ColumnListItem type="Active" press="onAccidentLocationSelect">
+                    <cells>
+                        <Text text="{LOC_CODE}"/>
+                        <Text text="{DESCRIPTION}"/>
+                       <!-- <Text text="{LOCATION_CLASS_ID}"/>
+                        <Text text="{ORG_UNIT_ID}"/>-->
+                    </cells>
+                </ColumnListItem>
+            </items>
+
+        </Table>
+    </Dialog>
+</core:FragmentDefinition>

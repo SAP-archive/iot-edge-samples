@@ -1,0 +1,586 @@
+<mvc:View
+    controllerName="dep.fiori.workorder.app.operation"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:c="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns="sap.m">
+    <Page
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <u:ObjectPageLayout
+            id="content"
+            useIconTabBar="true"
+            enableLazyLoading="true">
+            <u:headerTitle>
+                <u:ObjectPageHeader objectTitle="{i18nGlobal>General.workorder} {/AUFNR} / {i18nGlobal>General.operation} {/VORNR}" />
+            </u:headerTitle>
+            <u:ObjectPageSection title="{i18nGlobal>General.details}">
+                <u:ObjectPageSubSection>
+                    <u:blocks>
+                        <VBox
+                            fitContainer="true"
+                            renderType="Bare">
+                            <f:Form>
+                                <f:layout>
+                                    <f:ResponsiveGridLayout labelSpanL="2" />
+                                </f:layout>
+                                <f:toolbar>
+                                    <Toolbar class="sapUiTinyMarginBottom">
+                                        <Title text="{i18nGlobal>General.details}" />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            text="{i18nGlobal>General.edit}"
+                                            press="onEdit"
+                                            visible="{=
+                                                !${state>/editing} &amp;&amp;
+                                                ${workorder>/USER_STATUS}.substr(0, 4) !== 'CMPL' &amp;&amp;
+                                                ${workorder>/USER_STATUS}.substr(0, 4) !== 'TECO'
+                                            }" />
+                                        <Button
+                                            text="{i18nGlobal>General.save}"
+                                            press="onSave"
+                                            visible="{state>/editing}" />
+                                        <Button
+                                            text="{i18nGlobal>General.cancel}"
+                                            press="onCancel"
+                                            visible="{state>/editing}" />
+                                    </Toolbar>
+                                </f:toolbar>
+                                <f:FormContainer>
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label
+                                                text="{i18n>Operations.workCenter}"
+                                                required="true" />
+                                        </f:label>
+                                        <Input
+                                            showValueHelp="true"
+                                            valueHelpOnly="true"
+                                            value="{/ARBPL}"
+                                            valueState="{= !${/ARBPL} ? 'Error' : 'None' }"
+                                            valueHelpRequest="onWorkcenterValueHelp"
+                                            editable="{state>/editing}">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S4" />
+                                            </layoutData>
+                                        </Input>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label
+                                                text="{i18n>Operations.controlKey}"
+                                                required="true">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M3 S12" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <Input
+                                            value="{/STEUS}"
+                                            editable="false"
+                                            visible="{= !${state>/editing} }">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S4" />
+                                            </layoutData>
+                                        </Input>
+                                        <Select
+                                            forceSelection="false"
+                                            selectedKey="{/STEUS}"
+                                            items="{lookup>/controlkey}"
+                                            valueState="{= !${/STEUS} ? 'Error' : 'None' }"
+                                            visible="{state>/editing}">
+                                            <c:ListItem key="{lookup>STEUS}" text="{lookup>STEUS}" />
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S4" />
+                                            </layoutData>
+                                        </Select>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label text="{i18nGlobal>General.description}" />
+                                        </f:label>
+                                        <Input
+                                            value="{/LTXA1}"
+                                            maxLength="40"
+                                            editable="{state>/editing}">
+                                            <layoutData>
+                                                <l:GridData span="L6 M9 S12" />
+                                            </layoutData>
+                                        </Input>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label text="{i18n>Operations.plannedHours}" />
+                                        </f:label>
+                                        <Input
+                                            value="{/ARBEI}"
+                                            type="Number"
+                                            textAlign="Right"
+                                            editable="{state>/editing}">
+                                            <layoutData>
+                                                <l:GridData span="L1 M2 S3" />
+                                            </layoutData>
+                                        </Input>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label text="{i18n>Operations.numberOfWorkers}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M3 S12" indent="L1 M1" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <Input
+                                            value="{/ANZZL}"
+                                            type="Number"
+                                            textAlign="Right"
+                                            editable="{state>/editing}">
+                                            <layoutData>
+                                                <l:GridData span="L1 M2 S3" />
+                                            </layoutData>
+                                        </Input>
+                                    </f:FormElement>
+
+                                    <f:FormElement visible="{= ${/STEUS} === 'EXT2' }">
+                                        <f:label>
+                                            <Label text="{i18n>Operations.actualWork}" />
+                                        </f:label>
+                                        <Input
+                                            value="{/ISMNW}"
+                                            type="Number"
+                                            textAlign="Right"
+                                            editable="{state>/editing}">
+                                            <layoutData>
+                                                <l:GridData span="L1 M2 S3" />
+                                            </layoutData>
+                                        </Input>
+                                    </f:FormElement>
+
+                                    <f:FormElement visible="{= ${/STEUS} === 'EXT2' }">
+                                        <f:label>
+                                            <Label text="{i18n>Operations.estValue}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M3 S12" indent="L1 M1" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <Input
+                                            value="{
+                                                path: '/PREIS',
+                                                type: 'sap.ui.model.type.Float',
+                                                formatOptions: {
+                                                    emptyString: null
+                                                }
+                                            }"
+                                            type="Number"
+                                            textAlign="Right"
+                                            editable="{state>/editing}">
+                                            <layoutData>
+                                                <l:GridData span="L1 M2 S3" />
+                                            </layoutData>
+                                        </Input>
+                                    </f:FormElement>
+
+                                    <f:FormElement visible="{= ${/STEUS} === 'EXT2' }">
+                                        <f:label>
+                                            <Label text="{i18n>Operations.longText}" />
+                                        </f:label>
+                                        <TextArea
+                                            value="{/WO_OPNOTE_LTXT}"
+                                            rows="4"
+                                            editable="{state>/editing}">
+                                            <layoutData>
+                                                <l:GridData span="L6 M9 S12" />
+                                            </layoutData>
+                                        </TextArea>
+                                    </f:FormElement>
+                                </f:FormContainer>
+                            </f:Form>
+                        </VBox>
+                    </u:blocks>
+                </u:ObjectPageSubSection>
+            </u:ObjectPageSection>
+            <u:ObjectPageSection title="{i18n>Detail.components}">
+                <u:ObjectPageSubSection>
+                    <u:blocks>
+                        <VBox
+                            fitContainer="true"
+                            renderType="Bare">
+                            <c:Fragment fragmentName="dep.fiori.lib.frag.filterBar" type="XML" />
+                            <Table
+                                id="componentsList"
+                                noDataText="{i18n>Components.listEmpty}"
+                                items="{components>/}"
+                                growing="true"
+                                growingScrollToLoad="true"
+                                mode="{= ${workorder>/USER_STATUS}.substr(0, 4) === 'CMPL' || ${workorder>/USER_STATUS}.substr(0, 4) === 'TECO' ? 'None' : 'Delete' }"
+                                delete="onRemoveComponent">
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <Title text="{= ${i18n>Detail.components} + ' (' + (${components>/length} || 0) + ')' }" />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            tooltip="{i18nGlobal>General.listRefresh}"
+                                            icon="sap-icon://refresh"
+                                            press="refreshComponents" />
+                                        <Button
+                                            text="{i18nGlobal>General.edit}"
+                                            press="onTableEdit"
+                                            visible="{=
+                                                !${tableState>/editing} &amp;&amp;
+                                                ${workorder>/USER_STATUS}.substr(0, 4) !== 'CMPL' &amp;&amp;
+                                                ${workorder>/USER_STATUS}.substr(0, 4) !== 'TECO' &amp;&amp;
+                                                ${components>/length} > 0
+                                            }" />
+                                        <Button
+                                            text="{i18nGlobal>General.save}"
+                                            press="onTableSave"
+                                            visible="{tableState>/editing}" />
+                                        <Button
+                                            text="{i18nGlobal>General.cancel}"
+                                            press="onTableCancel"
+                                            visible="{tableState>/editing}" />
+                                        <Button
+                                            text="{i18n>Components.BOM}"
+                                            tooltip="{i18n>Components.addBOM}"
+                                            icon="sap-icon://add"
+                                            type="Emphasized"
+                                            press="onAddBOM"
+                                            visible="{=
+                                                !${tableState>/editing} &amp;&amp;
+                                                ${bomExists>/0/BOM_EXISTS} === 1 &amp;&amp;
+                                                ${workorder>/USER_STATUS}.substr(0, 4) !== 'CMPL' &amp;&amp;
+                                                ${workorder>/USER_STATUS}.substr(0, 4) !== 'TECO'
+                                            }" />
+                                        <Button
+                                            text="{i18n>Components.text}"
+                                            tooltip="{i18n>Components.addText}"
+                                            icon="sap-icon://add"
+                                            type="Emphasized"
+                                            press="onAddTextItem"
+                                            visible="{=
+                                                !${tableState>/editing} &amp;&amp;
+                                                ${workorder>/USER_STATUS}.substr(0, 4) !== 'CMPL' &amp;&amp;
+                                                ${workorder>/USER_STATUS}.substr(0, 4) !== 'TECO'
+                                            }" />
+                                        <Button
+                                            text="{i18nGlobal>General.material}"
+                                            tooltip="{i18n>Components.addMaterial}"
+                                            icon="sap-icon://add"
+                                            type="Emphasized"
+                                            press="onAddMaterial"
+                                            visible="{=
+                                                !${tableState>/editing} &amp;&amp;
+                                                ${workorder>/USER_STATUS}.substr(0, 4) !== 'CMPL' &amp;&amp;
+                                                ${workorder>/USER_STATUS}.substr(0, 4) !== 'TECO'
+                                            }" />
+                                    </Toolbar>
+                                </headerToolbar>
+                                <columns>
+                                    <Column vAlign="Middle">
+                                        <Title text="{i18nGlobal>General.component}" />
+                                    </Column>
+                                    <Column
+                                        vAlign="Middle">
+                                        <Title text="{i18nGlobal>General.item}" />
+                                    </Column>
+                                    <Column
+                                        vAlign="Middle"
+                                        width="30%"
+                                        minScreenWidth="Desktop"
+                                        demandPopin="true"
+                                        popinDisplay="Inline">
+                                        <Title text="{i18nGlobal>General.description}" />
+                                    </Column>
+                                    <Column
+                                        vAlign="Middle"
+                                        hAlign="Right">
+                                        <Title text="{i18n>Components.quantityRequired}" />
+                                    </Column>
+                                    <Column
+                                        vAlign="Middle"
+                                        hAlign="Right"
+                                        minScreenWidth="Tablet"
+                                        demandPopin="true"
+                                        popinDisplay="Inline">
+                                        <Title text="{i18n>Components.quantityIssued}" />
+                                    </Column>
+                                    <Column
+                                        vAlign="Middle"
+                                        minScreenWidth="Tablet"
+                                        demandPopin="true"
+                                        popinDisplay="Inline">
+                                        <Title text="{i18nGlobal>General.unit}" />
+                                    </Column>
+                                    <Column
+                                        vAlign="Middle"
+                                        minScreenWidth="Tablet"
+                                        demandPopin="true"
+                                        popinDisplay="Inline">
+                                        <Title text="{i18n>Components.category}" />
+                                    </Column>
+                                </columns>
+                                <ColumnListItem vAlign="Middle">
+                                    <HBox
+                                        fitContainer="true"
+                                        renderType="Bare"
+                                        alignItems="Center">
+                                        <Label
+                                            text="{components>MATNR}"
+                                            tooltip="{components>MATNR}"
+                                            design="Bold"
+                                            class="identifierTextBlue sapUiTinyMarginEnd"
+                                            visible="{=
+                                                ${components>POSTP} !== 'N' &amp;&amp;
+                                                ${components>POSTP} !== 'T'
+                                            }" />
+                                        <Button
+                                            text="{i18n>Components.fullText}"
+                                            press=".onEditTextItem"
+                                            class="sapUiTinyMarginEnd"
+                                            visible="{=
+                                                ${components>POSTP} === 'N' ||
+                                                ${components>POSTP} === 'T'
+                                            }" />
+                                        <c:Icon
+                                            src="sap-icon://message-error"
+                                            size="1.25rem"
+                                            color="red"
+                                            tooltip="{i18nGlobal>General.hasSyncErrors}"
+                                            visible="{= !!${components>EDGE_ERRORS} }"
+                                            press="handleResponsivePopoverPress" />
+                                    </HBox>
+                                    <Label
+                                        text="{components>POSNR}"
+                                        tooltip="{components>POSNR}" />
+                                    <Label
+                                        text="{= ${components>MAKTX} || ${components>POTX1} }"
+                                        tooltip="{= ${components>MAKTX} || ${components>POTX1} }" />
+                                    <Input
+                                        value="{components>BDMNG}"
+                                        type="Number"
+                                        editable="{tableState>/editing}"
+                                        change="onQuantityChange"
+                                        textAlign="Right" />
+                                    <Label text="{components>ENMNG}" />
+                                    <Label
+                                        text="{components>MEINS}"
+                                        tooltip="{components>MEINS}" />
+                                    <Label
+                                        text="{components>CATEGORY}"
+                                        tooltip="{components>CATEGORY}" />
+                                </ColumnListItem>
+                            </Table>
+                        </VBox>
+                    </u:blocks>
+                </u:ObjectPageSubSection>
+            </u:ObjectPageSection>
+            <u:ObjectPageSection title="{i18n>TimeConfirm.title}">
+                <u:ObjectPageSubSection>
+                    <u:blocks>
+                        <VBox
+                            fitContainer="true"
+                            renderType="Bare">
+                            <f:Form visible="{confirmationState>/editing}">
+                                <f:layout>
+                                    <f:ResponsiveGridLayout labelSpanL="2" />
+                                </f:layout>
+                                <f:toolbar>
+                                    <Toolbar class="sapUiTinyMarginBottom">
+                                        <Title text="{i18n>TimeConfirm.new}" />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            text="{i18nGlobal>General.save}"
+                                            press="onSaveConfirmation" />
+                                        <Button
+                                            text="{i18nGlobal>General.cancel}"
+                                            press="onCancelNewConfirmation" />
+                                    </Toolbar>
+                                </f:toolbar>
+                                <f:FormContainer>
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label
+                                                text="{i18n>Operations.workCenter}"
+                                                required="true" />
+                                        </f:label>
+                                        <Input
+                                            showValueHelp="true"
+                                            valueHelpOnly="true"
+                                            value="{newConfirmation>/ARBPL}"
+                                            valueState="{= !${newConfirmation>/ARBPL} ? 'Error' : 'None' }"
+                                            valueHelpRequest="onWorkcenterValueHelp">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S4" />
+                                            </layoutData>
+                                        </Input>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label text="{i18nGlobal>General.description}" />
+                                        </f:label>
+                                        <Input value="{newConfirmation>/LTXA1}" maxLength="40">
+                                            <layoutData>
+                                                <l:GridData span="L6 M9 S12" />
+                                            </layoutData>
+                                        </Input>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label text="{i18n>TimeConfirm.spent}" />
+                                        </f:label>
+                                        <Input
+                                            value="{newConfirmation>/ISMNW}"
+                                            type="Number"
+                                            textAlign="Right">
+                                            <layoutData>
+                                                <l:GridData span="L1 M2 S3" />
+                                            </layoutData>
+                                        </Input>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label text="{i18n>TimeConfirm.remaining}" />
+                                        </f:label>
+                                        <Input
+                                            value="{newConfirmation>/OFMNW}"
+                                            type="Number"
+                                            textAlign="Right">
+                                            <layoutData>
+                                                <l:GridData span="L1 M2 S3" />
+                                            </layoutData>
+                                        </Input>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label text="{i18n>TimeConfirm.actual}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M3 S12" indent="L1 M1" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <Input
+                                            value="{newConfirmation>/IDAUR}"
+                                            type="Number"
+                                            textAlign="Right">
+                                            <layoutData>
+                                                <l:GridData span="L1 M2 S3" />
+                                            </layoutData>
+                                        </Input>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <Checkbox
+                                            text="{i18n>TimeConfirm.final}"
+                                            selected="{= ${newConfirmation>/AUERU} === 'X' }"
+                                            select="onSelectFinal">
+                                            <layoutData>
+                                                <l:GridData span="L1 M2 S3" linebreak="true" indent="L2 M2" />
+                                            </layoutData>
+                                        </Checkbox>
+                                    </f:FormElement>
+                                </f:FormContainer>
+                            </f:Form>
+                            <Table
+                                noDataText="{i18n>TimeConfirm.listEmpty}"
+                                items="{confirmations>/}"
+                                growing="true"
+                                growingScrollToLoad="true">
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <Title text="{= ${i18n>TimeConfirm.title} + ' (' + (${confirmations>/length} || 0) + ')' }" />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            tooltip="{i18nGlobal>General.listRefresh}"
+                                            icon="sap-icon://refresh"
+                                            press="refreshConfirmations" />
+                                        <Button
+                                            tooltip="{i18n>TimeConfirm.add}"
+                                            icon="sap-icon://add"
+                                            type="Emphasized"
+                                            press="onAddConfirmation"
+                                            enabled="{
+                                                path: 'confirmations>/',
+                                                formatter: '.allowNewConfirmation'
+                                            }" />
+                                    </Toolbar>
+                                </headerToolbar>
+                                <columns>
+                                    <Column vAlign="Middle">
+                                        <Title text="{i18n>Operations.workCenter}" />
+                                    </Column>
+                                    <Column
+                                        vAlign="Middle">
+                                        <Title text="{i18n>TimeConfirm.spent}" />
+                                    </Column>
+                                    <Column
+                                        vAlign="Middle"
+                                        width="40%"
+                                        minScreenWidth="Desktop"
+                                        demandPopin="true"
+                                        popinDisplay="Inline">
+                                        <Title text="{i18nGlobal>General.description}" />
+                                    </Column>
+                                    <Column
+                                        vAlign="Middle"
+                                        hAlign="Center">
+                                        <Title text="{i18n>TimeConfirm.final}" />
+                                    </Column>
+                                </columns>
+                                <ColumnListItem>
+                                    <HBox
+                                        fitContainer="true"
+                                        renderType="Bare"
+                                        alignItems="Center">
+                                        <c:Icon
+                                            src="sap-icon://message-error"
+                                            size="1.25rem"
+                                            color="red"
+                                            tooltip="{i18nGlobal>General.hasSyncErrors}"
+                                            visible="{= !!${confirmations>EDGE_ERRORS} }"
+                                            press="handleResponsivePopoverPress"
+                                            class="sapUiTinyMarginEnd" />
+                                        <Label
+                                            text="{confirmations>ARBPL}"
+                                            tooltip="{confirmations>ARBPL}" />
+                                    </HBox>
+                                    <Label
+                                        text="{confirmations>ISMNW} {confirmations>IDAUE}"
+                                        tooltip="{confirmations>ISMNW} {confirmations>IDAUE}" />
+                                    <Label
+                                        text="{confirmations>LTXA1}"
+                                        tooltip="{confirmations>LTXA1}" />
+                                    <VBox>
+                                        <Checkbox
+                                            visible="{= ${confirmations>AUERU} === 'X' }"
+                                            selected="{= ${confirmations>AUERU} === 'X' }"
+                                            select="onCancelFinal"
+                                            editable="{= ${workorder>/USER_STATUS}.substr(0, 4) !== 'CMPL' &amp;&amp; ${workorder>/USER_STATUS}.substr(0, 4) !== 'TECO' }" />
+                                        <Label
+                                            visible="{= ${confirmations>STOKZ} === 'X' || Number(${confirmations>STZHL}) !== 0 }"
+                                            text="{i18n>TimeConfirm.finalCancelled}" />
+                                    </VBox>
+                                </ColumnListItem>
+                            </Table>
+                        </VBox>
+                    </u:blocks>
+                </u:ObjectPageSubSection>
+            </u:ObjectPageSection>
+        </u:ObjectPageLayout>
+    </Page>
+</mvc:View>

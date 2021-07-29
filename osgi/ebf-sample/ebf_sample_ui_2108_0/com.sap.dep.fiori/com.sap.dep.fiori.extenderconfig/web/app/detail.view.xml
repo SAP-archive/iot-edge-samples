@@ -1,0 +1,50 @@
+<mvc:View
+    controllerName="dep.fiori.extenderconfig.app.detail"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:c="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns:blocks="dep.fiori.extenderconfig.block"
+    xmlns="sap.m">
+    <Page
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <u:ObjectPageLayout 
+            id="content"
+            alwaysShowContentHeader="true"
+            useIconTabBar="true"
+            navigate="onBlockSelect">
+
+            <u:ObjectPageSection
+                id="stats"
+                title="{i18n>Block.stats}">
+                <u:ObjectPageSubSection>
+                    <u:blocks>
+                        <blocks:Stats />
+                    </u:blocks>
+                </u:ObjectPageSubSection>
+            </u:ObjectPageSection>
+            <u:ObjectPageSection
+                id="uriConfig"
+                title="{i18n>Block.uriConfig}">
+                <u:ObjectPageSubSection>
+                    <u:blocks>
+                        <blocks:UriConfig />
+                    </u:blocks>
+                </u:ObjectPageSubSection>
+            </u:ObjectPageSection>
+            <u:ObjectPageSection
+                id="setup"
+                title="{i18n>Block.setup}">
+                <u:ObjectPageSubSection>
+                    <u:blocks>
+                        <blocks:Setup />
+                    </u:blocks>
+                </u:ObjectPageSubSection>
+            </u:ObjectPageSection>
+        </u:ObjectPageLayout>
+    </Page>
+</mvc:View>

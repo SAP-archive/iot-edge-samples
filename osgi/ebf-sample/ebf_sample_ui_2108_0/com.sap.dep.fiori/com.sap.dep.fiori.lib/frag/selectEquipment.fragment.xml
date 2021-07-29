@@ -1,0 +1,99 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:l="sap.ui.layout">
+    <Dialog
+        title="{i18nGlobal>EquipmentSelect.title}"
+        class="dep-fiori"
+        stretchOnPhone="true"
+        contentHeight="100%"
+        contentWidth="100%"
+        verticalScrolling="false"
+        afterClose="dep.fiori.lib.util.SelectEquipmentDialog.onCancel">
+        <Page
+            showHeader="false"
+            showSubHeader="false"
+            enableScrolling="false">
+            <VBox
+                fitContainer="true"
+                renderType="Bare">
+                <core:Fragment fragmentName="dep.fiori.lib.frag.filterBar" type="XML" />
+                <ScrollContainer
+                    vertical="true"
+                    height="100%"
+                    width="100%">
+                    <Table
+                        id="list"
+                        items="{odata>/Equipment}"
+                        noDataText="{i18nGlobal>EquipmentSelect.listEmpty}"
+                        growing="true"
+                        growingScrollToLoad="true"
+                        mode="SingleSelectMaster"
+                        itemPress="dep.fiori.lib.util.SelectEquipmentDialog.onSelect">
+                        <headerToolbar>
+                            <Toolbar>
+                                <Title text="{i18nGlobal>General.equipment}" />
+                                <ToolbarSpacer />
+                                <Button
+                                    tooltip="{i18nGlobal>General.sortList}"
+                                    icon="sap-icon://drop-down-list"
+                                    press="dep.fiori.lib.util.SelectEquipmentDialog.onSortPress" />
+                            </Toolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column vAlign="Middle">
+                                <Title text="{i18nGlobal>EquipmentSelect.equipment}" />
+                            </Column>
+                            <Column
+                                vAlign="Middle"
+                                width="30%"
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                popinDisplay="Inline">
+                                <Title text="{i18nGlobal>General.description}" />
+                            </Column>
+                            <Column vAlign="Middle">
+                                <Title text="{i18nGlobal>General.location}" />
+                            </Column>
+                            <Column
+                                vAlign="Middle"
+                                width="30%"
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                popinDisplay="Inline">
+                                <Title text="{i18nGlobal>EquipmentSelect.locationDesc}" />
+                            </Column>
+                        </columns>
+                        <ColumnListItem type="Active">
+                            <Label
+                                text="{odata>EQUNR}"
+                                tooltip="{odata>EQUNR}"
+                                design="Bold"
+                                class="identifierTextBlue" />
+                            <Label
+                                text="{odata>EQKTX}"
+                                tooltip="{odata>EQKTX}" />
+                            <Label
+                                text="{odata>TPLNR}"
+                                tooltip="{odata>TPLNR}" />
+                            <Label
+                                text="{odata>PLTXT}"
+                                tooltip="{odata>PLTXT}" />
+                        </ColumnListItem>
+                    </Table>
+                </ScrollContainer>
+            </VBox>
+            <footer>
+                <Bar>
+                    <contentRight>
+                        <Button
+                            text="{i18nGlobal>General.cancel}"
+                            press="dep.fiori.lib.util.SelectEquipmentDialog.close" />
+                    </contentRight>
+                </Bar>
+            </footer>
+        </Page>
+    </Dialog>
+</core:FragmentDefinition>

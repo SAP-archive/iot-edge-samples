@@ -1,0 +1,8 @@
+#dep-fiori-transfer-display .sapUxAPObjectPageHeaderContentItem .sapMSlt:not(.sapUxAPHierarchicalSelect) {
+    height: 2.425rem;
+}
+
+#dep-fiori-transfer-display .sapUxAPObjectPageHeaderContentItem .sapMSlt:not(.sapUxAPHierarchicalSelect) .sapMSltLabel,
+#dep-fiori-transfer-display .sapUxAPObjectPageHeaderContentItem .sapMSlt:not(.sapUxAPHierarchicalSelect) .sapMSltArrow {
+    line-height: 2.425rem;
+}

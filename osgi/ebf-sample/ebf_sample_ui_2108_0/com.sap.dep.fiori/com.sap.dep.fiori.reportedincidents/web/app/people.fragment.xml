@@ -1,0 +1,44 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog title="{i18n>PeopleDialog.title}">
+
+        <endButton>
+            <Button text="{i18nGlobal>General.cancel}" press="peopleCancel"/>
+        </endButton>
+
+        <SearchField width="100%" placeholder=" ..." liveChange="filterPeople"/>
+
+        <Table id="peopleTable" items="{PEOPLE>/}">
+
+            <columns>
+                <Column demandPopin="true">
+                    <Label text="{i18n>InjuredForm.nameLabel}"/>
+                </Column>
+                <Column demandPopin="true">
+                    <Label text="{i18n>InjuredForm.address}"/>
+                </Column>
+                <Column minScreenWidth="Desktop" demandPopin="true">
+                    <Label text="{i18n>InjuredForm.company}"/>
+                </Column>
+                <Column minScreenWidth="Desktop" demandPopin="true">
+                    <Label text="{i18n>InjuredForm.email}"/>
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem type="Active" press="selectPerson">
+                    <cells>
+                        <Text text="{PEOPLE>FIRST_NAME} {PEOPLE>LAST_NAME}"/>
+                        <Text text="{PEOPLE>ADDRESS}"/>
+                        <Text text="{PEOPLE>COMPANY}"/>
+                        <Text text="{PEOPLE>EMAIL}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+
+        </Table>
+    </Dialog>
+</core:FragmentDefinition>

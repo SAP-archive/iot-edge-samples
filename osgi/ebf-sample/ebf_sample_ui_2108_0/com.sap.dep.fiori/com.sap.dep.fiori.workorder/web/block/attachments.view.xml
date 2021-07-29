@@ -1,0 +1,70 @@
+<c:View
+    controllerName="dep.fiori.workorder.block.attachments"
+    xmlns:c="sap.ui.core"
+    xmlns:uni="sap.ui.unified"
+    xmlns="sap.m">
+    <List
+        items="{attachments>/}"
+        delete="onDeleteAttachment">
+        <headerToolbar>
+            <Toolbar>
+                <Title text="{i18nGlobal>General.items} ({attachments>/length})" />
+                <ToolbarSpacer />
+                <Button
+                    tooltip="{i18nGlobal>General.listRefresh}"
+                    icon="sap-icon://refresh"
+                    press="refresh" />
+                <uni:FileUploader
+                    id="upload"
+                    useMultipart="false"
+                    sendXHR="true"
+                    uploadUrl="/ws_restful_data_controller/attachment"
+                    value="{upload>/filepath}"
+                    uploadComplete="onUploadComplete"
+                    placeholder="{i18nGlobal>General.upload}"
+                    visible="{= ${/USER_STATUS}.substr(0, 4) !== 'CMPL' &amp;&amp; ${/USER_STATUS}.substr(0, 4) !== 'TECO' }" />
+                <Button
+                    tooltip="{i18nGlobal>General.upload}"
+                    icon="sap-icon://upload"
+                    type="Transparent"
+                    press="onAddAttachment"
+                    visible="{= ${/USER_STATUS}.substr(0, 4) !== 'CMPL' &amp;&amp; ${/USER_STATUS}.substr(0, 4) !== 'TECO' }" />
+            </Toolbar>
+        </headerToolbar>
+        <CustomListItem>
+            <HBox
+                alignItems="Center"
+                fitContainer="true"
+                renderType="Bare">
+                <c:Icon
+                    src="{
+                        path: 'attachments>FILETYPE',
+                        formatter: 'dep.fiori.lib.util.Utilities.formatters.attachmentIcon'
+                    }"
+                    size="3rem"
+                    width="2.5rem"
+                    
+                    color="#346187"
+                    class="sapUiSmallMargin" />
+                <VBox
+                    renderType="Bare">
+                    <Title
+                        text="{attachments>FILEDESC}"
+                        visible="{= !${attachments>editable} }" />
+                    <HBox
+                        alignItems="Center"
+                        visible="{= !!${attachments>editable} }">
+                        <Input value="{attachments>newDesc}" />
+                        <Text
+                            text="{= '.' + ${attachments>FILETYPE} }"
+                            class="sapUiTinyMarginBegin" />
+                    </HBox>
+                </VBox>
+                <Button
+                    icon="sap-icon://download"
+                    type="Transparent"
+                    press="onDownload" />
+            </HBox>
+        </CustomListItem>
+    </List>
+</c:View>

@@ -1,0 +1,849 @@
+<mvc:View
+    controllerName="dep.fiori.reportedincidents.app.create"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns="sap.m">
+    <Page
+        id="main"
+        showHeader="false">
+        <u:ObjectPageLayout alwaysShowContentHeader="true" useIconTabBar="true" showTitleInHeaderContent="true">
+
+            <u:headerTitle>
+                <u:ObjectPageHeader>                        
+                </u:ObjectPageHeader>
+            </u:headerTitle>
+
+            <u:headerContent>
+               <!-- <l:HorizontalLayout width="100%">
+                    <Button id="initialsButton2" text="{parts: [ 'INJURED_PERSON>/PERSON_DETAILS/FIRST_NAME', 'INJURED_PERSON>/PERSON_DETAILS/LAST_NAME'], 
+                                                                   formatter: '.formatters.nameInitials'}" class="sapUiSmallMarginEnd"/>
+                    <Label text="{INJURED_PERSON>/PERSON_DETAILS/FIRST_NAME} {INJURED_PERSON>/PERSON_DETAILS/LAST_NAME}" id="nameField" class="sapUiSmallMarginTop"/>
+                </l:HorizontalLayout>
+				<l:HorizontalLayout width="100%">
+                        <Label
+                            text="{i18n>ObjectPageContentHeader.incidentID}"
+                            class="sapUiTinyMarginEnd" />
+                        <Label text="{INCIDENT_MODEL>/ID_LOCAL}"/>
+                    </l:HorizontalLayout>-->
+				<VBox
+                    fitContainer="true"
+                    renderType="Bare">
+                    <HBox renderType="Bare">
+					     <Button id="initialsButton2" text="{parts: [ 'INJURED_PERSON>/PERSON_DETAILS/FIRST_NAME', 'INJURED_PERSON>/PERSON_DETAILS/LAST_NAME'], 
+                                                                   formatter: '.formatters.nameInitials'}" class="sapUiSmallMarginEnd"/>
+					    <VBox>
+                           
+                            <Label text="{INJURED_PERSON>/PERSON_DETAILS/FIRST_NAME} {INJURED_PERSON>/PERSON_DETAILS/LAST_NAME}" id="nameField" class="sapUiTinyMarginTop"/>                    
+					
+							 <HBox renderType="Bare">
+								<Label
+									text="{i18n>ObjectPageContentHeader.incidentID}:"
+									class="sapUiTinyMarginEnd" />
+								<Label text="{INJURED_PERSON>/ID_LOCAL}"/>
+							</HBox>
+						</VBox>
+					</HBox>
+                   
+                </VBox>	
+            </u:headerContent>
+
+            <u:sections>
+                <u:ObjectPageSection title="{i18n>ObjectPageSection.injuredPerson}" id="page" >
+                    <u:subSections>
+                        <u:ObjectPageSubSection>
+                            <u:blocks>
+                                <f:Form id="form">
+
+                                    <f:layout>
+                                        <f:ResponsiveGridLayout
+                                            hSpacing="2"
+                                            /> 
+                                    </f:layout>
+                                    <f:toolbar>
+										<Toolbar class="sapUiTinyMarginBottom">
+											<Title text="{i18n>FormContainer.reportedincidents}" />										
+											<ToolbarSpacer />
+											<HBox visible="{= ${INJURED_PERSON>/IS_SUBMITTED} === ''}">
+												<Button
+													text="{i18nGlobal>General.edit}"
+													id="personEditButton"
+													press="onPersonEdit"
+													visible="{= !${state>/editing}}" />
+												<Button
+													id="personSaveButton"
+													text="{i18nGlobal>General.save}"
+													press="onPersonSave"
+													visible="{state>/editing}" />
+												<Button
+													text="{i18nGlobal>General.cancel}"
+													press="onPersonCancel"
+													visible="{state>/editing}" />
+											</HBox>
+										</Toolbar>
+									</f:toolbar>
+                                    <f:formContainers>
+                                        <f:FormContainer>
+                                            <f:formElements>
+												<f:FormElement visible="{= ${INJURED_PERSON>/INVOLVE_TYPE_ID} === 'EHHSS_PR_INJURED_PER' || ${INJURED_PERSON>/INVOLVE_TYPE_ID} === 'EHHSS_PR_WITNESS' }">
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.type}"
+															required="true"/>
+													</f:label>
+													<f:fields>            
+                                                            <RadioButtonGroup id="involvedPersonType" columns="32" width="100%">
+																<buttons>
+																	<RadioButton enabled="false" id="injuredType" text="Injured" selected ="{= ${INJURED_PERSON>/INVOLVE_TYPE_ID}==='EHHSS_PR_INJURED_PER'}"/>
+																	<RadioButton enabled="false" id="witnessType" text="Witness" selected ="{= ${INJURED_PERSON>/INVOLVE_TYPE_ID}==='EHHSS_PR_WITNESS'}"/>
+																</buttons>
+															</RadioButtonGroup>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement visible="{= ${INJURED_PERSON>/INVOLVE_TYPE_ID} === 'EHHSS_PR_REPORT_PER'}">
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.type}"
+															required="true"/>
+													</f:label>
+													<f:fields>            
+                                                            <Input
+														    id="reportingType"
+															value="{INJURED_PERSON>/INVOLVE_TYPE_DESC}"
+															class="sapUiSmallMarginBottom"
+															enabled="false"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement visible="{= ${INJURED_PERSON>/INVOLVE_TYPE_ID} === 'EHHSS_PR_SITE_OWNER'}">
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.type}"
+															required="true"/>
+													</f:label>
+													<f:fields>            
+                                                            <Input
+														    id="siteOwnerType"
+															value="{INJURED_PERSON>/INVOLVE_TYPE_DESC}"
+															class="sapUiSmallMarginBottom"
+															enabled="false"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement visible="{= ${INJURED_PERSON>/INVOLVE_TYPE_ID} === 'EHHSS_PR_SITE_TENANT'}">
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.type}"
+															required="true"/>
+													</f:label>
+													<f:fields>            
+                                                            <Input
+														    id="siteTenantType"
+															value="{INJURED_PERSON>/INVOLVE_TYPE_DESC}"
+															class="sapUiSmallMarginBottom"
+															enabled="false"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement visible="{= ${INJURED_PERSON>/INVOLVE_TYPE_ID} === 'EHHSS_PR_VEHIC_DRIVER'}">
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.type}"
+															required="true"/>
+													</f:label>
+													<f:fields>            
+                                                            <Input
+														    id="vehicleDriverType"
+															value="{INJURED_PERSON>/INVOLVE_TYPE_DESC}"
+															class="sapUiSmallMarginBottom"
+															enabled="false"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement visible="{= ${INJURED_PERSON>/INVOLVE_TYPE_ID} === 'EHHSS_PR_VEHIC_OWNER'}">
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.type}"
+															required="true"/>
+													</f:label>
+													<f:fields>            
+                                                            <Input
+														    id="vehicleOwnerType"
+															value="{INJURED_PERSON>/INVOLVE_TYPE_DESC}"
+															class="sapUiSmallMarginBottom"
+															enabled="false"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.firstName}"
+															required="true"/>
+													</f:label>
+													<f:fields>
+														<Input
+														    id="firstName"
+															value="{INJURED_PERSON>/PERSON_DETAILS/FIRST_NAME}"
+															class="sapUiSmallMarginBottom"
+															maxLength="60"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.lastName}"
+															required="true"/>
+													</f:label>
+													<f:fields>
+														<Input
+														    id="lastName"
+															value="{INJURED_PERSON>/PERSON_DETAILS/LAST_NAME}"
+															class="sapUiSmallMarginBottom"
+															maxLength="60"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.organizationalUnit}"/>
+													</f:label>
+													<f:fields>
+														<Input
+														    id="personOrgUnitID"
+															value="{INJURED_PERSON>/PERSON_DETAILS/ORG}"
+															class="sapUiSmallMarginBottom"
+															maxLength="40"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.company}"/>
+													</f:label>
+													<f:fields>
+														<Input
+															id="company"
+															value="{INJURED_PERSON>/PERSON_DETAILS/COMPANY}"
+															class="sapUiSmallMarginBottom"
+															maxLength="60"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.address}"/>
+													</f:label>
+													<f:fields>
+														<Input
+															id="address"
+															value="{INJURED_PERSON>/PERSON_DETAILS/ADDRESS}"
+															class="sapUiSmallMarginBottom"
+															maxLength="60"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												 <f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.phone}"/>
+													</f:label>
+													<f:fields>          
+														<Input
+															id="phone"
+															value="{INJURED_PERSON>/PERSON_DETAILS/PHONE}"
+															class="sapUiSmallMarginBottom"
+															maxLength="40"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>						
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.email}"/>
+													</f:label>
+													<f:fields>                     
+														<Input
+															id="email"
+															value="{INJURED_PERSON>/PERSON_DETAILS/EMAIL}"
+															maxLength="60"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement visible="{= ${INJURED_PERSON>/INVOLVE_TYPE_ID}==='EHHSS_PR_INJURED_PER'}">
+													<f:label>
+														<Label text="{i18n>InjuredForm.injuredDescription}"/>
+													</f:label>
+													
+													<f:fields>
+														<TextArea
+															id="injuredDescription"
+															value="{INJURED_PERSON>/INJURY_DESCRIPTION}"
+															rows="4"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</TextArea>
+													</f:fields>
+												</f:FormElement>
+												<!--
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="{i18n>InjuredForm.nameLabel}"
+                                                            required="true"/>
+                                                    </f:label>
+                                                    <f:fields>            
+                                                        <Input
+                                                            value="{INJURED_PERSON>/PERSON_DETAILS/FIRST_NAME} {INJURED_PERSON>/PERSON_DETAILS/LAST_NAME}"
+                                                            showValueHelp="true"
+                                                            valueHelpOnly="true"
+                                                            valueHelpRequest="peoplePress"
+                                                            class="sapUiSmallMarginBottom">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L5 M5 S12">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="{i18n>InjuredForm.address}"/>
+                                                    </f:label>
+                                                    <f:fields>
+                                                        <Input
+                                                            enabled="false"
+                                                            value="{INJURED_PERSON>/PERSON_DETAILS/ADDRESS}"
+                                                            class="sapUiSmallMarginBottom">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L5 M5 S12">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="{i18n>InjuredForm.company}"/>
+                                                    </f:label>
+                                                    <f:fields>  
+                                                        <Input
+                                                            enabled="false"
+                                                            value="{INJURED_PERSON>/PERSON_DETAILS/COMPANY}"
+                                                            class="sapUiSmallMarginBottom">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L5 M5 S12">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="{i18n>InjuredForm.organizationalUnit}"/>
+                                                    </f:label>
+                                                    <f:fields>                            
+                                                        <Input
+                                                            enabled="false"
+                                                            value="{INJURED_PERSON>/PERSON_DETAILS/ORG}"
+                                                            class="sapUiSmallMarginBottom">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L5 M5 S12">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="{i18n>InjuredForm.email}"/>
+                                                    </f:label>
+                                                    <f:fields>                     
+                                                        <Input
+                                                            enabled="false"
+                                                            value="{INJURED_PERSON>/PERSON_DETAILS/EMAIL}"
+                                                            class="sapUiSmallMarginBottom">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L5 M5 S12">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="{i18n>InjuredForm.phone}"/>
+                                                    </f:label>
+                                                    <f:fields>          
+                                                        <Input
+                                                            enabled="false"
+                                                            value="{INJURED_PERSON>/PERSON_DETAILS/PHONE}"
+                                                            class="sapUiSmallMarginBottom">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L5 M5 S12">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>-->
+
+                                            </f:formElements>
+                                        </f:FormContainer>
+                                    </f:formContainers>
+                                </f:Form>
+                            </u:blocks>
+                        </u:ObjectPageSubSection>
+                    </u:subSections>
+                </u:ObjectPageSection>
+
+<!--
+
+                <u:ObjectPageSection title="{i18n>ObjectPageSection.injuryDetails}" id="page2" >
+                    <u:subSections>
+                        <u:ObjectPageSubSection>
+                            <u:blocks>
+                                <f:Form 
+                                    id="injury-detail-form"
+                                    editable="true">
+
+                                    <f:layout>
+                                        <f:ResponsiveGridLayout
+                                            hSpacing="2"
+                                            /> 
+                                    </f:layout>
+
+                                    <f:formContainers>
+                                       
+                                        <f:FormContainer 
+                                            id="FC2-1_injury">
+                                            <f:formElements>
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="Work Related"
+                                                            tooltip="Work Related">
+                                                        </Label>
+                                                    </f:label>
+                                                    <f:fields>            
+                                                        <Input
+                                                            id="work-related"
+                                                            enabled="true"
+                                                            value="{INJURED_PERSON>/WORK_RELATED_CAT}"
+                                                            showValueHelp="true"
+                                                            valueHelpOnly="true"
+                                                            valueHelpRequest="workRelatedListPress">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L5 M5 S12">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="Classification"
+                                                            tooltip="Classification"
+                                                            required="true">
+                                                        </Label>
+                                                    </f:label>
+                                                    <f:fields>           
+                                                        <Input
+                                                            id="classification"
+                                                            enabled="true"
+                                                            value="{INJURED_PERSON>/INJURY_CLASS_ID}"
+                                                            showValueHelp="true"
+                                                            valueHelpOnly="true"
+                                                            valueHelpRequest="ClassificationPress">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L5 M5 S12">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="Injury/Illness Type"
+                                                            tooltip="Injury/Illness Type">
+                                                        </Label>
+                                                    </f:label>
+                                                    <f:fields>  
+                                                        <Input
+                                                            id="injury-type"
+                                                            enabled="true"
+                                                            value="{INJURED_PERSON>/INJURY_TYPE_ID}"
+                                                            showValueHelp="true"
+                                                            valueHelpOnly="true"
+                                                            valueHelpRequest="InjuryTypePress">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L5 M5 S12">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="Body Part"
+                                                            tooltip="Body Part">
+                                                        </Label>
+                                                    </f:label>
+                                                    <f:fields>  
+                                                        <Input
+                                                            id="body-part-desc"
+                                                            enabled="true"
+                                                            value="{INJURED_PERSON>/BODYPART}"
+                                                            showValueHelp="true"
+                                                            valueHelpOnly="true"
+                                                            valueHelpRequest="BodyPartPress">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L5 M5 S12">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="Body Side"
+                                                            tooltip="Body Side">
+                                                        </Label>
+                                                    </f:label>
+                                                    <f:fields>  
+                                                        <Input
+                                                            id="body-side"
+                                                            enabled="true"
+                                                            value="{INJURED_PERSON>/BODYSIDE}"
+                                                            showValueHelp="true"
+                                                            valueHelpOnly="true"
+                                                            valueHelpRequest="BodySidePress">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L5 M5 S12">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="Initial Severity Classification"
+                                                            tooltip="Initial Severity Classification"
+                                                            textAlign="Left">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L12 M12 S12"
+                                                                    linebreak="true">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Label>
+                                                    </f:label>
+                                                    <f:fields>  
+                                                        <CheckBox
+                                                            id="unconsciousness"
+                                                            text="Unconsciousness"
+                                                            enabled="true"
+                                                            tooltip="Unconsciousness"
+                                                            selected="{path:'INJURED_PERSON>/UNCONSCIOUS',
+                                                                        formatter: '.formatters.checkBoxFormatter' }"
+                                                            select="checkBoxClick">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L4 M5 S12"
+                                                                    indentL="2">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </CheckBox>
+                                                        <CheckBox
+                                                            id="beyond-firstaid"
+                                                            text="Treatment Beyond First Aid"
+                                                            enabled="true"
+                                                            
+                                                            tooltip="Treatment Beyond First Aid"
+                                                            selected="{path:'INJURED_PERSON>/TREATBEYONDFA',
+                                                                        formatter: '.formatters.checkBoxFormatter' }"
+                                                            select="checkBoxClick">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L4 M5 S12"
+                                                                    indentL="2">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </CheckBox>
+                                                        <CheckBox
+                                                            id="resuscitation"
+                                                            text="Immediate Resuscitation"
+                                                            enabled="true"
+                                                            tooltip="Immediate Resuscitation"
+                                                            selected="{path:'INJURED_PERSON>/RESUSCITATION',
+                                                                        formatter: '.formatters.checkBoxFormatter' }"
+                                                            select="checkBoxClick">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L4 M5 S12"
+                                                                    indentL="2">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </CheckBox>
+                                                        <CheckBox
+                                                            id="fatality"
+                                                            text="Fatality"
+                                                            enabled="true"
+                                                            tooltip="Fatality"
+                                                            selected="{path:'INJURED_PERSON>/FATAFLG',
+                                                                        formatter: '.formatters.checkBoxFormatter' }"
+                                                            select="checkBoxClick">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L4 M5 S12"
+                                                                    indentL="2">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </CheckBox>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="Injury Description"
+                                                            tooltip="Injury Description">
+                                                        </Label>
+                                                    </f:label>
+                                                    <f:fields>  
+                                                        <Input
+                                                            id="injury-description"
+                                                            enabled="true"
+                                                            value="{INJURED_PERSON>/DESC_TXT}">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L5 M5 S12">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="Initial Treatment"
+                                                            tooltip="Initial Treatment">
+                                                        </Label>
+                                                    </f:label>
+                                                    <f:fields>  
+                                                        <TextArea
+                                                            id="initial-treatment"
+                                                            enabled="true"
+                                                            value="{INJURED_PERSON>/INITIAL_TREATMENT}"
+                                                            rows="4"
+                                                            height="3rem">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L5 M5 S12">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </TextArea>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                            </f:formElements>
+                                        </f:FormContainer>
+                                    </f:formContainers>
+                                </f:Form>
+
+                            </u:blocks>
+                        </u:ObjectPageSubSection>
+                    </u:subSections>
+                </u:ObjectPageSection>
+
+                <u:ObjectPageSection title="{i18n>ObjectPageSection.influencingFactors}" id="page3" >
+                    <u:subSections>
+                        <u:ObjectPageSubSection>
+                            <u:blocks>
+                                <Table id="peopleTable" inset="true" mode="sap.m.ListMode.None" includeItemInSelection="false" items="{INJURED_PEOPLE_INFLUENCING_FACTORS>/}">
+
+                                    <columns>
+                                        <Column demandPopin="true">
+                                            <Label text="{i18n>InfluencingFactorsTable.item}"/>
+                                        </Column>
+                                        <Column minScreenWidth="Desktop" demandPopin="true">
+                                            <Label text="{i18n>InfluencingFactorsTable.factorCategory}"/>
+                                        </Column>
+                                        <Column minScreenWidth="Desktop" demandPopin="true">
+                                            <Label text="{i18n>InfluencingFactorsTable.influencingFactor}"/>
+                                        </Column>
+                                        <Column demandPopin="true" hAlign="End">
+                                            <Button icon="sap-icon://add" press="influencingFactorAddPress"/>
+                                        </Column>
+                                    </columns>
+
+                                    <items>
+                                        <ColumnListItem type="Active">
+                                            <cells>
+                                                <Text text="{INJURED_PEOPLE_INFLUENCING_FACTORS>LINE_NUMBER}"/>
+                                                <Input  value="{INJURED_PEOPLE_INFLUENCING_FACTORS>INFLUEN_FACTOR_CAT_ID}" 
+                                                        showValueHelp="true"
+                                                        valueHelpOnly="true"
+                                                        valueHelpRequest="factorCategoryPress"/>
+                                                <Input  value="{INJURED_PEOPLE_INFLUENCING_FACTORS>INFLUEN_FACTOR_ID}"
+                                                        showValueHelp="true"
+                                                        valueHelpOnly="true"
+                                                        valueHelpRequest="influencingFactorPress"/>
+                                                <Button icon="sap-icon://delete" press="removeInfluencingFactor"/>
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+
+                                </Table>
+                               
+                            </u:blocks>
+                        </u:ObjectPageSubSection>
+                    </u:subSections>
+                </u:ObjectPageSection> -->
+
+            </u:sections>
+        </u:ObjectPageLayout>
+<!--
+        <footer>
+            <Bar id="otbFooter">
+                <contentLeft>
+                    <Button
+                        id="messages-button"
+                        icon="sap-icon://message-popup"
+                        text="{/length}"
+                        type="Emphasized"
+                        press="handleMessagePopoverPress"/>
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        id="save-button"
+                        type="Emphasized"
+                        text="{i18nGlobal>General.save}"
+                        press="onSavePress"/>
+                    <Button
+                        id="cancel-button"
+                        text="{i18nGlobal>General.cancel}"
+                        press="dep.fiori.lib.util.Utilities.navHome"/>
+                </contentRight>
+            </Bar>
+        </footer> -->
+    </Page>
+</mvc:View>

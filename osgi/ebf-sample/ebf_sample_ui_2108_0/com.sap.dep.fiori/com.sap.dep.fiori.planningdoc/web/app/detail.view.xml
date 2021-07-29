@@ -1,0 +1,201 @@
+<mvc:View
+    controllerName="dep.fiori.planningdoc.app.detail"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:u="sap.uxap"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:c="sap.ui.core"
+    xmlns="sap.m">
+    <Page
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <u:ObjectPageLayout useIconTabBar="true">
+
+            <u:headerTitle>
+                <u:ObjectPageHeader objectTitle="{i18n>Detail.title} {/PLANDOC_ID}" />
+            </u:headerTitle>
+
+            <u:headerContent>
+                <l:Grid visible="{= !${/PR_NO_LOCAL} }">
+                    <Label text="{i18nGlobal>General.description}:">
+                        <layoutData>
+                            <l:GridData span="L1 M2 S12" />
+                        </layoutData>
+                    </Label>
+                    <Input
+                        value="{/DESCRIPTION}"
+                        editable="{= !!${state>/editing} }">
+                        <layoutData>
+                            <l:GridData span="L4 M6 S12" />
+                        </layoutData>
+                    </Input>
+                </l:Grid>
+                <l:VerticalLayout>
+                    <l:HorizontalLayout
+                        allowWrapping="true"
+                        visible="{= !!${/PR_NO_LOCAL} }">
+                        <Label
+                            text="{i18nGlobal>General.description}:"
+                            class="sapUiTinyMarginEnd" />
+                        <Label
+                            text="{/DESCRIPTION}"
+                            tooltip="{/DESCRIPTION}" />
+                    </l:HorizontalLayout>
+                    <l:HorizontalLayout
+                        allowWrapping="true"
+                        visible="{= !!${/PR_NO_LOCAL} }">
+                        <Label
+                            text="{i18n>Header.PRs}"
+                            class="sapUiTinyMarginEnd" />
+                        <Link
+                            text="{/PR_NO_LOCAL}"
+                            press=".toPR" />
+                    </l:HorizontalLayout>
+                </l:VerticalLayout>
+            </u:headerContent>
+
+            <u:sections>
+                <u:ObjectPageSection>
+                    <u:ObjectPageSubSection>
+                        <Table
+                            noDataText="{i18nGlobal>General.listEmpty}"
+                            growing="true"
+                            items="{/items}"
+                            growingScrollToLoad="true"
+                            mode="{= !${/PR_NO_LOCAL} ? 'Delete' : 'None' }"
+                            delete="onRemoveItem">
+                            <headerToolbar>
+                                <Toolbar>
+                                    <Title text="{i18nGlobal>General.items} ({/items/length})" />
+                                    <ToolbarSpacer />
+                                    <Button
+                                        tooltip="{i18n>List.refresh}"
+                                        icon="sap-icon://refresh"
+                                        press="refresh"
+                                        visible="{= !${state>/editing} }" />
+                                    <Button
+                                        tooltip="{i18nGlobal>General.add}"
+                                        icon="sap-icon://add"
+                                        type="Transparent"
+                                        press="onAddItem"
+                                        visible="{=
+                                            !${state>/editing} &amp;&amp;
+                                            !${/PR_NO_LOCAL}
+                                        }" />
+                                    <Button
+                                        text="{i18nGlobal>General.edit}"
+                                        tooltip="{i18nGlobal>General.edit}"
+                                        press="onEdit"
+                                        visible="{=
+                                            !${state>/editing} &amp;&amp;
+                                            !${/PR_NO_LOCAL}
+                                        }" />
+                                    <Button
+                                        text="{i18nGlobal>General.save}"
+                                        tooltip="{i18nGlobal>General.save}"
+                                        type="Emphasized"
+                                        press="onSave"
+                                        visible="{= !!${state>/editing} }" />
+                                    <Button
+                                        text="{i18nGlobal>General.cancel}"
+                                        tooltip="{i18nGlobal>General.cancel}"
+                                        press="onCancel"
+                                        visible="{= !!${state>/editing} }" />
+                                </Toolbar>
+                            </headerToolbar>
+                            <columns>
+                                <Column vAlign="Middle">
+                                    <Title
+                                        text="{i18nGlobal>General.material}"
+                                        tooltip="{i18nGlobal>General.material}" />
+                                </Column>
+                                <Column vAlign="Middle">
+                                    <Title
+                                        text="{i18nGlobal>General.location}"
+                                        tooltip="{i18nGlobal>General.location}" />
+                                </Column>
+                                <Column
+                                    vAlign="Middle"
+                                    width="40%"
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                    popinDisplay="Inline">
+                                    <Title
+                                        text="{i18nGlobal>General.description}"
+                                        tooltip="{i18nGlobal>General.description}" />
+                                </Column>
+                                <Column vAlign="Middle" hAlign="Right">
+                                    <Title
+                                        text="{i18nGlobal>General.onhand}"
+                                        tooltip="{i18nGlobal>General.onhand}" />
+                                </Column>
+                                <Column vAlign="Middle" hAlign="Right">
+                                    <Title
+                                        text="{i18n>List.requiredQty}"
+                                        tooltip="{i18n>List.requiredQty}" />
+                                </Column>
+                                <Column vAlign="Middle" hAlign="Right">
+                                    <Title
+                                        text="{i18n>List.prQty}"
+                                        tooltip="{i18n>List.prQty}" />
+                                </Column>
+                            </columns>
+                            <ColumnListItem vAlign="Middle">
+                                <Label
+                                    text="{MATNR}"
+                                    tooltip="{MATNR}"
+                                    design="Bold"
+                                    class="identifierTextBlue" />
+                                <Label
+                                    text="{LGORT}"
+                                    tooltip="{LGORT}" />
+                                <Label
+                                    text="{MAKTX}"
+                                    tooltip="{MAKTX}" />
+                                <Label
+                                    text="{ONHAND}"
+                                    textAlign="Right" />
+                                <Label
+                                    text="{REQQTY}"
+                                    textAlign="Right" />
+                                <l:HorizontalLayout>
+                                    <Label
+                                        text="{PRQTY}"
+                                        textAlign="Right"
+                                        visible="{= !!${/PR_NO_LOCAL} }" />
+                                    <Input
+                                        value="{PRQTY}"
+                                        type="Number"
+                                        editable="{= !!${state>/editing} }"
+                                        textAlign="Right"
+                                        visible="{= !${/PR_NO_LOCAL} }" />
+                                </l:HorizontalLayout>
+                            </ColumnListItem>
+                        </Table>
+                    </u:ObjectPageSubSection>
+                </u:ObjectPageSection>
+            </u:sections>
+        </u:ObjectPageLayout>
+
+        <footer>
+            <Bar>
+                <contentRight>
+                    <Button
+                        type="Emphasized"
+                        text="{i18n>Footer.createPR}"
+                        press="createPR"
+                        visible="{= !${/PR_NO_LOCAL} }" />
+                    <Button
+                        type="Emphasized"
+                        text="{i18n>Footer.createDoc}"
+                        press="cloneDoc"
+                        visible="{= !!${/PR_NO_LOCAL} }" />
+                </contentRight>
+            </Bar>
+        </footer> 
+    </Page>
+</mvc:View>

@@ -1,0 +1,329 @@
+<mvc:View
+    controllerName="dep.fiori.purchaseorder.app.detail"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:c="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns:l="sap.ui.layout"
+    xmlns:uni="sap.ui.unified"
+    xmlns="sap.m">
+    <u:ObjectPageLayout
+        id="content"
+        alwaysShowContentHeader="true"
+        useIconTabBar="true"
+        navigate="onPageNav">
+
+        <u:headerTitle>
+            <u:ObjectPageHeader objectTitle="{i18n>General.purchaseOrder} {/}" />
+        </u:headerTitle>
+
+        <u:headerContent>
+            <l:Grid
+                vSpacing="0"
+                defaultSpan="L12 M12 S12">
+                <HBox
+                    fitContainer="true"
+                    renderType="Bare">
+                    <Label
+                        text="{i18n>Header.approval}:"
+                        class="sapUiSmallMarginEnd" />
+                    <Label text="{
+                        path: 'materials>/0/PROCSTAT',
+                        formatter: '.approvalFormatter'
+                    }" />
+                </HBox>
+            </l:Grid>
+        </u:headerContent>
+
+        <u:sections>
+            <u:ObjectPageSection
+                id="materials"
+                title="{i18n>Order.materials}">
+                <u:subSections>
+                    <u:ObjectPageSubSection>
+                        <u:blocks>
+                            <VBox
+                                fitContainer="true"
+                                renderType="Bare">
+                                <HBox
+                                    fitContainer="true"
+                                    renderType="Bare"
+                                    alignItems="Center">
+                                    <Label
+                                        text="{i18n>Header.location}:"
+                                        class="sapUiSmallMarginEnd" />
+                                    <Select
+                                        items="{locations>/}"
+                                        selectedKey="{selectedLocation>/LGORT}"
+                                        class="sapUiLargeMarginEnd">
+                                        <c:Item text="{locations>LGORT}" key="{locations>LGORT}" />
+                                    </Select>
+                                    <CheckBox
+                                        text="{i18n>Header.adjustBudat}"
+                                        selected="{uiProps>/adjustBudat}"
+                                        class="sapUiLargeMarginBegin" />
+                                </HBox>
+                                <Table
+                                    noDataText="{i18nGlobal>General.listEmpty}"
+                                    growing="true"
+                                    items="{materials>/}"
+                                    growingScrollToLoad="true">
+                                    <headerToolbar>
+                                        <Toolbar>
+                                            <Title text="{i18nGlobal>General.items} ({materials>/length})" />
+                                            <ToolbarSpacer />
+                                            <Button
+                                                tooltip="{i18nGlobal>General.listRefresh}"
+                                                icon="sap-icon://refresh"
+                                                press="refreshMaterials" />
+                                            <Button
+                                                text="{i18n>Header.receive}"
+                                                type="Emphasized"
+                                                press="saveReceipt" />
+                                        </Toolbar>
+                                    </headerToolbar>
+                                    <columns>
+                                        <Column
+                                            vAlign="Middle">
+                                            <Title
+                                                text="{i18n>Item.number}"
+                                                tooltip="{i18n>Item.number}" />
+                                        </Column>
+                                        <Column vAlign="Middle">
+                                            <Title
+                                                text="{i18nGlobal>General.material}"
+                                                tooltip="{i18nGlobal>General.material}" />
+                                        </Column>
+                                        <Column
+                                            vAlign="Middle"
+                                            width="35%"
+                                            minScreenWidth="Desktop"
+                                            demandPopin="true"
+                                            popinDisplay="Inline">
+                                            <Title
+                                                text="{i18nGlobal>General.description}"
+                                                tooltip="{i18nGlobal>General.description}" />
+                                        </Column>
+                                        <Column
+                                            vAlign="Middle"
+                                            hAlign="End">
+                                            <Title
+                                                text="{i18n>Order.quantity}"
+                                                tooltip="{i18n>Order.quantity}" />
+                                        </Column>
+                                        <Column
+                                            vAlign="Middle"
+                                            hAlign="End">
+                                            <Title
+                                                text="{i18n>Order.backorder}"
+                                                tooltip="{i18n>Order.backorder}" />
+                                        </Column>
+                                        <Column
+                                            vAlign="Middle"
+                                            hAlign="End"
+                                            minScreenWidth="Tablet"
+                                            demandPopin="true"
+                                            popinDisplay="Inline">
+                                            <Title
+                                                text="{i18n>Order.receipt101}"
+                                                tooltip="{i18n>Order.receipt101}" />
+                                        </Column>
+                                        <Column
+                                            vAlign="Middle"
+                                            hAlign="End">
+                                            <Title
+                                                text="{i18n>Order.available}"
+                                                tooltip="{i18n>Order.available}" />
+                                        </Column>
+                                        <Column
+                                            vAlign="Middle"
+                                            hAlign="End"
+                                            minScreenWidth="Tablet"
+                                            demandPopin="true"
+                                            popinDisplay="Inline">
+                                            <Title
+                                                text="{i18n>Order.receipt343}"
+                                                tooltip="{i18n>Order.receipt343}" />
+                                        </Column>
+                                        <Column
+                                            vAlign="Middle"
+                                            minScreenWidth="Tablet"
+                                            demandPopin="true"
+                                            popinDisplay="Inline">
+                                            <Title
+                                                text="{i18nGlobal>General.unit}"
+                                                tooltip="{i18nGlobal>General.unit}" />
+                                        </Column>
+                                        <Column
+                                            vAlign="Middle"
+                                            minScreenWidth="Tablet"
+                                            demandPopin="true"
+                                            popinDisplay="Inline">
+                                            <Title
+                                                text="{i18n>Order.valuation}"
+                                                tooltip="{i18n>Order.valuation}" />
+                                        </Column>
+                                    </columns>
+                                    <ColumnListItem>
+                                        <HBox
+                                            fitContainer="true"
+                                            renderType="Bare"
+                                            alignItems="Center">
+                                            <Label
+                                                text="{materials>EBELP}"
+                                                tooltip="{materials>EBELP}"
+                                                class="sapUiTinyMarginEnd" />
+                                            <c:Icon
+                                                src="sap-icon://message-error"
+                                                size="1.25rem"
+                                                color="red"
+                                                tooltip="{i18nGlobal>General.hasSyncErrors}"
+                                                visible="{= !!${materials>EDGE_ERRORS} }"
+                                                press="handleResponsivePopoverPress" />
+                                        </HBox>
+                                        <Label
+                                            text="{materials>MATNR}"
+                                            tooltip="{materials>MATNR}" />
+                                        <Label
+                                            text="{materials>TXZ01}"
+                                            tooltip="{materials>TXZ01}" />
+                                        <Label text="{materials>MENGE}" />
+                                        <Label text="{materials>BACKORDER_QTY}" />
+                                        <Input
+                                            value="{materials>ERFMG_101}"
+                                            change="onChange"
+                                            placeholder="0"
+                                            type="Number"
+                                            textAlign="Right"
+                                            editable="{
+                                                path: 'materials>',
+                                                formatter: '.receive101Formatter'
+                                            }"
+                                            valueState="{= ${materials>ERFMG_101} > ${materials>BACKORDER_QTY} ? 'Error' : 'None' }"
+                                            valueStateText="{
+                                                path: 'materials>BACKORDER_QTY',
+                                                formatter: '.errorStateFormatter'
+                                            }" />
+                                        <Label text="{materials>AVAIL_QTY}" />
+                                        <Input
+                                            value="{materials>ERFMG_343}"
+                                            change="onChange"
+                                            placeholder="0"
+                                            type="Number"
+                                            textAlign="Right"
+                                            editable="{
+                                                path: 'materials>',
+                                                formatter: '.receive343Formatter'
+                                            }"
+                                            valueState="{= ${materials>ERFMG_343} > ${materials>AVAIL_QTY} ? 'Error' : 'None' }"
+                                            valueStateText="{
+                                                path: 'materials>AVAIL_QTY',
+                                                formatter: '.errorStateFormatter'
+                                            }" />
+                                        <Label
+                                            text="{materials>BPRME}"
+                                            tooltip="{materials>BPRME}" />
+                                        <Label
+                                            text="{materials>BWTAR}"
+                                            tooltip="{materials>BWTAR}" />
+                                    </ColumnListItem>
+                                </Table>
+                            </VBox>
+                        </u:blocks>
+                    </u:ObjectPageSubSection>
+                </u:subSections>
+            </u:ObjectPageSection>
+            <u:ObjectPageSection
+                id="service"
+                title="{i18n>Service.title}">
+                <u:subSections>
+                    <u:ObjectPageSubSection>
+                        <u:blocks>
+                            <Table
+                                noDataText="{i18nGlobal>General.listEmpty}"
+                                growing="true"
+                                items="{service>/}"
+                                growingScrollToLoad="true"
+                                itemPress="onSheetSelect">
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <Title text="{i18n>Table.service} ({service>/length})" />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            tooltip="{i18nGlobal>General.listRefresh}"
+                                            icon="sap-icon://refresh"
+                                            press="refreshService" />
+                                    </Toolbar>
+                                </headerToolbar>
+                                <columns>
+                                    <Column
+                                        vAlign="Middle">
+                                        <Title
+                                            text="{i18n>Item.number}"
+                                            tooltip="{i18n>Item.number}" />
+                                    </Column>
+                                    <Column
+                                        vAlign="Middle"
+                                        width="35%"
+                                        minScreenWidth="Desktop"
+                                        demandPopin="true"
+                                        popinDisplay="Inline">
+                                        <Title
+                                            text="{i18nGlobal>General.description}"
+                                            tooltip="{i18nGlobal>General.description}" />
+                                    </Column>
+                                    <Column vAlign="Middle">
+                                        <Title
+                                            text="{i18n>Service.start}"
+                                            tooltip="{i18n>Service.start}" />
+                                    </Column>
+                                    <Column vAlign="Middle">
+                                        <Title
+                                            text="{i18n>Service.end}"
+                                            tooltip="{i18n>Service.end}" />
+                                    </Column>
+                                    <Column vAlign="Middle">
+                                        <Title
+                                            text="{i18nGlobal>General.currency}"
+                                            tooltip="{i18nGlobal>General.currency}" />
+                                    </Column>
+                                </columns>
+                                <ColumnListItem type="Navigation">
+                                    <Label
+                                        text="{service>PO_ITEM}"
+                                        tooltip="{service>PO_ITEM}" />
+                                    <Label
+                                        text="{service>SHORT_TEXT}"
+                                        tooltip="{service>SHORT_TEXT}" />
+                                    <Label
+                                        text="{
+                                            path: 'service>BEGDATE',
+                                            formatter: 'dep.fiori.lib.util.Utilities.formatters.date'
+                                        }"
+                                        tooltip="{
+                                            path: 'service>BEGDATE',
+                                            formatter: 'dep.fiori.lib.util.Utilities.formatters.date'
+                                        }" />
+                                    <Label
+                                        text="{
+                                            path: 'service>ENDDATE',
+                                            formatter: 'dep.fiori.lib.util.Utilities.formatters.date'
+                                        }"
+                                        tooltip="{
+                                            path: 'service>ENDDATE',
+                                            formatter: 'dep.fiori.lib.util.Utilities.formatters.date'
+                                        }" />
+                                    <Label
+                                        text="{service>CURRENCY}"
+                                        tooltip="{service>CURRENCY}" />
+                                </ColumnListItem>
+                            </Table>
+                        </u:blocks>
+                    </u:ObjectPageSubSection>
+                </u:subSections>
+            </u:ObjectPageSection>
+        </u:sections>
+    </u:ObjectPageLayout>
+</mvc:View>

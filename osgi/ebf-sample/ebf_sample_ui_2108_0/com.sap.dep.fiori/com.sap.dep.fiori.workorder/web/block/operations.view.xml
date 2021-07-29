@@ -1,0 +1,204 @@
+<c:View
+    controllerName="dep.fiori.workorder.block.operations"
+    xmlns:c="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+    <VBox
+        fitContainer="true"
+        renderType="Bare">
+        <f:Form visible="{state>/creatingOperation}">
+            <f:layout>
+                <f:ResponsiveGridLayout labelSpanL="2" />
+            </f:layout>
+            <f:toolbar>
+                <Toolbar class="sapUiTinyMarginBottom">
+                    <Title text="{i18n>Operations.create}" />
+                    <ToolbarSpacer />
+                    <Button
+                        text="{i18nGlobal>General.save}"
+                        press="onCreateOperation" />
+                    <Button
+                        text="{i18nGlobal>General.cancel}"
+                        press="onResetNewOperation" />
+                </Toolbar>
+            </f:toolbar>
+            <f:FormContainer>
+                <f:FormElement>
+                    <f:label>
+                        <Label
+                            text="{i18n>Operations.workCenter}:"
+                            required="true" />
+                    </f:label>
+                    <Select
+                        selectedKey="{operation>/ARBPL}"
+                        items="{lookup>/workcenter}"
+                        valueState="{= !${operation>/ARBPL} ? 'Error' : 'None' }"
+                        showSecondaryValues="true">
+                        <c:ListItem
+                            text="{lookup>VAPLZ}"
+                            key="{lookup>VAPLZ}"
+                            additionalText="{lookup>KTEXT}" />
+                        <layoutData>
+                            <l:GridData span="L2 M3 S4" />
+                        </layoutData>
+                    </Select>
+                </f:FormElement>
+
+                <f:FormElement>
+                    <f:label>
+                        <Label
+                            text="{i18n>Operations.controlKey}:"
+                            required="true">
+                            <layoutData>
+                                <l:GridData span="L2 M3 S12" />
+                            </layoutData>
+                        </Label>
+                    </f:label>
+                    <Select
+                        selectedKey="{operation>/STEUS}"
+                        items="{lookup>/controlkey}"
+                        valueState="{= !${operation>/STEUS} ? 'Error' : 'None' }">
+                        <c:ListItem key="{lookup>STEUS}" text="{lookup>STEUS}" />
+                        <layoutData>
+                            <l:GridData span="L2 M3 S4" />
+                        </layoutData>
+                    </Select>
+                </f:FormElement>
+
+                <f:FormElement>
+                    <f:label>
+                        <Label text="{i18nGlobal>General.description}:" />
+                    </f:label>
+                    <Input value="{operation>/LTXA1}" maxLength="40">
+                        <layoutData>
+                            <l:GridData span="L6 M9 S12" />
+                        </layoutData>
+                    </Input>
+                </f:FormElement>
+
+                <f:FormElement>
+                    <f:label>
+                        <Label text="{i18n>Operations.plannedHours}:" />
+                    </f:label>
+                    <Input
+                        value="{operation>/DAUNO}"
+                        type="Number"
+                        textAlign="Right">
+                        <layoutData>
+                            <l:GridData span="L1 M2 S3" />
+                        </layoutData>
+                    </Input>
+                </f:FormElement>
+
+                <f:FormElement>
+                    <f:label>
+                        <Label text="{i18n>Operations.numberOfWorkers}:">
+                            <layoutData>
+                                <l:GridData span="L2 M3 S12" indent="L1 M1" />
+                            </layoutData>
+                        </Label>
+                    </f:label>
+                    <Input
+                        value="{operation>/ARBEI}"
+                        type="Number"
+                        textAlign="Right">
+                        <layoutData>
+                            <l:GridData span="L1 M2 S3" />
+                        </layoutData>
+                    </Input>
+                </f:FormElement>
+
+                <f:FormElement visible="{= ${operation>/STEUS} === 'EXT2' }">
+                    <f:label>
+                        <Label text="{i18n>Operations.actualWork}:" />
+                    </f:label>
+                    <Input
+                        value="{operation>/ISMNW}"
+                        type="Number"
+                        textAlign="Right">
+                        <layoutData>
+                            <l:GridData span="L1 M2 S3" />
+                        </layoutData>
+                    </Input>
+                </f:FormElement>
+
+                <f:FormElement visible="{= ${operation>/STEUS} === 'EXT2' }">
+                    <f:label>
+                        <Label text="{i18n>Operations.longText}:" />
+                    </f:label>
+                    <TextArea
+                        value="{operation>/WO_OPNOTE_LTXT}"
+                        rows="4">
+                        <layoutData>
+                            <l:GridData span="L6 M9 S12" />
+                        </layoutData>
+                    </TextArea>
+                </f:FormElement>
+            </f:FormContainer>
+        </f:Form>
+        <Table
+            noDataText="{i18n>Operations.listEmpty}"
+            items="{operations>/}"
+            growing="true"
+            growingScrollToLoad="true"
+            mode="{= ${allowDelete>/} === 'Y' ? 'Delete' : 'SingleSelectMaster' }"
+            delete="onDeleteOperation"
+            itemPress="onEditOperation">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{= ${i18n>Detail.operations} + ' (' + (${operations>/length} || 0) + ')' }" />
+                    <ToolbarSpacer />
+                    <Button
+                        tooltip="{i18nGlobal>General.listRefresh}"
+                        icon="sap-icon://refresh"
+                        press="refresh" />
+                    <Button
+                        tooltip="{i18n>Operations.addOperation}"
+                        icon="sap-icon://add"
+                        press="onNewOperation"
+                        visible="{=
+                            !${state>/creatingOperation} &amp;&amp;
+                            ${/USER_STATUS}.substr(0, 4) !== 'CMPL' &amp;&amp;
+                            ${/USER_STATUS}.substr(0, 4) !== 'TECO'
+                        }" />
+                </Toolbar>
+            </headerToolbar>
+            <columns>
+                <Column vAlign="Middle">
+                    <Title text="{i18n>Detail.operations}" />
+                </Column>
+                <Column
+                    vAlign="Middle"
+                    width="30%"
+                    minScreenWidth="Desktop"
+                    demandPopin="true"
+                    popinDisplay="Inline">
+                    <Title text="{i18nGlobal>General.description}" />
+                </Column>
+                <Column vAlign="Middle">
+                    <Title text="{i18n>Operations.controlKey}" />
+                </Column>
+                <Column vAlign="Middle">
+                    <Title text="{i18n>Operations.workCenter}" />
+                </Column>
+            </columns>
+            <ColumnListItem type="Navigation" vAlign="Middle">
+                <Label
+                    text="{operations>VORNR}"
+                    tooltip="{operations>VORNR}"
+                    design="Bold"
+                    class="identifierTextBlue" />
+                <Label
+                    text="{operations>LTXA1}"
+                    tooltip="{operations>LTXA1}" />
+                <Label
+                    text="{operations>STEUS}"
+                    tooltip="{operations>STEUS}" />
+                <Label
+                    text="{operations>ARBPL}"
+                    tooltip="{operations>ARBPL}" />
+            </ColumnListItem>
+        </Table>
+    </VBox>
+</c:View>

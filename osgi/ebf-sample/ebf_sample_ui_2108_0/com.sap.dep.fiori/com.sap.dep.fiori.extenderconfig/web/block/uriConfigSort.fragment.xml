@@ -1,0 +1,24 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <ViewSettingsDialog confirm="onSort">
+        <sortItems>
+            <ViewSettingsItem
+                text="{i18n>Label.signature}"
+                key="SIGNATURE"
+                selected="true" />
+            <ViewSettingsItem
+                text="{i18n>Label.uri}"
+                key="URI" />
+            <ViewSettingsItem
+                text="{i18n>Label.isPrefix}"
+                key="URI_IS_PREFIX" />
+            <ViewSettingsItem
+                text="{i18n>Label.lastAccess}"
+                key="LAST_ACCESS" />
+            <ViewSettingsItem
+                text="{i18n>Label.lastFetch}"
+                key="LAST_FETCH" />
+        </sortItems>
+    </ViewSettingsDialog>
+</c:FragmentDefinition>

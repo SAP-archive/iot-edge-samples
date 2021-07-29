@@ -1,0 +1,67 @@
+{
+    "sap.ui5": {
+        "name": "DEP Purchase Requisition",
+        "version": "1.0",
+        "config": {
+            "serviceConfig": {
+                "rest": {
+                    "description": "Base URL",
+                    "url": "/ws_restful_data_controller"
+                }
+            },
+            "compactContentDensity": false
+        },
+        "routing" : {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "viewPath": "dep.fiori.purchasereq.app",
+                "targetControl": "content",
+                "targetAggregation": "pages"
+            },
+            "routes": {
+                "display": {
+                    "pattern": "",
+                    "viewId": "dep-fiori-purchasereq-list",
+                    "view": "list"
+                },
+                "create": {
+                    "pattern": "create",
+                    "viewId": "dep-fiori-purchasereq-create",
+                    "view": "create"
+                },
+                "saved": {
+                    "pattern": "create/saved",
+                    "viewId": "dep-fiori-purchasereq-saved",
+                    "view": "saved"
+                },
+                "detail": {
+                    "pattern": "{PR_NO_LOCAL}/:block:",
+                    "viewId": "dep-fiori-purchasereq-detail",
+                    "view": "detail"
+                }
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "i18nGlobal": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "/dep_fiori_apps/com.sap.dep.fiori.lib/i18n/i18n.properties"
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                },
+                {
+                    "uri": "/dep_fiori_apps/com.sap.dep.fiori.lib/css/style.css",
+                    "id": "dep-lib-style"
+                }
+            ]
+        }
+    }
+}

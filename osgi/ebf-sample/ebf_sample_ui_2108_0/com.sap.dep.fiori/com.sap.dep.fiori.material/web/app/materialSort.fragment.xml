@@ -1,0 +1,27 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <ViewSettingsDialog confirm="onSort">
+        <sortItems>
+            <ViewSettingsItem
+                text="{i18nGlobal>MaterialSelect.material}"
+                key="MATNR"
+                selected="true" />
+            <ViewSettingsItem
+                text="{i18nGlobal>General.description}"
+                key="MAKTX" />
+            <ViewSettingsItem
+                text="{i18n>Material.storageLocation}"
+                key="LGORT" />
+            <ViewSettingsItem
+                text="{i18n>Material.bin}"
+                key="LGPBE" />
+            <ViewSettingsItem
+                text="{i18nGlobal>MaterialSelect.manufacturer}"
+                key="NAME1" />
+            <ViewSettingsItem
+                text="{i18nGlobal>MaterialSelect.manufacturerPartNo}"
+                key="MFRPN" />
+        </sortItems>
+    </ViewSettingsDialog>
+</c:FragmentDefinition>

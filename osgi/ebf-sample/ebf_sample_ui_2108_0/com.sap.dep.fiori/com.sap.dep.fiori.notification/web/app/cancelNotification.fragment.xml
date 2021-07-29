@@ -1,0 +1,20 @@
+<c:FragmentDefinition 
+    xmlns="sap.m" 
+    xmlns:c="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+    <Dialog class="dep-fiori" title="Cancel Notification Confirmation">
+        <l:VerticalLayout class="sapUiContentPadding" width="100%">
+            <l:content>
+                <Label
+                    text="{i18n>Cancel.confirm}" />
+                </l:content>
+        </l:VerticalLayout>
+        <beginButton>
+            <Button text="OK" type="Emphasized" press="cancelNotification" />
+        </beginButton>
+
+        <endButton>
+            <Button text="Cancel" press="closeCancelDialog" />
+        </endButton>
+    </Dialog>
+</c:FragmentDefinition>

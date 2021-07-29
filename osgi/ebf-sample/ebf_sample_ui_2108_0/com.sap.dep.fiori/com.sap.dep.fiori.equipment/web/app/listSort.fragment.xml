@@ -1,0 +1,27 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <ViewSettingsDialog confirm="onSort">
+        <sortItems>
+            <ViewSettingsItem
+                text="{i18nGlobal>EquipmentSelect.equipment}"
+                key="EQUNR"
+                selected="true" />
+            <ViewSettingsItem
+                text="{i18nGlobal>General.description}"
+                key="EQKTX" />
+            <ViewSettingsItem
+                text="{i18nGlobal>General.location}"
+                key="TPLNR" />
+            <ViewSettingsItem
+                text="{i18nGlobal>EquipmentSelect.locationDesc}"
+                key="PLTXT" />
+            <ViewSettingsItem
+                text="{i18n>Equipment.costCenter}"
+                key="KOSTL" />
+            <ViewSettingsItem
+                text="{i18n>Equipment.root}"
+                key="IS_ROOT_EQUIP" />
+        </sortItems>
+    </ViewSettingsDialog>
+</c:FragmentDefinition>

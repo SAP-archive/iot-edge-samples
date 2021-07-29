@@ -1,0 +1,137 @@
+<mvc:View
+    controllerName="dep.fiori.equipmentmodel.app.list"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:c="sap.ui.core"
+    xmlns="sap.m">
+    <Page
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <VBox
+            fitContainer="true"
+            renderType="Bare">
+            <c:Fragment fragmentName="dep.fiori.lib.frag.filterBar" type="XML" />
+            <ScrollContainer
+                vertical="true"
+                height="100%"
+                width="100%">
+                <Table
+                    id="list"
+                    items="{odata>/Equipment_Model}"
+                    noDataText="{i18nGlobal>General.listEmpty}"
+                    growing="true"
+                    growingScrollToLoad="true"
+                    mode="SingleSelectMaster"
+                    itemPress="onItemPress">
+                    <headerToolbar>
+                        <Toolbar>
+                            <Title text="{i18n>EMList.title}" />
+                            <ToolbarSpacer />
+                            <Button
+                                tooltip="{i18nGlobal>General.sortList}"
+                                icon="sap-icon://drop-down-list"
+                                press="onSortPress" />
+                        </Toolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column 
+                            vAlign="Middle">
+                            <Title
+                                text="{i18n>Model.name}"
+                                tooltip="{i18n>EMList.modelName}" />
+                        </Column>
+                        <Column
+                            vAlign="Middle"
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                            popinDisplay="Inline">
+                            <Title 
+                                text="{i18nGlobal>General.description}" 
+                                tooltip="{i18nGlobal>General.description}" />
+                        </Column>
+                        <Column 
+                        	vAlign="Middle"
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                            popinDisplay="Inline">
+                            <Title 
+                                text="{i18n>Model.manufacturer}"
+                                tooltip="{i18n>Model.manufacturer}" />
+                        </Column>
+                        <Column 
+                            vAlign="Middle"
+                            minScreenWidth="Desktop"
+                            demandPopin="true"
+                            popinDisplay="Inline">
+                            <Title 
+                                text="{i18n>Model.class}" 
+                                tooltip="{i18n>Model.class}" />
+                        </Column>
+                        <Column 
+                            vAlign="Middle"
+                            minScreenWidth="Desktop"
+                            demandPopin="true"
+                            popinDisplay="Inline">
+                            <Title 
+                                text="{i18n>Model.subClass}"
+                                tooltip="{i18n>Model.subClass}" />
+                        </Column>
+                        <Column 
+                            vAlign="Middle"
+                            width="10%"
+                            minScreenWidth="Desktop"
+                            demandPopin="true"
+                            popinDisplay="Inline">
+                            <Title 
+                                text="{i18n>Model.root}"
+                                tooltip="{i18n>Model.root}" />
+                        </Column>
+                        <Column 
+                            vAlign="Middle"
+                            width="10%"
+                            minScreenWidth="Desktop"
+                            demandPopin="true"
+                            popinDisplay="Inline">
+                            <Title 
+                                text="{i18n>Model.sensor}"
+                                tooltip="{i18n>Model.sensor}" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type ="Active">
+                            <cells>
+                                <Label
+                                    text="{odata>MODEL_NAME}"
+                                    tooltip="{odata>MODEL_NAME}"
+                                    design="Bold"
+                                    class="identifierTextBlue" />
+                                <Label
+                                    text="{odata>DESCRIPTION}"
+                                    tooltip="{odata>DESCRIPTION}" />
+                                <Label
+                                    text="{odata>MANUFACTURER}"
+                                    tooltip="{odata>MANUFACTURER}" />
+                                <Label
+                                    text="{odata>CLASS}"
+                                    tooltip="{odata>CLASS}" />
+                                <Label
+                                    text="{odata>SUBCLASS}"
+                                    tooltip="{odata>SUBCLASS}" />
+                                <Label
+                                    text="{=${odata>IS_ROOT_MODEL} ? ${i18nGlobal>General.yes} : ${i18nGlobal>General.no}}"
+                                    tooltip="{=${odata>IS_ROOT_MODEL} ? ${i18nGlobal>General.yes} : ${i18nGlobal>General.no}}" />
+                                <Label
+                                    text="{=${odata>IS_SENSOR} ? ${i18nGlobal>General.yes} : ${i18nGlobal>General.no}}"
+                                    tooltip="{=${odata>IS_SENSOR} ? ${i18nGlobal>General.yes} : ${i18nGlobal>General.no}}" />
+                            </cells>
+                        </ColumnListItem>
+                     </items>
+                </Table>
+            </ScrollContainer>
+        </VBox>
+    </Page>
+</mvc:View>

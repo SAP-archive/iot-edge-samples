@@ -1,0 +1,29 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <ResponsivePopover
+        showHeader="false"
+        class="sapUiPopupWithPadding"
+        placement="Bottom" >
+        <content>
+            <List
+                items="{/}"
+                mode="SingleSelectMaster"
+                itemPress="dep.fiori.lib.util.ErrorPopover.toError">
+                <StandardListItem
+                    title="{}"
+                    type="Navigation" />
+            </List>
+        </content>
+        <beginButton>
+            <!-- <Button
+                text="{i18nGlobal>General.viewList}"
+                press="toEdgeErrorList" /> -->
+        </beginButton>
+        <endButton>
+            <Button
+                text="{i18nGlobal>General.close}"
+                press="dep.fiori.lib.util.ErrorPopover.close" />
+        </endButton>
+    </ResponsivePopover>
+</c:FragmentDefinition>

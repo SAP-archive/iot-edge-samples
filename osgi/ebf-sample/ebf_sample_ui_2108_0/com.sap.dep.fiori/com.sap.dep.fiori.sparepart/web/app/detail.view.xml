@@ -1,0 +1,232 @@
+<mvc:View
+    controllerName="dep.fiori.sparepart.app.detail"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:c="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+    <Page
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <u:ObjectPageLayout 
+            id="content"
+            alwaysShowContentHeader="true"
+            useIconTabBar="true"
+            navigate="onBlockSelect">
+            <u:headerTitle>
+                <u:ObjectPageHeader objectTitle="{i18n>Detail.title}: {sparepart>/INTERNAL_ID}" />
+            </u:headerTitle>
+            <u:headerContent>
+                <VBox
+                    fitContainer="true"
+                    renderType="Bare">
+                    <HBox renderType="Bare">
+                        <Label
+                            text="{i18nGlobal>General.description}:"
+                            class="sapUiTinyMarginEnd" />
+                        <Label text="{sparepart>/DESCRIPTION}" />
+                    </HBox>
+                    <HBox renderType="Bare">
+                        <Label
+                            text="{i18n>Part.subclass}:"
+                            class="sapUiTinyMarginEnd" />
+                        <Label text="{sparepart>/SUBCLASS}" />
+                    </HBox>
+                    <HBox renderType="Bare">
+                        <Label
+                            text="{i18n>Part.uom}:"
+                            class="sapUiTinyMarginEnd" />
+                        <Label text="{sparepart>/UOM}" />
+                    </HBox>
+                </VBox>
+            </u:headerContent>
+
+            <u:ObjectPageSection
+                id="details"
+                title="{i18n>Detail.details}">
+                <u:ObjectPageSubSection>
+                    <f:Form>
+                        <f:layout>
+                            <f:ResponsiveGridLayout labelSpanL="2" />
+                        </f:layout>
+                        <f:toolbar>
+                            <Toolbar class="sapUiTinyMarginBottom">
+                                <Title text="{i18n>Detail.partDetail}" />
+                            </Toolbar>
+                        </f:toolbar>
+                        <f:FormContainer>
+                            <f:layoutData>
+                                <l:GridData span="L6 M6 S12" />
+                            </f:layoutData>
+                            <f:FormElement>
+                                <f:label>
+                                    <Label
+                                        text="{i18n>Part.source}"
+                                        tooltip="{i18n>Part.source}">
+                                        <layoutData>
+                                            <l:GridData span="L6 M6 S12" />
+                                        </layoutData>
+                                    </Label>
+                                </f:label>
+                                <Label
+                                    text="{sparepart>/SOURCE}">
+                                </Label>
+                            </f:FormElement>
+                            <f:FormElement>
+                                <f:label>
+                                    <Label
+                                        text="{i18n>Part.manufacturer}"
+                                        tooltip="{i18n>Part.manufacturer}">
+                                        <layoutData>
+                                            <l:GridData span="L6 M6 S12" />
+                                        </layoutData>
+                                    </Label>
+                                </f:label>
+                                <Label
+                                    text="{sparepart>/MANUFACTURER}">
+                                </Label>
+                            </f:FormElement>
+                            <f:FormElement>
+                                <f:label>
+                                    <Label
+                                        text="{i18n>Part.mfrPartNumber}"
+                                        tooltip="{i18n>Part.mfrPartNumber}">
+                                        <layoutData>
+                                            <l:GridData span="L6 M6 S12" />
+                                        </layoutData>
+                                    </Label>
+                                </f:label>
+                                <Label
+                                    text="{sparepart>/MFR_PART_NUMBER}">
+                                </Label>
+                            </f:FormElement>
+                            <f:FormElement>
+                                <f:label>
+                                    <Label
+                                        text="{i18n>Part.eanNumber}"
+                                        tooltip="{i18n>Part.eanNumber}">
+                                        <layoutData>
+                                            <l:GridData span="L6 M6 S12" />
+                                        </layoutData>
+                                    </Label>
+                                </f:label>
+                                <Label
+                                    text="{sparepart>/EAN_NUMBER}">
+                                </Label>
+                            </f:FormElement>
+                        </f:FormContainer>
+                        <f:FormContainer>
+                            <f:layoutData>
+                                <l:GridData span="L6 M6 S12" />
+                            </f:layoutData>
+                            <f:FormElement>
+                                <f:label>
+                                    <Label
+                                        text="{i18n>Part.sizeDimensions}"
+                                        tooltip="{i18n>Part.sizeDimensions}">
+                                        <layoutData>
+                                            <l:GridData span="L6 M6 S12" />
+                                        </layoutData>
+                                    </Label>
+                                </f:label>
+                                <Label
+                                    text="{=${sparepart>/SIZE_DIMENSIONS} ? ${sparepart>/SIZE_DIMENSIONS} : '-'}">
+                                </Label>
+                            </f:FormElement>
+                            <f:FormElement>
+                                <f:label>
+                                    <Label
+                                        text="{i18n>Part.length}"
+                                        tooltip="{i18n>Part.length}">
+                                        <layoutData>
+                                            <l:GridData span="L6 M6 S12" />
+                                        </layoutData>
+                                    </Label>
+                                </f:label>
+                                <Label text="{sparepart>/LENGTH} {sparepart>/LWH_UOM}" />
+                            </f:FormElement>
+                            <f:FormElement>
+                                <f:label>
+                                    <Label
+                                        text="{i18n>Part.width}"
+                                        tooltip="{i18n>Part.width}">
+                                        <layoutData>
+                                            <l:GridData span="L6 M6 S12" />
+                                        </layoutData>
+                                    </Label>
+                                </f:label>
+                                <Label text="{sparepart>/WIDTH} {sparepart>/LWH_UOM}" />
+                            </f:FormElement>
+                            <f:FormElement>
+                                <f:label>
+                                    <Label
+                                        text="{i18n>Part.height}"
+                                        tooltip="{i18n>Part.height}">
+                                        <layoutData>
+                                            <l:GridData span="L6 M6 S12" />
+                                        </layoutData>
+                                    </Label>
+                                </f:label>
+                                <Label text="{sparepart>/HEIGHT} {sparepart>/LWH_UOM}" />
+                            </f:FormElement>
+                            <f:layoutData>
+                                <l:GridData span="L6 M6 S12" />
+                            </f:layoutData>
+                            <f:FormElement>
+                                <f:label>
+                                    <Label
+                                        text="{i18n>Part.grossWeight}"
+                                        tooltip="{i18n>Part.grossWeight}">
+                                        <layoutData>
+                                            <l:GridData span="L6 M6 S12" />
+                                        </layoutData>
+                                    </Label>
+                                </f:label>
+                                <Label text="{sparepart>/GROSS_WEIGHT}  {sparepart>/WEIGHT_UOM}" />
+                            </f:FormElement>
+                            <f:FormElement>
+                                <f:label>
+                                    <Label
+                                        text="{i18n>Part.netWeight}"
+                                        tooltip="{i18n>Part.netWeight}">
+                                        <layoutData>
+                                            <l:GridData span="L6 M6 S12" />
+                                        </layoutData>
+                                    </Label>
+                                </f:label>
+                                <Label text="{sparepart>/NET_WEIGHT} {sparepart>/WEIGHT_UOM}" />
+                            </f:FormElement>
+                            <f:FormElement>
+                                <f:label>
+                                    <Label
+                                        text="{i18n>Part.volume}"
+                                        tooltip="{i18n>Part.volume}">
+                                        <layoutData>
+                                            <l:GridData span="L6 M6 S12" />
+                                        </layoutData>
+                                    </Label>
+                                </f:label>
+                                <Label text="{sparepart>/VOLUME} {sparepart>/VOLUME_UOM}" />
+                            </f:FormElement>
+                        </f:FormContainer>
+                    </f:Form>
+                </u:ObjectPageSubSection>
+            </u:ObjectPageSection>
+        </u:ObjectPageLayout>
+
+        <footer>
+            <Bar>
+                <contentRight>
+                    <Button
+                        text="{i18nGlobal>General.cancel}"
+                        press="onCancel"/>
+                </contentRight>
+            </Bar>
+        </footer> 
+    </Page>
+</mvc:View>

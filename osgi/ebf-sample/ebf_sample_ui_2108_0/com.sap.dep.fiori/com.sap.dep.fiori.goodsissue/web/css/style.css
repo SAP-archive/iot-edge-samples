@@ -1,0 +1,19 @@
+#dep-fiori-goodsissue-detail .sapUxAPObjectPageSectionTitle {
+    border-bottom: 0.125rem solid #427cac;
+}
+
+#dep-fiori-goodsissue-detail .sapUxAPObjectPageSectionTitle {
+    color: #427cac;
+    font-size: 1rem;
+}
+
+
+
+#dep-fiori-goodsissue-detail .sapUxAPObjectPageHeaderContentItem .sapMSlt:not(.sapUxAPHierarchicalSelect) {
+    height: 2.425rem;
+}
+
+#dep-fiori-goodsissue-detail .sapUxAPObjectPageHeaderContentItem .sapMSlt:not(.sapUxAPHierarchicalSelect) .sapMSltLabel,
+#dep-fiori-goodsissue-detail .sapUxAPObjectPageHeaderContentItem .sapMSlt:not(.sapUxAPHierarchicalSelect) .sapMSltArrow {
+    line-height: 2.425rem;
+}

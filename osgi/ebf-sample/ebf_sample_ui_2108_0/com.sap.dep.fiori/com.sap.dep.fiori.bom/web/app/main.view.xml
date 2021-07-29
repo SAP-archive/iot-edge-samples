@@ -1,0 +1,111 @@
+<mvc:View
+    controllerName="dep.fiori.bom.app.main"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.uxap"
+    xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <SplitApp
+        id="content"
+        initialMaster="master"
+        initialDetail="detail">
+        <masterPages>
+            <Page
+                id="master"
+                title="{i18n>List.title}">
+                <subHeader>
+                    <Toolbar>
+                        <SearchField
+                            search="onSearch"
+                            width="100%" />
+                    </Toolbar>
+                </subHeader>
+                <List
+                    id="bom-list"
+                    items="{odata>/Equipment_BOM}"
+                    itemPress="onListItemPress"
+                    mode="SingleSelectMaster" >
+                    <StandardListItem
+                        title="{odata>BOM_NUM}"
+                        description="{odata>EQUNR_LIST}"
+                        custom:navTo="{odata>EQUNR}"
+                        type="Active"
+                        icon="{= !!${odata>EDGE_ERRORS} ? 'sap-icon://message-error' : '' }" />
+                </List>
+            </Page>
+        </masterPages>
+        <detailPages>
+            <Page
+                id="detail"
+                title="{/BOM_NUM}"
+                enableScrolling="false"
+                visible="{ formatter: '.detailVisibleFormatter', path: '/' }">
+                <headerContent>
+                    <Button
+                        icon="sap-icon://message-error"
+                        tooltip="{i18n>General.hasEdgeErrors}"
+                        visible="{= !!${/EDGE_ERRORS} }"
+                        type="Reject"
+                        press="handleResponsivePopoverPress" />
+                </headerContent>
+                <u:ObjectPageLayout alwaysShowContentHeader="true">
+                    <u:headerContent>
+                        <l:VerticalLayout class="sapUiSmallMarginTop">
+                            <Label text="{i18n>Detail.equipment}" />
+                            <Text text="{/EQUNR_LIST}" />
+                        </l:VerticalLayout>
+                    </u:headerContent>
+
+                    <u:sections>
+                        <u:ObjectPageSection title="{i18n>Detail.components}" >
+                            <u:subSections>
+                                <u:ObjectPageSubSection>
+                                    <u:blocks>
+                                        <Table
+                                            noDataText="{i18n>Table.empty}"
+                                            items="{components>/}"
+                                            growing="true"
+                                            growingScrollToLoad="true"
+                                            mode="Delete"
+                                            delete="onDelete">
+                                            <headerToolbar>
+                                                <Toolbar>
+                                                    <Title text="{ path: 'components>/length', formatter: '.listTitleFormatter' }" />
+                                                    <ToolbarSpacer />
+                                                    <Button
+                                                        tooltip="{i18n>Tooltip.addComponent}"
+                                                        icon="sap-icon://add"
+                                                        press="onAddComponent" />
+                                                </Toolbar>
+                                            </headerToolbar>
+                                            <columns>
+                                                <Column vAlign="Middle">
+                                                    <Text text="{i18n>Table.component}"/>
+                                                </Column>
+                                                <Column vAlign="Middle">
+                                                    <Text text="{i18nGlobal>General.description}" />
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem>
+                                                    <cells>
+                                                        <Text text="{components>IDNRK}" />
+                                                        <Text text="{components>MAKTX}" />
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                                        </Table>
+                                    </u:blocks>
+                                </u:ObjectPageSubSection>
+                            </u:subSections>
+                        </u:ObjectPageSection>
+                    </u:sections>
+                </u:ObjectPageLayout>
+            </Page>
+        </detailPages>
+    </SplitApp>
+</mvc:View>

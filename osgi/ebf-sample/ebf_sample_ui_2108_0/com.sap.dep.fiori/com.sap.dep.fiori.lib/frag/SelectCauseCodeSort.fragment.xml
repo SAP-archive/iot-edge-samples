@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <ViewSettingsDialog confirm="dep.fiori.lib.util.SelectCauseCodeDialog.onSort">
+        <sortItems>
+            <ViewSettingsItem
+                text="{i18nGlobal>CauseCodeSelect.group}"
+                key="URGRP"
+                selected="true" />
+            <ViewSettingsItem
+                text="{i18nGlobal>CauseCodeSelect.code}"
+                key="URCOD" />
+            <ViewSettingsItem
+                text="{i18nGlobal>CauseCodeSelect.text}"
+                key="URTXT" />
+        </sortItems>
+    </ViewSettingsDialog>
+</core:FragmentDefinition>

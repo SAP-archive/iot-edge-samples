@@ -1,0 +1,34 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog title="{i18n>OrgUnit.title}">
+
+        <endButton>
+            <Button text="{i18nGlobal>General.cancel}" press="orgUnitDialogCancel"/>
+        </endButton>
+
+        <Table id="orgUnitTable" inset="true" mode="sap.m.ListMode.None" includeItemInSelection="false" items="{/}">
+
+            <columns>
+                <Column demandPopin="true">
+                    <Label text="{i18n>OrgUnit.orgUnitLabel}"/>
+                </Column>
+                <Column demandPopin="true">
+                    <Label text="{i18n>OrgUnit.descriptionLabel}"/>
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem type="Active" press="onOrgUnitSelect">
+                    <cells>
+                        <Text text="{ORG_UNIT_ID}"/>
+                        <Text text="{ORG_UNIT_DESCRIPTION}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+
+        </Table>
+    </Dialog>
+</core:FragmentDefinition>

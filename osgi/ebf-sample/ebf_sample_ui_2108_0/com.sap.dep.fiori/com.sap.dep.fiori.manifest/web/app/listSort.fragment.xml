@@ -1,0 +1,24 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <ViewSettingsDialog confirm="onSort">
+        <sortItems>
+            <ViewSettingsItem
+                text="{i18n>Manifest.id}"
+                key="MANIFEST_ID"
+                selected="true" />
+            <ViewSettingsItem
+                text="{i18n>Container.id}"
+                key="CONTAINER_ID" />
+            <ViewSettingsItem
+                text="{i18n>Container.status}"
+                key="CONTAINER_STATUS" />
+            <ViewSettingsItem
+                text="{i18n>Container.source}"
+                key="SOURCE_LOC" />
+            <ViewSettingsItem
+                text="{i18n>Container.target}"
+                key="TARGET_LOC" />
+        </sortItems>
+    </ViewSettingsDialog>
+</c:FragmentDefinition>

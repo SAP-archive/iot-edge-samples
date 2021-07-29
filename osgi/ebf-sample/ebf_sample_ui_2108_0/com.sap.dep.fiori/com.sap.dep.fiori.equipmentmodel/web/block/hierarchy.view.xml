@@ -1,0 +1,85 @@
+<c:View
+    controllerName="dep.fiori.equipmentmodel.block.hierarchy"
+    xmlns:c="sap.ui.core"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m">
+     <t:TreeTable
+         id="hierarchyTable"
+         showColumnVisibilityMenu="true"
+         selectionMode="Single"
+         selectionBehavior="RowOnly"
+         rowSelectionChange="onHierarchySelectionChange"
+         rows="{hierarchy>/}">
+         <t:columns>
+             <t:Column label="{i18n>Model.name}">
+                 <t:template>
+                     <Label  
+                         text="{hierarchy>NAME}"
+                         tooltip="{hierarchy>NAME}"
+                         design="Bold"
+                         class="identifierTextBlue"/>
+                 </t:template>
+             </t:Column>
+             <t:Column label="{i18nGlobal>General.description}">
+                 <t:template>
+                     <Label 
+                         text="{hierarchy>DESCRIPTION}"
+                         tooltip="{hierarchy>DESCRIPTION}"/>
+                 </t:template>
+             </t:Column>
+             <t:Column label="{i18n>Model.manufacturer}">
+                 <t:template>
+                     <Label 
+                         text="{hierarchy>MANUFACTURER}"
+                         tooltip="{hierarchy>MANUFACTURER}"/>
+                 </t:template>
+             </t:Column>
+              <t:Column label="{i18n>Model.type}">
+                 <t:template>
+                     <Label 
+                         text="{
+                            path: 'hierarchy>OBJECT_TYPE',
+                            formatter: '.objTypeFormatter'
+                         }"
+                         tooltip="{
+                            path: 'hierarchy>OBJECT_TYPE',
+                            formatter: '.objTypeFormatter'
+                         }"/>
+                 </t:template>
+             </t:Column>
+             <t:Column label="{i18n>Model.subClass}">
+                 <t:template>
+                     <Label 
+                         text="{hierarchy>SUBCLASS}"
+                         tooltip="{hierarchy>SUBCLASS}"/>
+                 </t:template>
+             </t:Column>
+             <t:Column 
+                 label="{i18n>Component.mandatory}"
+                 width="10%">
+                 <t:template>
+                     <Label 
+                         text="{ 
+                             path: 'hierarchy>MANDATORY', 
+                             formatter: '.mandatoryFormatter' 
+                         }"
+                         tooltip="{
+                             path: 'hierarchy>MANDATORY',
+                             formatter: '.mandatoryFormatter'
+                         }"/>
+                 </t:template>
+             </t:Column>
+             <t:Column 
+                 label="{i18n>Component.quantity}"
+                 width="10%">
+                 <t:template>
+                     <Label 
+                         text="{ 
+                             parts: [ 'hierarchy>MIN_QUANTITY', 'hierarchy>MAX_QUANTITY' ], 
+                             formatter: '.quantityFormatter' 
+                         }"/>
+                 </t:template>
+             </t:Column>
+         </t:columns>
+     </t:TreeTable>
+</c:View>

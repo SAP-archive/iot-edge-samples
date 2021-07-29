@@ -1,0 +1,87 @@
+<mvc:View
+    controllerName="dep.fiori.syncoptions.app.change"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:c="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns="sap.m">
+    <Page 
+    title="Edit Sync Options"
+    showHeader="false">
+        <content>
+          <VBox id="sync-option-new-entry">
+           <HBox>
+               <RadioButtonGroup 
+                  selectedIndex="{/OPTION_TYPE}"
+                  select="onTypeChange"
+                  columns="2">
+                   <RadioButton 
+                       text="Global options"/>
+                   <RadioButton 
+                       text="User options"/>
+               </RadioButtonGroup>
+            </HBox>
+           <HBox>
+               <VBox>
+                   <Input type="Text"
+                          value="{/OPTION_NAME}"
+                          placeholder="New Option"/>
+               
+               </VBox>
+               <VBox>
+                   <Input type="Text"
+                          value="{/OPTION_VALUE}"
+                          placeholder="New Value"/>
+               </VBox>
+           </HBox>
+            <HBox>
+                <Toolbar>
+                    <ToolbarSpacer />
+                    <Button 
+                    icon="sap-icon://save"
+                    text="Save"
+                    press="saveNewSyncOption" 
+                    type="Accept" />
+                </Toolbar>
+            </HBox>
+            </VBox>
+            <Table
+            id="sync-option-edit-table"
+            items="{/}" 
+            growing="true" 
+            growingScrollToLoad="true" 
+            noDataText="No Sync Option(s)">
+                <columns>
+                    <Column vAlign="Middle" width="30%">
+                        <Text text="Name" />
+                    </Column>
+                    <Column vAlign="Middle">
+                        <Text text="Value" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{OPTION_NAME}"/>
+                            <Input type="Text" value="{OPTION_VALUE}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Button 
+                icon="sap-icon://save"
+                text="Save"
+                press="saveSyncOptions" 
+                type="Accept" />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

@@ -1,0 +1,141 @@
+<mvc:View
+    controllerName="dep.fiori.notification.app.list"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:c="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:lib="dep.fiori.lib">
+    <Page
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <VBox
+            fitContainer="true"
+            renderType="Bare">
+            <c:Fragment fragmentName="dep.fiori.lib.frag.filterBar" type="XML" />
+            <ScrollContainer
+                vertical="true"
+                height="100%"
+                width="100%">
+                <Table
+                    id="list"
+                    noDataText="{i18n>List.empty}"
+                    items="{odata>/Workorder_Notification}"
+                    growing="true"
+                    growingScrollToLoad="true"
+                    mode="SingleSelectMaster"
+                    itemPress="onItemPress">
+                    <headerToolbar>
+                        <Toolbar>
+                            <Title text="{i18n>List.title}" />
+                            <ToolbarSpacer />
+                            <Button
+                                tooltip="{i18n>Page.title}"
+                                icon="sap-icon://add"
+                                press="onCreatePress" />
+                            <Button
+                                tooltip="{i18nGlobal>General.sortList}"
+                                icon="sap-icon://drop-down-list"
+                                press="onSortPress" />
+                        </Toolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column vAlign="Middle">
+                            <Title
+                                text="{i18n>Notification.number}"
+                                tooltip="{i18n>Notification.number}" />
+                        </Column>
+                        <Column vAlign="Middle">
+                            <Title
+                                text="{i18n>WorkOrder.number}"
+                                tooltip="{i18n>WorkOrder.number}" />
+                        </Column>
+                        <Column vAlign="Middle">
+                            <Title
+                                text="{i18nGlobal>General.equipment}"
+                                tooltip="{i18nGlobal>General.equipment}" />
+                        </Column>
+                        <Column
+                            vAlign="Middle"
+                            width="30%"
+                            minScreenWidth="Desktop"
+                            demandPopin="true"
+                            popinDisplay="Inline">
+                            <Title
+                                text="{i18nGlobal>General.description}"
+                                tooltip="{i18nGlobal>General.description}" />
+                        </Column>
+                        <Column vAlign="Middle">
+                            <Title
+                                text="{i18n>Notification.date}"
+                                tooltip="{i18n>Notification.date}" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Active">
+                            <cells>
+                                <HBox
+                                    fitContainer="true"
+                                    renderType="Bare"
+                                    alignItems="Center">
+                                    <Label
+                                        text="{odata>QMNUM}"
+                                        tooltip="{odata>QMNUM}"
+                                        design="Bold"
+                                        class="identifierTextBlue sapUiTinyMarginEnd" />
+                                    <c:Icon
+                                        src="sap-icon://message-error"
+                                        size="1.25rem"
+                                        color="red"
+                                        tooltip="{i18nGlobal>General.hasSyncErrors}"
+                                        visible="{= !!${odata>EDGE_ERRORS} }"
+                                        press="handleResponsivePopoverPress" />
+                                </HBox>
+                                <HBox
+                                    fitContainer="true"
+                                    renderType="Bare"
+                                    alignItems="Center">
+                                    <Label
+                                        text="{odata>AUFNR}"
+                                        tooltip="{odata>AUFNR}"
+                                        design="Bold"
+                                        class="identifierTextBlue sapUiTinyMarginEnd" />
+                                    <c:Icon
+                                        src="sap-icon://decline"
+                                        size="1.25rem"
+                                        color="red"
+                                        tooltip="{i18n>List.woMissing}"
+                                        visible="{= ${odata>WO_EXISTS} !== 'X' }" />
+                                    <c:Icon
+                                        src="sap-icon://accept"
+                                        size="1.25rem"
+                                        color="green"
+                                        tooltip="{i18n>List.woExists}"
+                                        visible="{= ${odata>WO_EXISTS} === 'X' }" />
+                                </HBox>
+                                <Label
+                                    text="{odata>EQUNR}"
+                                    tooltip="{odata>EQUNR}" />
+                                <Label
+                                    text="{odata>QMTXT}"
+                                    tooltip="{odata>QMTXT}" />
+                                <Label
+                                    text="{
+                                        path: 'odata>QMDAT',
+                                        formatter: 'dep.fiori.lib.util.Utilities.formatters.date'
+                                    }"
+                                    tooltip="{
+                                        path: 'odata>QMDAT',
+                                        formatter: 'dep.fiori.lib.util.Utilities.formatters.date'
+                                    }" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </ScrollContainer>
+        </VBox>
+    </Page>
+</mvc:View>

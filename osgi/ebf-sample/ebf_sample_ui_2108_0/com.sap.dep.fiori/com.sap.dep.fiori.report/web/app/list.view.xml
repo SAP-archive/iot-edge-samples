@@ -1,0 +1,85 @@
+<mvc:View
+    controllerName="dep.fiori.report.app.list"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:c="sap.ui.core"
+    xmlns="sap.m">
+    <Page
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <VBox
+            fitContainer="true"
+            renderType="Bare">
+            <c:Fragment fragmentName="dep.fiori.lib.frag.filterBar" type="XML" />
+            <ScrollContainer
+                vertical="true"
+                height="100%"
+                width="100%">
+                <Table
+                    id="list"
+                    noDataText="{i18nGlobal>General.listEmpty}"
+                    items="{odata>/Report}"
+                    growing="true"
+                    growingScrollToLoad="true"
+                    mode="SingleSelectMaster"
+                    itemPress="onItemPress">
+                    <headerToolbar>
+                        <Toolbar>
+                            <Title text="{i18n>General.reports}" />
+                            <ToolbarSpacer />
+                            <Button
+                                tooltip="{i18nGlobal>General.sortList}"
+                                icon="sap-icon://drop-down-list"
+                                press="onSortPress" />
+                        </Toolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column
+                            vAlign="Middle"
+                            width="auto">
+                            <Title
+                                text="{i18n>TCODE}"
+                                tooltip="{i18n>TCODE}" />
+                        </Column>
+                        <Column
+                            vAlign="Middle"
+                            width="auto">
+                            <Title
+                                text="{i18n>REPVAR}"
+                                tooltip="{i18n>REPVAR}" />
+                        </Column>
+                        <Column
+                            vAlign="Middle"
+                            width="50%"
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                            popinDisplay="Inline">
+                            <Title
+                                text="{i18nGlobal>General.description}"
+                                tooltip="{i18nGlobal>General.description}" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Active">
+                            <cells>
+                                <Label
+                                    text="{odata>TCODE}"
+                                    tooltip="{odata>TCODE}" />
+                                <Label
+                                    text="{odata>REPVAR}"
+                                    tooltip="{odata>REPVAR}" />
+                                <Label
+                                    text="{odata>REPDESC}"
+                                    tooltip="{odata>REPDESC}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </ScrollContainer>
+        </VBox>
+    </Page>
+</mvc:View>

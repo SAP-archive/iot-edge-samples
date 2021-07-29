@@ -1,0 +1,495 @@
+<mvc:View
+    controllerName="dep.fiori.reportedincidents.app.createProperty"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns="sap.m">
+    <Page
+        id="main"
+        showHeader="false">
+       
+		
+		
+		<f:Form id="form">
+
+            <f:toolbar>
+                <Toolbar>
+                    <Title text="{i18n>PropertyForm.createTitle}"/>
+                    <ToolbarSpacer></ToolbarSpacer>
+                </Toolbar>
+            </f:toolbar>
+
+            <f:layout>
+                <f:ResponsiveGridLayout
+                    hSpacing="2"
+                    /> 
+            </f:layout>
+
+            <f:formContainers>
+				<f:FormContainer>
+					<f:formElements>
+						<f:FormElement>
+							<f:label>
+								<Label text="{i18n>PropertyForm.TitleWhat}" design="Bold">
+									<layoutData>
+										<l:GridData
+											span="L12 M12 S12">
+										</l:GridData>
+									</layoutData>
+								</Label>
+							</f:label>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.property}"
+									required="true"/>
+							</f:label>
+							<f:fields>
+								<Input
+									id="propertyID"
+									showValueHelp="true"
+									value="{INVOLVED_PROPERTY>/PROP_ID}"
+									valueHelpOnly="true"
+									class="sapUiSmallMarginBottom"
+									editable="{state>/editing}"
+									valueHelpRequest="propertyLookupPress">	
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.desc}"
+									required="true">
+								</Label>
+							</f:label>
+							<f:fields>
+								<Input
+									id="propDesc"
+									value="{INVOLVED_PROPERTY>/PROP_DESC}"
+									maxLength="40"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.type}"/>
+							</f:label>
+							<f:fields>
+								<Input
+									styleClass="sapUiBigMarginBottom"
+									id="propType"
+									showValueHelp="true" 
+									valueHelpOnly="true"
+									value="{INVOLVED_PROPERTY>/PROP_TYPE}"
+									valueHelpRequest="equipmentTypeLookupPress">									
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+														
+							</f:fields>
+						</f:FormElement>
+						<!--<f:FormElement>
+							<f:label>
+								<Label text="{i18n>PropertyForm.plantId}" required="false"/>
+							</f:label>
+
+							<f:fields>
+								<Input
+									id="pPlantID"
+									value="{plantIDModel>/PLANT_ID}"
+									enabled="false">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>-->
+						
+						<f:FormElement>
+							<f:label>
+								<Label text="{i18n>PropertyForm.locDesc}"/>
+							</f:label>
+							
+							<f:fields>
+								<TextArea
+									id="locDesc"
+									value="{INVOLVED_PROPERTY>/PROP_DESC}"
+									rows="4">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</TextArea>
+							</f:fields>
+						</f:FormElement>
+						
+						<f:FormElement>
+							<f:label>
+								<Label text="{i18n>PropertyForm.addDesc}"/>
+							</f:label>
+							
+							<f:fields>
+								<TextArea
+									id="addDesc"
+									value="{INVOLVED_PROPERTY>/PROP_ADD_DESC}"
+									rows="4">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</TextArea>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label text="{i18n>PropertyForm.TitleWhoOwner}" design="Bold">
+									<layoutData>
+										<l:GridData
+											span="L12 M12 S12">
+										</l:GridData>
+									</layoutData>
+								</Label>
+							</f:label>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.firstname}"
+								/>
+							</f:label>
+							<f:fields>
+								<Input
+								    id="pofirstName"
+									value="{INVOLVED_PROPERTY>/PROP_OWNER_FNAME}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.lastname}"
+								/>
+							</f:label>
+							<f:fields>
+								<Input
+									id="polastName"
+									value="{INVOLVED_PROPERTY>/PROP_OWNER_LNAME}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.org}"/>
+							</f:label>
+							<f:fields>
+								<Input
+									styleClass="sapUiBigMarginBottom"
+									id="poOrgUnitID"                                    
+									value="{INVOLVED_PROPERTY>/PROP_OWNER_ORG}"
+									maxLength="40">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+														
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.company}"/>
+							</f:label>
+							<f:fields>
+								<Input
+									id="pocompany" 
+									value="{INVOLVED_PROPERTY>/PROP_OWNER_COMPANY}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.address}"/>
+							</f:label>
+							<f:fields>
+								<Input
+									id= "poaddress"
+									value="{INVOLVED_PROPERTY>/PROP_OWNER_ADDRESS}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						 <f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.phone}"/>
+							</f:label>
+							<f:fields>          
+								<Input
+									id="pophone"
+									value="{INVOLVED_PROPERTY>/PROP_OWNER_PHONE}"
+									maxLength="40"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>						
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.email}"/>
+							</f:label>
+							<f:fields>                     
+								<Input
+									id="poemail"
+									value="{INVOLVED_PROPERTY>/PROP_OWNER_EMAIL}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						
+						<f:FormElement>
+							<f:label>
+								<Label text="{i18n>PropertyForm.TitleWhoTenant}" design="Bold">
+									<layoutData>
+										<l:GridData
+											span="L12 M12 S12">
+										</l:GridData>
+									</layoutData>
+								</Label>
+							</f:label>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.firstname}"
+								/>
+							</f:label>
+							<f:fields>
+								<Input
+								    id="ptfirstName"
+									value="{INVOLVED_PROPERTY>/PROP_TENANT_FNAME}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.lastname}"
+								/>
+							</f:label>
+							<f:fields>
+								<Input
+									id="ptlastName"
+									value="{INVOLVED_PROPERTY>/PROP_TENANT_LNAME}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.org}"/>
+							</f:label>
+							<f:fields>
+								<Input
+									styleClass="sapUiBigMarginBottom"
+									id="ptOrgUnitID"                                    
+									value="{INVOLVED_PROPERTY>/PROP_TENANT_ORG}"
+									maxLength="40">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+														
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.company}"/>
+							</f:label>
+							<f:fields>
+								<Input
+									id="ptcompany" 
+									value="{INVOLVED_PROPERTY>/PROP_TENANT_COMPANY}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.address}"/>
+							</f:label>
+							<f:fields>
+								<Input
+									id= "ptaddress"
+									value="{INVOLVED_PROPERTY>/PROP_TENANT_ADDRESS}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						 <f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.phone}"/>
+							</f:label>
+							<f:fields>          
+								<Input
+									id="ptphone"
+									value="{INVOLVED_PROPERTY>/PROP_TENANT_PHONE}"
+									maxLength="40"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>						
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>PropertyForm.email}"/>
+							</f:label>
+							<f:fields>                     
+								<Input
+									id="ptemail"
+									value="{INVOLVED_PROPERTY>/PROP_TENANT_EMAIL}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+					   
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+        </f:Form>
+
+        <footer>
+            <Bar id="otbFooter">
+                <contentLeft>
+                    <Button
+                        id="messages-button"
+                        icon="sap-icon://message-popup"
+                        text="{/length}"
+                        type="Emphasized"
+                        press="handleMessagePopoverPress"/>
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        id="save-button"
+                        type="Emphasized"
+                        text="{i18nGlobal>General.save}"
+                        press="propertySave"/>
+                    <Button
+                        id="cancel-button"
+                        text="{i18nGlobal>General.cancel}"
+                        press="onCancel"/>
+                </contentRight>
+            </Bar>
+        </footer> 
+    </Page>
+</mvc:View>

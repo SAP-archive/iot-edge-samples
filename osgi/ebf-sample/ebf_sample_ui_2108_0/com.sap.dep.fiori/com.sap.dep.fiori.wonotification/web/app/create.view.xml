@@ -1,0 +1,291 @@
+<mvc:View
+    controllerName="dep.fiori.wonotification.app.create"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:u="sap.uxap"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:c="sap.ui.core"
+    xmlns="sap.m">
+    <Page
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <u:ObjectPageLayout useIconTabBar="true">
+
+            <u:headerTitle>
+                <u:ObjectPageHeader objectTitle="{i18n>Create.title}" />
+            </u:headerTitle>
+
+            <u:sections>
+                <u:ObjectPageSection>
+                    <u:ObjectPageSubSection>
+                        <VBox
+                            fitContainer="true"
+                            renderType="Bare">
+                            <f:Form>
+                                <f:layout>
+                                    <f:ResponsiveGridLayout hSpacing="2" />
+                                </f:layout>
+                                <f:FormContainer>
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label text="{i18nGlobal>General.description}:" />
+                                        </f:label>
+                                        <Input
+                                            value="{/QMTXT}"
+                                            editable="{state>/editing}"
+                                            maxLength="40">
+                                            <layoutData>
+                                                <l:GridData span="L6 M9 S12" />
+                                            </layoutData>
+                                        </Input>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label
+                                                text="{i18nGlobal>General.equipment}:"
+                                                tooltip="{i18nGlobal>General.equipment}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M2 S12" linebreak="true" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <Input
+                                            showValueHelp="true"
+                                            valueHelpOnly="true"
+                                            value="{/EQUNR}"
+                                            valueHelpRequest="onEquipmentValueHelp">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </Input>
+                                        <Label
+                                            text="{/EQKTX}"
+                                            tooltip="{/EQKTX}"
+                                            class="inlineFormLabelS">
+                                            <layoutData>
+                                                <l:GridData span="L4 M6 S6" />
+                                            </layoutData>
+                                        </Label>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label
+                                                text="{i18nGlobal>General.priority}:"
+                                                tooltip="{i18nGlobal>General.priority}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M2 S12" linebreak="true" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <Select
+                                            items="{
+                                                path: 'odata>/Workorder_Priority',
+                                                filters: [
+                                                    {
+                                                        path: 'ARTPR',
+                                                        operator: 'EQ',
+                                                        value1: 'PM'
+                                                    }
+                                                ],
+                                                sorter: {
+                                                    path: 'PRIOK',
+                                                    descending: true
+                                                }
+                                            }"
+                                            selectedKey="{/PRIOK}">
+                                            <c:Item
+                                                text="{odata>PRIOKX}"
+                                                key="{odata>PRIOK}" />
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S4" />
+                                            </layoutData>
+                                        </Select>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label
+                                                text="{i18n>Form.sysCondition}:"
+                                                tooltip="{i18n>Form.sysCondition}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M3 S12" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <Select
+                                            items="{odata>/System_Condition}"
+                                            selectedKey="{/ANLZU}"
+                                            forceSelection="false">
+                                            <c:Item
+                                                text="{odata>VALUE}"
+                                                key="{odata>DO_KEY}" />
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </Select>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label
+                                                text="{i18n>Form.damageCode}:"
+                                                tooltip="{i18n>Form.damageCode}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M2 S12" linebreak="true" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <Select
+                                            items="{
+                                                path: 'odata>/Damage_Code',
+                                                filters: [
+                                                    {
+                                                        path: 'FEGRP',
+                                                        operator: 'EQ',
+                                                        value1: 'PM1'
+                                                    }
+                                                ]
+                                            }"
+                                            selectedKey="{/FECOD}"
+                                            change="onDamageCodeSelect"
+                                            showSecondaryValues="true"
+                                            forceSelection="false">
+                                            <c:ListItem
+                                                text="{odata>FECOD}"
+                                                key="{odata>FECOD}"
+                                                additionalText="{odata>FETXT}" />
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </Select>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label
+                                                text="{i18n>Form.causeCode}:"
+                                                tooltip="{i18n>Form.causeCode}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M3 S12" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <Select
+                                            items="{
+                                                path: 'odata>/Cause_Code',
+                                                filters: [
+                                                    {
+                                                        path: 'URGRP',
+                                                        operator: 'EQ',
+                                                        value1: 'PM1'
+                                                    }
+                                                ]
+                                            }"
+                                            selectedKey="{/URCOD}"
+                                            change="onCauseCodeSelect"
+                                            showSecondaryValues="true"
+                                            forceSelection="false">
+                                            <c:ListItem
+                                                text="{odata>URCOD}"
+                                                key="{odata>URCOD}"
+                                                additionalText="{odata>URTXT}" />
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </Select>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label
+                                                text="{i18nGlobal>General.breakdown}:"
+                                                tooltip="{i18nGlobal>General.breakdown}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M2 S12" linebreak="true" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <Checkbox
+                                            selected="{= ${/MSAUS} === 'X' }"
+                                            select="onBreakdownSelect" />
+                                    </f:FormElement>
+
+                                    <f:FormElement visible="{= ${/MSAUS} === 'X' }">
+                                        <f:label>
+                                            <Label
+                                                text="{i18n>Form.malfunctionStart}:"
+                                                tooltip="{i18n>Form.malfunctionStart}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M2 S12" linebreak="true" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <DatePicker
+                                            value="{/AUSVN}"
+                                            valueFormat="yyyyMMdd">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </DatePicker>
+                                        <TimePicker
+                                            value="{/AUZTV}"
+                                            valueFormat="hhmmss">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </TimePicker>
+                                    </f:FormElement>
+
+                                    <f:FormElement visible="{= ${/MSAUS} === 'X' }">
+                                        <f:label>
+                                            <Label
+                                                text="{i18n>Form.malfunctionEnd}:"
+                                                tooltip="{i18n>Form.malfunctionEnd}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M2 S12" linebreak="true" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <DatePicker
+                                            value="{/AUSBS}"
+                                            valueFormat="yyyyMMdd">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </DatePicker>
+                                        <TimePicker
+                                            value="{/AUZTB}"
+                                            valueFormat="hhmmss">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </TimePicker>
+                                    </f:FormElement>
+                                </f:FormContainer>
+                            </f:Form>
+                        </VBox>
+                    </u:ObjectPageSubSection>
+                </u:ObjectPageSection>
+            </u:sections>
+        </u:ObjectPageLayout>
+
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Button
+                    text="{i18nGlobal>General.save}"
+                    type="Emphasized"
+                    press="onSave" />
+                <Button
+                    text="{i18nGlobal>General.cancel}"
+                    press="onCancel" />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

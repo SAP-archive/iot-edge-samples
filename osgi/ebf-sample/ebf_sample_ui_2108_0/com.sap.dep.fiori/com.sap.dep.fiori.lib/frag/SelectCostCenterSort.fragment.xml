@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <ViewSettingsDialog confirm="dep.fiori.lib.util.SelectCostCenterDialog.onSort">
+        <sortItems>
+            <ViewSettingsItem
+                text="{i18nGlobal>CostCenterSelect.kokrs}"
+                key="KOKRS"
+                selected="true" />
+            <ViewSettingsItem
+                text="{i18nGlobal>CostCenterSelect.datbi}"
+                key="DATBI" />
+            <ViewSettingsItem
+                text="{i18nGlobal>CostCenterSelect.kostl}"
+                key="KOSTL" />
+        </sortItems>
+    </ViewSettingsDialog>
+</core:FragmentDefinition>

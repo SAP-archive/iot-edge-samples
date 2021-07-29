@@ -1,0 +1,18 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <ViewSettingsDialog confirm="onSort">
+        <sortItems>
+            <ViewSettingsItem
+                text="{i18n>Order.number}"
+                key="EBELN"
+                selected="true" />
+            <ViewSettingsItem
+                text="{i18nGlobal>General.date}"
+                key="BEDAT" />
+            <ViewSettingsItem
+                text="{i18n>Order.type}"
+                key="POTYP" />
+        </sortItems>
+    </ViewSettingsDialog>
+</c:FragmentDefinition>

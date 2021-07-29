@@ -1,0 +1,122 @@
+<mvc:View
+    controllerName="dep.fiori.container.app.detail"
+   class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:c="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns:blocks="dep.fiori.container.block"
+    xmlns="sap.m">
+    <Page
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <u:ObjectPageLayout 
+            id="content"
+            alwaysShowContentHeader="true"
+            useIconTabBar="true">
+
+            <u:headerTitle>
+                <u:ObjectPageHeader objectTitle="{i18n>Detail.title}: {container>/CONTAINER_ID}" />
+            </u:headerTitle>
+
+            <u:headerContent>
+                <VBox
+                    fitContainer="true"
+                    renderType="Bare">
+                    <HBox renderType="Bare">
+                        <Label
+                            text="{i18nGlobal>General.description}:"
+                            class="sapUiTinyMarginEnd" />
+                        <Label text="{container>/CONTAINER_DESC}" />
+                    </HBox>
+                    <HBox renderType="Bare">
+                        <Label
+                            text="{i18n>Container.type}:"
+                            class="sapUiTinyMarginEnd" />
+                        <Label text="{container>/CONTAINER_TYPE}" />
+                    </HBox>
+                    <HBox renderType="Bare">
+                        <Label
+                            text="{i18n>Container.ext_id}:"
+                            class="sapUiTinyMarginEnd" />
+                        <Label text="{container>/EXT_CONTAINER_ID}" />
+                    </HBox>
+                    <HBox renderType="Bare">
+                        <Label
+                            text="{i18n>Container.source}:"
+                            class="sapUiTinyMarginEnd" />
+                        <Label text="{container>/CONTAINER_SOURCE}" />
+                    </HBox>
+                </VBox>
+            </u:headerContent>
+
+            <u:sections>
+                <u:ObjectPageSection
+                    id="attributes" 
+                    title="{i18n>Detail.attributes}">
+                    <u:subSections>
+                        <u:ObjectPageSubSection>
+                                <Table
+                                  noDataText="{i18nGlobal>General.listEmpty}"
+                                  items="{attributes>/}"
+                                  growing="true"
+                                  growingScrollToLoad="true">
+                                  <headerToolbar>
+                                      <Toolbar>
+                                          <Title text="{= ${i18n>Container.attributes} + ' (' + (${attributes>/length} || 0) + ')' }" />
+                                          <ToolbarSpacer />
+                                          <Button
+                                              tooltip="{i18nGlobal>General.listRefresh}"
+                                              icon="sap-icon://refresh"
+                                              press="refreshList" />
+                                      </Toolbar>
+                                  </headerToolbar>
+                                  <columns>
+                                      <Column vAlign="Middle">
+                                          <Title text="{i18n>Attribute.name}" />
+                                      </Column>
+                                      <Column vAlign="Middle">
+                                          <Title text="{i18n>Attribute.value}" />
+                                      </Column>
+                                      <Column
+                                          vAlign="Middle"
+                                          popinDisplay="Inline">
+                                          <Title text="{i18n>Attribute.uom}" />
+                                      </Column>
+                                      <Column
+                                          vAlign="Middle"
+                                          hAlign="End" />
+                                  </columns>
+                                  <ColumnListItem>
+                                      <Label
+                                          text="{attributes>ATTR_NAME}"
+                                          tooltip="{attributes>ATTR_NAME}"
+                                          design="Bold"
+                                          class="identifierTextBlue" />
+                                      <Label
+                                          text="{attributes>ATTR_VALUE}"
+                                          tooltip="{attributes>ATTR_VALUE}" />
+                                      <Label
+                                          text="{attributes>ATTR_UOM}"
+                                          tooltip="{attributes>ATTR_UOM}" />
+                                  </ColumnListItem>
+                              </Table>
+                        </u:ObjectPageSubSection>
+                    </u:subSections>
+                </u:ObjectPageSection> 
+            </u:sections>
+        </u:ObjectPageLayout>
+
+        <footer>
+            <Bar>
+                <contentRight>
+                    <Button
+                        text="{i18nGlobal>General.cancel}"
+                        press="onCancel"/>
+                </contentRight>
+            </Bar>
+        </footer> 
+    </Page>
+</mvc:View>

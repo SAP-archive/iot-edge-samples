@@ -1,0 +1,261 @@
+<mvc:View
+    controllerName="dep.fiori.purchasereq.app.detail"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:c="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns:l="sap.ui.layout"
+    xmlns:uni="sap.ui.unified"
+    xmlns="sap.m">
+    <u:ObjectPageLayout
+        id="content"
+        alwaysShowContentHeader="true"
+        useIconTabBar="true"
+        navigate="onBlockSelect">
+
+        <u:headerTitle>
+            <u:ObjectPageHeader objectTitle="{i18n>PR.number} {/BANFN} / {/PR_NO_LOCAL}" >
+                <u:ObjectPageHeaderActionButton
+                    icon="sap-icon://message-error"
+                    text="{i18nGlobal>General.hasEdgeErrors}"
+                    tooltip="{i18nGlobal>General.hasEdgeErrors}"
+                    importance="High"
+                    visible="{= !!${/EDGE_ERRORS} }"
+                    type="Reject"
+                    press="handleResponsivePopoverPress" />
+            </u:ObjectPageHeader>
+        </u:headerTitle>
+
+        <u:headerContent>
+            <l:Grid>
+                <l:VerticalLayout width="100%">
+                    <HBox
+                        fitContainer="true"
+                        renderType="Bare">
+                        <Label
+                            text="{i18n>PR.status}:"
+                            class="sapUiSmallMarginEnd" />
+                        <Label text="{
+                            path: '/PR_STATUS',
+                            formatter: '.statusFormatter'
+                        }" />
+                    </HBox>
+                    <HBox
+                        fitContainer="true"
+                        renderType="Bare"
+                        justifyContent="SpaceBetween">
+                        <Label text="{i18nGlobal>General.description}:" />
+                        <HBox
+                            fitContainer="true"
+                            renderType="Bare">
+                            <Button
+                                text="{i18nGlobal>General.save}"
+                                type="Transparent"
+                                visible="{ltxtEdit>/editable}"
+                                press="onDescriptionSave" />
+                            <Button
+                                text="{i18nGlobal>General.cancel}"
+                                type="Transparent"
+                                visible="{ltxtEdit>/editable}"
+                                press="onDescriptionCancel" />
+                            <Button
+                                text="{i18nGlobal>General.edit}"
+                                type="Transparent"
+                                visible="{= !${ltxtEdit>/editable} }"
+                                press="onDescriptionEdit" />
+                        </HBox>
+                    </HBox>
+                    <TextArea
+                        value="{/TDTXT}"
+                        width="100%"
+                        rows="4"
+                        editable="{ltxtEdit>/editable}" />
+                    <l:layoutData>
+                        <l:GridData span="L8 M10 S12" />
+                    </l:layoutData>
+                </l:VerticalLayout>
+            </l:Grid>
+        </u:headerContent>
+
+        <u:sections>
+            <u:ObjectPageSection
+                id="detail"
+                title="{i18n>Page.materials}">
+                <u:subSections>
+                    <u:ObjectPageSubSection>
+                        <u:blocks>
+                            <Table
+                                noDataText="{i18n>List.empty}"
+                                growing="true"
+                                items="{/PRItemArray}"
+                                growingScrollToLoad="true"
+                                mode="Delete"
+                                delete="onDeletePRItem">
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <Title text="{i18nGlobal>General.items} ({/PRItemArray/length})" />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            tooltip="{i18nGlobal>General.listRefresh}"
+                                            icon="sap-icon://refresh"
+                                            press="refresh" />
+                                        <Button
+                                            tooltip="{i18n>PRItem.add}"
+                                            icon="sap-icon://add"
+                                            type="Transparent"
+                                            press="onAddPRItem" />
+                                    </Toolbar>
+                                </headerToolbar>
+                                <columns>
+                                    <Column vAlign="Middle">
+                                        <Title
+                                            text="{i18nGlobal>General.material}"
+                                            tooltip="{i18nGlobal>General.material}" />
+                                    </Column>
+                                    <Column
+                                        vAlign="Middle"
+                                        width="35%"
+                                        minScreenWidth="Desktop"
+                                        demandPopin="true"
+                                        popinDisplay="Inline">
+                                        <Title
+                                            text="{i18nGlobal>General.description}"
+                                            tooltip="{i18nGlobal>General.description}" />
+                                    </Column>
+                                    <Column vAlign="Middle" hAlign="Right">
+                                        <Title
+                                            text="{i18n>List.quantity}"
+                                            tooltip="{i18n>List.quantity}" />
+                                    </Column>
+                                    <Column
+                                        vAlign="Middle"
+                                        minScreenWidth="Tablet"
+                                        demandPopin="true"
+                                        popinDisplay="Inline">
+                                        <Title
+                                            text="{i18n>List.delivery}"
+                                            tooltip="{i18n>List.delivery}" />
+                                    </Column>
+                                    <Column vAlign="Middle" hAlign="Right" />
+                                </columns>
+                                <ColumnListItem vAlign="Middle">
+                                    <Label
+                                        text="{MATNR}"
+                                        tooltip="{MATNR}" />
+                                    <Label
+                                        text="{TXZ01}"
+                                        tooltip="{TXZ01}" />
+                                    <Label text="{MENGE}" />
+                                    <Label
+                                        text="{
+                                            path: 'LFDAT',
+                                            formatter: 'dep.fiori.lib.util.Utilities.formatters.date'
+                                        }" />
+                                    <Button
+                                        text="{i18nGlobal>General.edit}"
+                                        press="onEditPRItem" />
+                                </ColumnListItem>
+                            </Table>
+                        </u:blocks>
+                    </u:ObjectPageSubSection>
+                </u:subSections>
+            </u:ObjectPageSection>
+            <u:ObjectPageSection
+                id="attachments"
+                title="{i18nGlobal>General.attachments}">
+                <u:subSections>
+                    <u:ObjectPageSubSection>
+                        <u:blocks>
+                            <List
+                                items="{attachments>/}"
+                                delete="onDeleteAttachment">
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <Title text="{i18nGlobal>General.items} ({attachments>/length})" />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            tooltip="{i18nGlobal>General.listRefresh}"
+                                            icon="sap-icon://refresh"
+                                            press="refreshAttachments" />
+                                        <uni:FileUploader
+                                            id="upload"
+                                            useMultipart="false"
+                                            sendXHR="true"
+                                            uploadUrl="/ws_restful_data_controller/attachment"
+                                            value="{upload>/filepath}"
+                                            uploadComplete="onUploadComplete"
+                                            placeholder="{i18n>General.upload}" />
+                                        <Button
+                                            tooltip="{i18n>General.upload}"
+                                            icon="sap-icon://upload"
+                                            type="Transparent"
+                                            press="onAddAttachment" />
+                                    </Toolbar>
+                                </headerToolbar>
+                                <CustomListItem>
+                                    <HBox
+                                        alignItems="Center"
+                                        fitContainer="true"
+                                        renderType="Bare">
+                                        <c:Icon
+                                            src="{
+                                                path: 'attachments>FILETYPE',
+                                                formatter: 'dep.fiori.lib.util.Utilities.formatters.attachmentIcon'
+                                            }"
+                                            size="3rem"
+                                            width="2.5rem"
+                                            color="#346187"
+                                            class="sapUiSmallMargin" />
+                                        <VBox
+                                            renderType="Bare">
+                                            <Title
+                                                text="{attachments>FILEDESC}"
+                                                visible="{= !${attachments>editable} }" />
+                                            <HBox
+                                                alignItems="Center"
+                                                visible="{= !!${attachments>editable} }">
+                                                <Input value="{attachments>newDesc}" />
+                                                <Text
+                                                    text="{= '.' + ${attachments>FILETYPE} }"
+                                                    class="sapUiTinyMarginBegin" />
+                                            </HBox>
+                                            <!-- <HBox
+                                                renderType="Bare"
+                                                class="sapUiTinyMarginTop">
+                                                <Button
+                                                    icon="sap-icon://download"
+                                                    type="Transparent"
+                                                    press="onDownload" />
+                                                <Button
+                                                    icon="sap-icon://edit"
+                                                    type="Transparent"
+                                                    visible="{= !${attachments>editable} }"
+                                                    press="onEditAttachment" />
+                                                <Button
+                                                    text="{i18nGlobal>General.save}"
+                                                    type="Transparent"
+                                                    visible="{= !!${attachments>editable} }"
+                                                    press="onSaveAttachment" />
+                                                <Button
+                                                    text="{i18nGlobal>General.cancel}"
+                                                    type="Transparent"
+                                                    visible="{= !!${attachments>editable} }"
+                                                    press="onCancelAttachment" />
+                                            </HBox> -->
+                                        </VBox>
+                                        <Button
+                                            icon="sap-icon://download"
+                                            type="Transparent"
+                                            press="onDownload" />
+                                    </HBox>
+                                </CustomListItem>
+                            </List>
+                        </u:blocks>
+                    </u:ObjectPageSubSection>
+                </u:subSections>
+            </u:ObjectPageSection>
+        </u:sections>
+    </u:ObjectPageLayout>
+</mvc:View>

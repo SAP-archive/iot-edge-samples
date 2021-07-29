@@ -1,0 +1,166 @@
+<mvc:View
+    controllerName="dep.fiori.transaction.app.detail"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:c="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+    <Page
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <u:ObjectPageLayout
+            id="content"
+            alwaysShowContentHeader="true"
+            useIconTabBar="true"
+            navigate="onBlockSelect">
+            <u:headerTitle>
+                <u:ObjectPageHeader objectTitle="{i18n>Detail.title} {/TRANSID}" />
+            </u:headerTitle>
+            <u:headerContent>
+                <VBox
+                    fitContainer="true"
+                    renderType="Bare">
+                    <HBox renderType="Bare">
+                        <Label
+                            text="{i18nGlobal>General.date}:"
+                            class="sapUiTinyMarginEnd" />
+                        <Label
+                            text="{
+                                path: '/TRANSID',
+                                formatter: '.transIdToDateFormatter'
+                            }" />
+                    </HBox>
+                    <HBox renderType="Bare">
+                        <Label
+                            text="{i18n>List.object}:"
+                            class="sapUiTinyMarginEnd" />
+                        <Label text="{/OBJID}" />
+                    </HBox>
+                    <HBox renderType="Bare">
+                        <Label
+                            text="{i18n>Detail.message}:"
+                            class="sapUiTinyMarginEnd" />
+                        <Label text="{/MESSAGE}" />
+                    </HBox>
+                </VBox>
+            </u:headerContent>
+
+            <u:ObjectPageSection
+                id="detail"
+                title="{i18nGlobal>General.details}"
+                visible="{= !${object>/} }">
+                <u:ObjectPageSubSection>
+                    <VBox
+                        fitContainer="true"
+                        renderType="Bare">
+                        <HBox
+                            renderType="Bare"
+                            alignItems="Center">
+                            <Label
+                                text="{i18n>Detail.objectType}:"
+                                class="sapUiTinyMarginEnd"
+                                required="true" />
+                            <Select
+                                items="{detail>/}"
+                                change=".onSelectObjectType"
+                                forceSelection="false">
+                                <c:ListItem text="{detail>OBJ_TYPE}" key="{detail>OBJ_TYPE}" />
+                            </Select>
+                        </HBox>
+                        <Table
+                            id="objectList"
+                            visible="{= !!${selected>/OBJ_TYPE} }"
+                            columns="{
+                                path: 'selected>/METADATA',
+                                filters: [
+                                    {
+                                        path: 'IS_KEY',
+                                        operator: 'EQ',
+                                        value1: 'Y'
+                                    }
+                                ]
+                            }"
+                            itemPress="toObject"
+                            mode="SingleSelectMaster"
+                            class="sapUiTinyMarginTop">
+                            <columns>
+                                <Column vAlign="Middle">
+                                    <Title
+                                        text="{selected>LABEL}"
+                                        tooltip="{selected>PROP}" />
+                                </Column>
+                            </columns>
+                        </Table>
+                    </VBox>
+                </u:ObjectPageSubSection>
+            </u:ObjectPageSection>
+            <u:ObjectPageSection
+                id="object"
+                title="{i18nGlobal>General.details}"
+                visible="{= !!${object>/} }">
+                <u:ObjectPageSubSection>
+                    <VBox
+                        fitContainer="true"
+                        renderType="Bare">
+                        <Breadcrumbs currentLocationText="{
+                            parts: [
+                                'selected>/OBJ_TYPE',
+                                'selected>/METADATA',
+                                'object>/'
+                            ],
+                            formatter: '.currentObjectFormatter'
+                        }">
+                            <Link
+                                text="{i18n>Detail.overview}"
+                                press="toOverview" />
+                        </Breadcrumbs>
+                        <Table
+                            id="objectProperties"
+                            items="{objectProps>/}"
+                            class="sapUiTinyMarginTop">
+                            <columns>
+                                <Column vAlign="Middle">
+                                    <Title
+                                        text="{i18n>Detail.property}"
+                                        tooltip="{i18n>Detail.property}" />
+                                </Column>
+                                <Column vAlign="Middle">
+                                    <Title
+                                        text="{i18n>Detail.value}"
+                                        tooltip="{i18n>Detail.value}" />
+                                </Column>
+                            </columns>
+                            <ColumnListItem>
+                                <Label
+                                    text="{objectProps>LABEL}"
+                                    tooltip="{objectProps>PROP}" />
+                                <Label
+                                    text="{objectProps>VALUE}"
+                                    tooltip="{= String(${objectProps>VALUE}) }" />
+                            </ColumnListItem>
+                        </Table>
+                    </VBox>
+                </u:ObjectPageSubSection>
+            </u:ObjectPageSection>
+        </u:ObjectPageLayout>
+
+        <footer>
+            <Bar>
+                <contentRight>
+                    <Button
+                        text="{i18n>Detail.dismiss}"
+                        type="Emphasized"
+                        press="onDismiss"/>
+                    <Button
+                        text="{i18nGlobal>General.cancel}"
+                        press="onCancel"/>
+                </contentRight>
+            </Bar>
+        </footer>
+    </Page>
+</mvc:View>

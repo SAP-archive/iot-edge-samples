@@ -1,0 +1,87 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout">
+    <Dialog
+        title="{i18n>Setup.dialogHeader}"
+        class="dep-fiori"
+        stretchOnPhone="true"
+        contentHeight="100%"
+        contentWidth="100%"
+        afterClose=".onDialogClose">
+        <Page
+            showHeader="false"
+            showSubHeader="false">
+            <f:Form class="dep-fiori-dialog-form">
+                <f:layout>
+                    <f:ResponsiveGridLayout hSpacing="2" />
+                </f:layout>
+                <f:FormContainer>
+                    <f:layoutData>
+                        <l:GridData span="L12 M12 S12" />
+                    </f:layoutData>
+
+                    <f:FormElement>
+                        <f:label>
+                            <Label text="{i18n>Label.providerId}" tooltip="{i18n>Tooltip.providerId}" />
+                        </f:label>
+                        <Input value="{/ID}">
+                            <layoutData>
+                                <l:GridData span="L2 M4 S12" />
+                            </layoutData>
+                        </Input>
+                    </f:FormElement>
+
+                    <f:FormElement>
+                        <f:label>
+                            <Label text="{i18n>Label.domain}" tooltip="{i18n>Tooltip.domain}" />
+                        </f:label>
+                        <Input value="{/DOMAIN_URL}">
+                            <layoutData>
+                                <l:GridData span="L6 M8 S12" />
+                            </layoutData>
+                        </Input>
+                    </f:FormElement>
+
+                    <f:FormElement>
+                        <f:label>
+                            <Label text="{i18n>Label.proxy}" tooltip="{i18n>Tooltip.proxy}" />
+                        </f:label>
+                        <Input value="{/HTTP_PROXY}">
+                            <layoutData>
+                                <l:GridData span="L3 M4 S12" />
+                            </layoutData>
+                        </Input>
+                    </f:FormElement>
+
+                    <f:FormElement>
+                        <f:label>
+                            <Label text="{i18n>Label.certificate}" tooltip="{i18n>Tooltip.certificate}" />
+                        </f:label>
+                        <Input value="{/CERTIFICATE}">
+                            <layoutData>
+                                <l:GridData span="L3 M4 S12" />
+                            </layoutData>
+                        </Input>
+                    </f:FormElement>
+
+                </f:FormContainer>
+            </f:Form>
+
+            <footer>
+                <Toolbar>
+                    <ToolbarSpacer />
+                    <Button
+                        text="{i18nGlobal>General.save}"
+                        type="Emphasized"
+                        press=".onSaveProvider" />
+                    <Button
+                        text="{i18nGlobal>General.cancel}"
+                        press=".closeDialog" />
+                </Toolbar>
+            </footer>
+        </Page>
+    </Dialog>
+</c:FragmentDefinition>

@@ -1,0 +1,21 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <ViewSettingsDialog confirm="onSort">
+        <sortItems>
+            <ViewSettingsItem
+                text="{i18n>Assignment.type}"
+                key="OBJTYPE_TEXT" />
+            <ViewSettingsItem
+                text="{i18n>Assignment.objKeys}"
+                key="OBJKEY" />
+            <ViewSettingsItem
+                text="{i18n>Assignment.user}"
+                key="PLANTUSER"
+                visible="{= !${page>/currentUser} }" />
+            <ViewSettingsItem
+                text="{i18n>Assignment.status}"
+                key="STATUS_TEXT" />
+        </sortItems>
+    </ViewSettingsDialog>
+</c:FragmentDefinition>

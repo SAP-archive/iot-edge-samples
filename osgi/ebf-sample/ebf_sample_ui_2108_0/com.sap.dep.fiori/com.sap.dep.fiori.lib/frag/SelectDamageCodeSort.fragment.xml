@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <ViewSettingsDialog confirm="dep.fiori.lib.util.SelectDamageCodeDialog.onSort">
+        <sortItems>
+            <ViewSettingsItem
+                text="{i18nGlobal>DamageCodeSelect.group}"
+                key="FEGRP"
+                selected="true" />
+            <ViewSettingsItem
+                text="{i18nGlobal>DamageCodeSelect.code}"
+                key="FECOD" />
+            <ViewSettingsItem
+                text="{i18nGlobal>DamageCodeSelect.text}"
+                key="FETXT" />
+        </sortItems>
+    </ViewSettingsDialog>
+</core:FragmentDefinition>

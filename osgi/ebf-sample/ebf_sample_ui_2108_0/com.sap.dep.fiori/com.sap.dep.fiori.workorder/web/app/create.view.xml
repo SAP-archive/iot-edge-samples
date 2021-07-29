@@ -1,0 +1,269 @@
+<mvc:View
+    controllerName="dep.fiori.workorder.app.create"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:c="sap.ui.core"
+    xmlns="sap.m">
+    <Page showHeader="false">
+        <f:Form id="form">
+
+            <f:toolbar>
+                <Toolbar>
+                    <Title id="workorderTitle" text="{i18n>Form.title}"/>
+                    <ToolbarSpacer/>
+                    <Label text="{i18n>Form.authorLabel}:"/>
+                    <Image
+                        height="2.5rem"
+                        width="auto"
+                        src="{createdByImg>/imageURL}" class="borderRadiusCircle"
+                        visible="{= !!${createdByImg>/imageURL} }"/>
+                    <Label
+                        text="{createdByImg>/name}"
+                        visible="{= !${createdByImg>/imageURL} }" />
+                </Toolbar>
+            </f:toolbar>
+
+            <f:layout>
+                <f:ResponsiveGridLayout
+                    labelSpanL="2"/>
+            </f:layout>
+
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement>
+                            <f:label>
+                                <Label
+                                    text="{i18n>Form.dateLabel}"
+                                    required="true"/>
+                            </f:label>
+                            <f:fields>
+                                <DatePicker
+                                    id="inputDate"
+                                    width="100%"
+                                    valueFormat="yyyyMMdd"
+                                    value="{/GSTRP}"
+                                    class="sapUiSmallMarginBottom"
+                                    change="changeState">
+                                    <layoutData>
+                                        <l:GridData
+                                            span="L2 M2 S12">
+                                        </l:GridData>
+                                    </layoutData>
+                                </DatePicker>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement>
+                            <f:label>
+                                <Label
+                                    text="{i18nGlobal>General.description}"
+                                    required="true"/>
+                            </f:label>
+                            <f:fields>
+                                <Input
+                                    id="inputDesc"
+                                    value="{/KTEXT}"
+                                    maxLength="40"
+                                    class="sapUiSmallMarginBottom"
+                                    change="changeState">
+                                    <layoutData>
+                                        <l:GridData
+                                            span="L6 M6 S12">
+                                        </l:GridData>
+                                    </layoutData>
+                                </Input>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement>
+                            <f:label>
+                                <Label
+                                    text="{i18n>Form.maintenanceLabel}"
+                                    required="true" />
+                            </f:label>
+                            <f:fields>
+                                <Select
+                                    id="workorderTypeSelect"
+                                    class="sapUiSmallMarginBottom"
+                                    forceSelection="false"
+                                    items="{activityTypes>/}"
+                                    selectedKey="{/ILART}"
+                                    change="changeState">
+                                    <c:Item
+                                        key="{activityTypes>ILART}"
+                                        text="{activityTypes>ILART} - {activityTypes>ILATX}" />
+                                    <layoutData>
+                                        <l:GridData
+                                            span="L3 M3 S12">
+                                        </l:GridData>
+                                    </layoutData>
+                                </Select>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement>
+                            <f:label>
+                                <Label
+                                    text="{i18nGlobal>General.equipment}"
+                                    required="true"/>
+                            </f:label>
+                            <f:fields>
+                                <Input
+                                    id="equipmentSelect"
+                                    showValueHelp="true"
+                                    valueHelpOnly="true"
+                                    value="{/EQUNR}"
+                                    class="sapUiSmallMarginBottom"
+                                    valueHelpRequest="onEquipmentValueHelp"
+                                    change="changeState">
+                                    <layoutData>
+                                        <l:GridData
+                                            span="L3 M3 S12">
+                                        </l:GridData>
+                                    </layoutData>
+                                </Input>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement>
+                            <f:label>
+                                <Label
+                                    text="{i18n>Form.locationLabel}"
+                                    required="true"/>
+                            </f:label>
+                            <f:fields>
+                                <Input
+                                    enabled="false"
+                                    value="{/TPLNR}"
+                                    class="sapUiSmallMarginBottom">
+                                    <layoutData>
+                                        <l:GridData
+                                            span="L3 M3 S12">
+                                        </l:GridData>
+                                    </layoutData>
+                                </Input>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement>
+                            <f:label>
+                                <Label
+                                    text="{i18n>Form.workcenterLabel}"
+                                    required="true"/>
+                            </f:label>
+                            <f:fields>
+                                <Input
+                                    id="workcenterSelect"
+                                    showValueHelp="true"
+                                    valueHelpOnly="true"
+                                    value="{/VAPLZ}"
+                                    class="sapUiSmallMarginBottom"
+                                    valueHelpRequest="workcenterPress"
+                                    change="changeState">
+                                    <layoutData>
+                                        <l:GridData span="L3 M3 S12" />
+                                    </layoutData>
+                                </Input>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement>
+                            <f:label>
+                                <Label text="{i18nGlobal>General.priority}"/>
+                            </f:label>
+                            <f:fields>
+                                <Select
+                                    class="sapUiSmallMarginBottom"
+                                    id="prioritySelect"
+                                    items="{
+                                        path: 'odata>/Workorder_Priority',
+                                        filters : [
+                                            { path : 'ARTPR', operator : 'EQ', value1 : 'PM'}
+                                        ]
+                                    }"
+                                    selectedKey="{/PRIOK}"
+                                    change="changeState">
+                                    <c:Item key="{odata>PRIOK}" text="{odata>PRIOKX}" />
+                                    <layoutData>
+                                        <l:GridData
+                                            span="L2 M2 S12">
+                                        </l:GridData>
+                                    </layoutData>
+                                </Select>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement>
+                            <f:label>
+                                <Label text="{i18nGlobal>General.breakdown}"/>
+                            </f:label>
+                            <f:fields>
+                                <CheckBox
+                                    id="breakdownCheckbox"
+                                    selected="{ path: '/MSAUS', formatter: '.formatters.breakdown' }"
+                                    select="breakdownSelect"/>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement visible="{ path: '/MSAUS', formatter: '.formatters.breakdown' }">
+                            <f:label>
+                                <Label text="{i18n>Breakdown.malfunctionDateLabel}"/>
+                            </f:label>
+                            <DatePicker
+                                valueFormat="yyyyMMdd"
+                                value="{/AUSVN}"
+                                class="malfunctionDate sapUiSmallMarginBottom">
+                                <layoutData>
+                                    <l:GridData span="L2 M2 S12" />
+                                </layoutData>
+                            </DatePicker>
+                        </f:FormElement>
+
+                        <f:FormElement visible="{ path: '/MSAUS', formatter: '.formatters.breakdown' }">
+                            <f:label>
+                                <Label text="{i18n>Breakdown.malfunctionTimeLabel}"/>
+                            </f:label>
+                            <TimePicker
+                                valueFormat="HHmmss"
+                                value="{/AUZTV}"
+                                class="malfunctionTime">
+                                <layoutData>
+                                    <l:GridData span="L2 M2 S12" />
+                                </layoutData>
+                            </TimePicker>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+
+        <footer>
+            <Bar id="otbFooter">
+                <contentLeft>
+                    <Button
+                        id="messages-button"
+                        icon="sap-icon://message-popup"
+                        text="{/length}"
+                        type="Emphasized"
+                        press="handleMessagePopoverPress"/>
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        id="save-button"
+                        type="Emphasized"
+                        text="{i18nGlobal>General.save}"
+                        press="workorderSave"/>
+                    <Button
+                        id="cancel-button"
+                        text="{i18nGlobal>General.cancel}"
+                        press="dep.fiori.lib.util.Utilities.navHome"/>
+                </contentRight>
+            </Bar>
+        </footer>
+    </Page>
+</mvc:View>

@@ -1,0 +1,111 @@
+<mvc:View
+    controllerName="dep.fiori.purchaseorder.app.service"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:c="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns:l="sap.ui.layout"
+    xmlns:uni="sap.ui.unified"
+    xmlns="sap.m">
+    <u:ObjectPageLayout
+        id="content"
+        alwaysShowContentHeader="true"
+        useIconTabBar="true"
+        navigate="onPageNav">
+
+        <u:headerTitle>
+            <u:ObjectPageHeader objectTitle="{i18n>EntrySheet.title} {/SHEET_NO_LOCAL}" />
+        </u:headerTitle>
+
+        <u:headerContent>
+            <l:Grid
+                vSpacing="0"
+                defaultSpan="L12 M12 S12">
+                <HBox
+                    fitContainer="true"
+                    renderType="Bare">
+                    <Label
+                        text="{i18n>General.purchaseOrder}:"
+                        class="sapUiSmallMarginEnd" />
+                    <Label text="{/PO_NUMBER}" />
+                </HBox>
+            </l:Grid>
+        </u:headerContent>
+
+        <u:sections>
+            <u:ObjectPageSection>
+                <u:subSections>
+                    <u:ObjectPageSubSection>
+                        <u:blocks>
+                            <Table
+                                noDataText="{i18nGlobal>General.listEmpty}"
+                                growing="true"
+                                items="{items>/}"
+                                includeItemInSelection="true"
+                                growingScrollToLoad="true"
+                                itemPress="onSheetSelect">
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <Title text="{i18nGlobal>General.items} ({items>/length})" />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            tooltip="{i18n>List.refresh}"
+                                            icon="sap-icon://refresh"
+                                            press="refresh" />
+                                    </Toolbar>
+                                </headerToolbar>
+                                <columns>
+                                    <Column
+                                        vAlign="Middle"
+                                        width="35%"
+                                        minScreenWidth="Desktop"
+                                        demandPopin="true"
+                                        popinDisplay="Inline">
+                                        <Title
+                                            text="{i18nGlobal>General.description}"
+                                            tooltip="{i18nGlobal>General.description}" />
+                                    </Column>
+                                    <Column
+                                        vAlign="Middle"
+                                        hAlign="End">
+                                        <Title
+                                            text="{i18nGlobal>General.quantity}"
+                                            tooltip="{i18nGlobal>General.quantity}" />
+                                    </Column>
+                                    <Column vAlign="Middle">
+                                        <Title
+                                            text="{i18nGlobal>General.unit}"
+                                            tooltip="{i18nGlobal>General.unit}" />
+                                    </Column>
+                                    <Column
+                                        vAlign="Middle"
+                                        hAlign="End">
+                                        <Title
+                                            text="{i18n>EntrySheet.price}"
+                                            tooltip="{i18n>EntrySheet.price}" />
+                                    </Column>
+                                    <!-- <Column hAlign="End" /> -->
+                                </columns>
+                                <ColumnListItem>
+                                    <Label
+                                        text="{items>SHORT_TEXT_ITEM}"
+                                        tooltip="{items>SHORT_TEXT_ITEM}" />
+                                    <Label text="{items>QUANTITY}" />
+                                    <Label
+                                        text="{items>UOM_ISO}"
+                                        tooltip="{items>UOM_ISO}" />
+                                    <Label text="{items>GR_PRICE}" />
+                                    <!-- <Button
+                                        text="{i18nGlobal>General.edit}"
+                                        press="onEditPress" /> -->
+                                </ColumnListItem>
+                            </Table>
+                        </u:blocks>
+                    </u:ObjectPageSubSection>
+                </u:subSections>
+            </u:ObjectPageSection>
+        </u:sections>
+    </u:ObjectPageLayout>
+</mvc:View>

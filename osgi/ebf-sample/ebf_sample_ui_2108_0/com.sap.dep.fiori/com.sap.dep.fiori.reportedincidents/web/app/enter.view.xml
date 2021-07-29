@@ -1,0 +1,159 @@
+<mvc:View
+	controllerName="dep.fiori.reportedincidents.app.enter"
+	class="dep-fiori" displayBlock="true" height="100%"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:u="sap.uxap"
+	xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout"
+	xmlns:c="sap.ui.core" xmlns:v="sap.viz.ui5.controls"
+	xmlns:vd="sap.viz.ui5.data"
+	xmlns:vf="sap.viz.ui5.controls.common.feeds">
+	<Page id="main" enableScrolling="false" showHeader="false">
+		<content>
+			<VBox fitContainer="true" renderType="Bare">
+				<c:Fragment fragmentName="dep.fiori.lib.frag.filterBar"
+					type="XML" />
+				<Toolbar height="10%" width="auto">
+					<Title
+						text="{ path: 'INCIDENTS>/length', formatter: '.tableTitleFormatter' }"
+						level="H2" />
+					<ToolbarSpacer />
+					<HBox renderType="Bare">
+						<Button id="addButton" tooltip="{i18n>Page.title}"
+							icon="sap-icon://add" press="onCreateIncidentPress" />
+						<Button tooltip="{i18nGlobal>General.listRefresh}"
+							icon="sap-icon://refresh" press="onRefresh" />
+						<Button tooltip="{i18nGlobal>General.sortList}"
+							icon="sap-icon://drop-down-list" press="onSortPress" />
+					</HBox>
+				</Toolbar>
+				<Table
+					visible="{ path: 'pageVisibility>/', formatter: '.showTableFormatter' }"
+					showNoData="false">
+					<columns>
+						<Column demandPopin="true">
+							<Text text="{i18n>ListItem.incidentID}" />
+						</Column>
+						<Column demandPopin="true"> <Text text="{i18n>ListItem.ehsID}" 
+							/> </Column> 
+						<Column demandPopin="true">
+							<Text text="{i18n>ListItem.status}" />
+						</Column>
+						<Column demandPopin="true" minScreenWidth="Tablet">
+							<Text text="{i18n>ListItem.incidentTitle}" />
+						</Column>
+						<Column demandPopin="true" minScreenWidth="Tablet">
+							<Text text="{i18n>ListItem.location}" />
+						</Column>
+						<Column demandPopin="true" minScreenWidth="Tablet">
+							<Text text="{i18n>ListItem.creationDate}" />
+						</Column>
+					</columns>
+				</Table>
+				<ScrollContainer vertical="true" height="100%"
+					width="100%">
+					<Table noDataText="{i18n>List.empty}"
+						id="reported-incidents-table"
+						items="{
+                            path: 'odata>/Reported_Incidents',
+                            sorter: {
+                                path: 'ID_LOCAL',
+                                descending: true
+                            }
+                        }"
+						growing="true" growingScrollToLoad="true"
+						visible="{ path: 'pageVisibility>/', formatter: '.showTableFormatter' }"
+						itemPress="onItemPress">
+						<columns>
+							<Column demandPopin="true">
+								<Text text="{i18n>ListItem.incidentID}" />
+							</Column>
+							<Column demandPopin="true"> <Text text="{i18n>ListItem.ehsID}" 
+								/> </Column> 
+							<Column demandPopin="true">
+								<Text text="{i18n>ListItem.status}" />
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Tablet">
+								<Text text="{i18n>ListItem.incidentTitle}" />
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Tablet">
+								<Text text="{i18n>ListItem.location}" />
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Tablet">
+								<Text text="{i18n>ListItem.creationDate}" />
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem vAlign="Middle" type="Active">
+								<cells>
+
+									<Label text="{odata>ID_LOCAL}"
+										class="incidentIDLabelBlue" design="Bold" />
+									<Label text="{odata>ID}"/>
+									<Label text="{odata>STATUS}" />
+									<!-- <core:Icon class="statusIcon" size="1.8rem" src="{ path: 'odata>STATUS_KEY', 
+										formatter: '.statusIconSrcFormatter'}" color="{ path: 'odata>STATUS_KEY', 
+										formatter: '.statusIconColorFormatter'}"/> -->
+									<Label text="{odata>TITLE}" />
+									<Label text="{odata>PLANT_LOC_CODE}" />
+									<Label
+										text="{parts: ['odata>START_DATE'], formatter: '.incidentFormatter'}" />
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+					<Carousel pageIndicatorPlacement="Top"
+						arrowsPlacement="PageIndicator" height="100%" width="100%"
+						class="incidentStatCharts"
+						visible="{ path: 'pageVisibility>/', formatter: '.showChartsFormatter' }">
+						<VBox renderType="Bare" alignItems="Center">
+							<Title
+								text="{ path: 'i18n>Chart.currentYearReportStatus', formatter: '.currentYearReportStatus' }"
+								class="incidentChartTitle" textAlign="Center" />
+							<v:VizFrame width="75%" height="20rem"
+								vizProperties="{columnChartProperties>/}" legendVisible="false"
+								class="incidentColumnChart">
+								<v:dataset>
+									<vd:FlattenedDataset
+										data="{reportStatusChart>/}">
+										<vd:dimensions>
+											<vd:DimensionDefinition name="Status"
+												value="{STATUS_KEY}" />
+										</vd:dimensions>
+										<vd:measures>
+											<vd:MeasureDefinition name="Reports"
+												value="{TOTAL_REPORTS}" />
+										</vd:measures>
+									</vd:FlattenedDataset>
+								</v:dataset>
+								<v:feeds>
+									<vf:FeedItem uid="valueAxis" type="Measure"
+										values="Reports" />
+									<vf:FeedItem uid="categoryAxis" type="Dimension"
+										values="Status" />
+								</v:feeds>
+							</v:VizFrame>
+							<HBox renderType="Bare" justifyContent="Center">
+								<VBox renderType="Bare">
+									<Text text="{reportStatus>/1}"
+										class="incidentStatus incidentStatusNew" />
+									<Text text="{reportStatus>/2}"
+										class="incidentStatus incidentStatusInProgress" />
+									<Text text="{reportStatus>/3}"
+										class="incidentStatus incidentStatusCompleted" />
+								</VBox>
+								<VBox renderType="Bare">
+									<Label text="{i18nGlobal>Status.new}"
+										class="incidentStatus incidentStatusNew" />
+									<Label text="{i18nGlobal>Status.inProgress}"
+										class="incidentStatus incidentStatusInProgress" />
+									<Label text="{i18nGlobal>Status.completed}"
+										class="incidentStatus incidentStatusCompleted" />
+								</VBox>
+							</HBox>
+						</VBox>
+					</Carousel>
+				</ScrollContainer>
+			</VBox>
+		</content>
+	</Page>
+</mvc:View>

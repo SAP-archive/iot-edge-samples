@@ -1,0 +1,117 @@
+{
+    "sap.ui5": {
+        "name": "DEP Reported Incidents",
+        "version": "1.0",
+        "config": {
+            "serviceConfig": {
+                "rest": {
+                    "description": "Base URL",
+                    "url": "/ws_restful_data_controller"
+                }
+            },
+            "compactContentDensity": false
+        },
+        "routing" : {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "viewPath": "dep.fiori.reportedincidents.app",
+                "targetControl": "content",
+                "targetAggregation": "pages"
+            },
+            "routes": {
+                "enter": {
+                    "pattern": "",
+                    "viewId": "dep-fiori-reportedincidents-enter",
+                    "view": "enter"
+                },
+                "myincidents": {
+                    "pattern": "myincidents",
+                    "viewId": "dep-fiori-reportedincidents-enter",
+                    "view": "enter"
+                },
+                "edit": {
+                	"pattern": "edit/{ID_LOCAL}",
+                	"viewId": "dep-fiori-reportedincidents-edit",
+                    "view": "edit"
+                },
+                "create": {
+                    "pattern": "create/{ID_LOCAL}/{LOCAL_PERSN_ID}",
+                    "viewId": "dep-fiori-reportedincidents-create",
+                    "view": "create"
+                },
+                "create_new": {
+                    "pattern": "create_new/{ID_LOCAL}/{LOCAL_PERSN_ID}",
+                    "viewId": "dep-fiori-reportedincidents-create",
+                    "view": "create"
+                },
+				"createPeople": {
+                    "pattern": "create/{ID_LOCAL}",
+                    "viewId": "dep-fiori-reportedincidents-createPeople",
+                    "view": "createPeople"
+                },
+				"createEquipment": {
+                    "pattern": "createEquipment/{ID_LOCAL}",
+                    "viewId": "dep-fiori-reportedincidents-createEquipment",
+                    "view": "createEquipment"
+                },
+				"equipmentDetails": {
+                    "pattern": "equipmentDetails/{ID_LOCAL}/{ASSET_TYPE}/{ASSET_ID}/{ASSET_LINE_NO}",
+                    "viewId": "dep-fiori-reportedincidents-equipmentDetails",
+                    "view": "equipmentDetails"
+                },
+				"createEquipmentDamage": {
+                    "pattern": "createEquipmentDamage/{ID_LOCAL}/{ASSET_TYPE}/{ASSET_ID}/{ASSET_LINE_NO}",
+                    "viewId": "dep-fiori-reportedincidents-createEquipmentDamage",
+                    "view": "createEquipmentDamage"
+                },
+				"equipmentDamageDetails": {
+                    "pattern": "equipmentDamageDetails/{ID_LOCAL}/{ASSET_TYPE}/{ASSET_ID}/{ASSET_LINE_NO}/{ASSET_DAMAGE_LINE_NO}",
+                    "viewId": "dep-fiori-reportedincidents-equipmentDamageDetails",
+                    "view": "equipmentDamageDetails"
+                },
+                "createVehicle": {
+                    "pattern": "createVehicle/{ID_LOCAL}",
+                    "viewId": "dep-fiori-reportedincidents-createVehicle",
+                    "view": "createVehicle"
+                },
+                "vehicleDetails": {
+                    "pattern": "vehicleDetails/{ID_LOCAL}/{ASSET_TYPE}/{ASSET_ID}/{ASSET_LINE_NO}",
+                    "viewId": "dep-fiori-reportedincidents-vehicleDetails",
+                    "view": "vehicleDetails"
+                },
+                "createProperty": {
+                    "pattern": "createProperty/{ID_LOCAL}",
+                    "viewId": "dep-fiori-reportedincidents-createProperty",
+                    "view": "createProperty"
+                },
+                "propertyDetails": {
+                    "pattern": "propertyDetails/{ID_LOCAL}/{ASSET_TYPE}/{ASSET_ID}/{ASSET_LINE_NO}",
+                    "viewId": "dep-fiori-reportedincidents-propertyDetails",
+                    "view": "propertyDetails"
+                }
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "i18nGlobal": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "/dep_fiori_apps/com.sap.dep.fiori.lib/i18n/i18n.properties"
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                },
+                {
+                    "uri": "/dep_fiori_apps/com.sap.dep.fiori.lib/css/style.css",
+                    "id": "dep-lib-style"
+                }
+            ]
+        }
+    }
+}

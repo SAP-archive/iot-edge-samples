@@ -1,0 +1,143 @@
+<mvc:View
+    controllerName="dep.fiori.inventory.app.list"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:c="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:lib="dep.fiori.lib">
+    <Page
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <VBox
+            fitContainer="true"
+            renderType="Bare">
+            <c:Fragment fragmentName="dep.fiori.lib.frag.filterBar" type="XML" />
+            <ScrollContainer
+                vertical="true"
+                height="100%"
+                width="100%">
+                <Table
+                    id="list"
+                    noDataText="{i18n>List.empty}"
+                    items="{odata>/Physical_Inventory_Documents}"
+                    growing="true"
+                    growingScrollToLoad="true"
+                    mode="MultiSelect"
+                    itemPress="onItemPress">
+                    <headerToolbar>
+                        <Toolbar>
+                            <Title text="{i18n>List.title}" />
+                            <ToolbarSpacer />
+                            <Button
+                                id="addButton"
+                                tooltip="{i18n>Page.createDocument}"
+                                icon="sap-icon://add"
+                                press="onCreatePress" />
+                            <Button
+                                tooltip="{i18nGlobal>General.sortList}"
+                                icon="sap-icon://drop-down-list"
+                                press="onSortPress" />
+                            <Button
+                                tooltip="{i18nGlobal>General.print}"
+                                icon="sap-icon://print"
+                                press="onPrintPress" />
+                        </Toolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column
+                            vAlign="Middle"
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                            popinDisplay="Inline">
+                            <Title
+                                text="{i18nGlobal>General.status}"
+                                tooltip="{i18nGlobal>General.status}" />
+                        </Column>
+                        <Column vAlign="Middle">
+                            <Title
+                                text="{i18n>Inventory.localNumber}"
+                                tooltip="{i18n>Inventory.localNumber}" />
+                        </Column>
+                        <Column vAlign="Middle">
+                            <Title
+                                text="{i18n>Inventory.number}"
+                                tooltip="{i18n>Inventory.number}" />
+                        </Column>
+                        <Column
+                            vAlign="Middle"
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                            popinDisplay="Inline">
+                            <Title
+                                text="{i18n>Inventory.date}"
+                                tooltip="{i18n>Inventory.date}" />
+                        </Column>
+                        <Column vAlign="Middle">
+                            <Title
+                                text="{i18nGlobal>General.location}"
+                                tooltip="{i18nGlobal>General.location}" />
+                        </Column>
+                        <Column
+                            vAlign="Middle"
+                            minScreenWidth="Desktop"
+                            demandPopin="true"
+                            popinDisplay="Inline">
+                            <Title
+                                text="{i18n>Inventory.total}"
+                                tooltip="{i18n>Inventory.total}" />
+                        </Column>
+                        <Column
+                            vAlign="Middle"
+                            minScreenWidth="Desktop"
+                            demandPopin="true"
+                            popinDisplay="Inline">
+                            <Title
+                                text="{i18n>Inventory.uncounted}"
+                                tooltip="{i18n>Inventory.uncounted}" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Active">
+                            <cells>
+                                <Label
+                                    text="{= ${odata>DSTAT} === 'X' ? ${i18n>CountStatus.closed} : ${i18n>CountStatus.open} }"
+                                    tooltip="{= ${odata>DSTAT} === 'X' ? ${i18n>CountStatus.closed} : ${i18n>CountStatus.open} }" />
+                                <HBox
+                                    fitContainer="true"
+                                    renderType="Bare"
+                                    alignItems="Center">
+                                    <Label
+                                        text="{odata>INV_NO_LOCAL}"
+                                        tooltip="{odata>INV_NO_LOCAL}"
+                                        class="sapUiTinyMarginEnd" />
+                                    <c:Icon
+                                        src="sap-icon://message-error"
+                                        size="1.25rem"
+                                        color="red"
+                                        tooltip="{i18nGlobal>General.hasSyncErrors}"
+                                        visible="{= !!${odata>EDGE_ERRORS} }"
+                                        press="handleResponsivePopoverPress" />
+                                </HBox>
+                                <Label
+                                    text="{odata>IBLNR}"
+                                    tooltip="{odata>IBLNR}" />
+                                <Label
+                                    text="{odata>BLDAT}"
+                                    tooltip="{odata>BLDAT}" />
+                                <Label
+                                    text="{odata>LGORT}"
+                                    tooltip="{odata>LGORT}" />
+                                <Label text="{odata>TOTAL_ITEMS}" />
+                                <Label text="{odata>ITEMS_UNCOUNTED}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </ScrollContainer>
+        </VBox>
+    </Page>
+</mvc:View>

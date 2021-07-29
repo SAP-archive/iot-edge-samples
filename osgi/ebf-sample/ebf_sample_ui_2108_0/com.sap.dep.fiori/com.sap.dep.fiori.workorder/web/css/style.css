@@ -1,0 +1,68 @@
+#dep-fiori-workorder-create--form--Grid .sapUiRespGrid {
+    padding-bottom: 0;
+}
+
+#dep-fiori-workorder-create .borderRadiusCircle { 
+	border-radius: 50%; 
+}
+
+#dep-fiori-workorder-saved .sapUxAPObjectPageSectionTitle {
+	    border-bottom: 0.125rem solid #427cac;
+}
+
+#dep-fiori-workorder-saved .sapUxAPObjectPageSectionHeader {
+	    border-bottom: 0.125rem solid #d1e0ef;
+}
+
+#dep-fiori-workorder-saved .sapUxAPObjectPageSectionHeader {
+	    background-color: #eff4f9;
+}
+
+#dep-fiori-workorder-saved .sapUxAPObjectPageHeaderObjectImage-Circle, .sapUxAPObjectPageHeaderObjectImage-Circle .sapUxAPObjectPageHeaderObjectImage {
+    float:right;
+    margin-top:.75rem;
+}
+
+#dep-fiori-workorder-saved .sapUxAPObjectPageHeaderIdentifier .sapUxAPObjectPageHeaderIdentifierDescription {
+    float: right;
+    font-style: italic;
+    margin-left: auto;
+    margin-right:0;
+}
+
+#dep-fiori-workorder-saved .sapUxAPObjectPageHeaderIdentifier.sapUxAPObjectPageHeaderIdentifierForce, .sapUxAPObjectPageHeaderStickied .sapUxAPObjectPageHeaderIdentifier {
+    padding-bottom: 0.1rem;
+}
+
+#dep-fiori-workorder-saved .sapUxAPObjectPageContainerNoBar>.sapUxAPObjectPageSection:first-child {
+    outline: none;
+}
+
+#dep-fiori-workorder-saved .sapUxAPObjectPageSection .sapUxAPObjectPageSubSection:last-child {
+    outline: none;
+}
+
+#dep-fiori-workorder-detail .sapMInputBase.classification {
+    opacity: 1;
+}
+
+#dep-fiori-workorder-detail .sapMInputBase.classification {
+    padding: 0.675rem 0;
+}
+
+#dep-fiori-workorder-detail .sapMInputBase.classification .sapMInputBaseInner {
+    height: 1.5rem;
+    background: transparent;
+}
+
+#dep-fiori-workorder-detail .sapUiRespGridMedia-Std-Phone .inlineFormLabelS {
+    line-height: 2.75rem;
+}
+
+#dep-fiori-workorder-operation .workorderComponentsFilterBar {
+    background: none;
+}
+
+#dep-fiori-workorder-detail .docFlowTree .sapMTreeItemBase.sapMLIBHoverable:hover {
+    background-color: #f0f0f0;
+}

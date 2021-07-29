@@ -1,0 +1,226 @@
+<mvc:View
+    controllerName="dep.fiori.workorderop.app.create"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:c="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns="sap.m">
+    <Page
+        id="main"
+        showHeader="false">
+
+        <u:ObjectPageLayout alwaysShowContentHeader="true">
+
+            <u:headerTitle>
+                <u:ObjectPageHeader
+                    id="objectPageTitle"
+                    objectTitle="{i18n>Page.createOperation}:"
+                    objectSubtitle="">
+                </u:ObjectPageHeader>
+            </u:headerTitle>
+
+            <u:sections>
+                <u:ObjectPageSection title="{i18nGlobal>General.details} " id="page" >
+                    <u:subSections>
+                        <u:ObjectPageSubSection id="matlistSubSection">
+                            <u:blocks>
+                                <f:Form id="form" class="sapUiSmallMarginTop">
+
+                                    <f:layout>
+                                        <f:ResponsiveGridLayout hSpacing="2"/>
+                                    </f:layout>
+
+                                    <f:formContainers>
+                                        <f:FormContainer>
+                                            <f:formElements>
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="{i18n>List.workCenter}:"
+                                                            required="true"/>
+                                                    </f:label>
+                                                    <f:fields>
+                                                        <Select
+                                                            id="opcWorkcenterSelect"
+                                                            forceSelection="false"
+                                                            selectedKey="{operation>/ARBPL}"
+                                                            items="{path: 'COMBO_BOX_MODEL>/Workcenter', templateShareable: 'false'}">
+                                                            <c:ListItem key="{COMBO_BOX_MODEL>VAPLZ}" text="{COMBO_BOX_MODEL>VAPLZ}" />
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L2 M2 S4">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Select>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="{i18n>List.controlKey}:"
+                                                            required="true"/>
+                                                    </f:label>
+                                                    <f:fields>
+                                                        <Select
+                                                            id="opcControlKeySelect"
+                                                            forceSelection="false"
+                                                            change="checkEXT2"
+                                                            selectedKey="{operation>/STEUS}"
+                                                            items="{path: 'COMBO_BOX_MODEL>/Control_Key_List', templateShareable: 'false'}">
+                                                            <c:ListItem key="{COMBO_BOX_MODEL>STEUS}" text="{COMBO_BOX_MODEL>STEUS}" />
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L2 M2 S4">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Select>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="{i18n>List.operationShortText}:"/>
+                                                    </f:label>
+                                                    <f:fields>
+                                                        <Input
+                                                            id="txtLTXA1"
+                                                            value="{operation>/LTXA1}"
+                                                            maxLength="40"
+                                                            class="sapUiSmallMarginBottom">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L4 M4 S12">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="{i18n>Form.plannedHours}:"/>
+                                                    </f:label>
+                                                    <f:fields>
+                                                        <Input
+                                                            id="txtDAUNO"
+                                                            value="{operation>/DAUNO}"
+                                                            type="Number"
+                                                            class="sapUiSmallMarginBottom">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L1 M1 S2">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:label>
+                                                        <Label
+                                                            text="{i18n>Form.numWorkers}:"/>
+                                                    </f:label>
+                                                    <f:fields>
+                                                        <Input
+                                                            id="txtARBEI"
+                                                            value="{operation>/ARBEI}"
+                                                            type="Number"
+                                                            class="sapUiSmallMarginBottom">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L1 M1 S2">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement visible="false" id="estValFormElement">
+                                                    <f:label>
+                                                        <Label
+                                                            text="{i18n>Form.estVal}:"/>
+                                                    </f:label>
+                                                    <f:fields>
+                                                        <Input
+                                                            id="estVal"
+                                                            value="{operation>/ISMNW}"
+                                                            type="Number"
+                                                            class="sapUiSmallMarginBottom">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L1 M1 S2">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Input>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement visible="false" id="longTextButtonFormElement">
+                                                    <f:label>
+                                                        <Label
+                                                           text="{i18n>Form.longText}:"/>
+                                                    </f:label>
+                                                    <f:fields>
+                                                        <Button id="longTextButton" icon="sap-icon://add-document" press="longTextOpen">
+                                                            <layoutData>
+                                                                <l:GridData
+                                                                    span="L1 M1 S2">
+                                                                </l:GridData>
+                                                            </layoutData>
+                                                        </Button>
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement visible="false" id="noLimitCheckboxFormElement">
+                                                    <f:label>
+                                                        <Label
+                                                            text="{i18n>Form.noLimit}:"/>
+                                                    </f:label>
+                                                    <f:fields>
+                                                        <CheckBox
+                                                            id="noLimitCheckbox"/>
+                                                    </f:fields>
+                                                </f:FormElement>
+                                            </f:formElements>
+                                        </f:FormContainer>
+                                    </f:formContainers>
+                                </f:Form>
+                            </u:blocks>
+                        </u:ObjectPageSubSection>
+                    </u:subSections>
+                </u:ObjectPageSection> 
+            </u:sections>
+        </u:ObjectPageLayout>
+
+        <footer>
+            <Bar id="otbFooter">
+                <contentLeft>
+                    <Button
+                        id="messages-button"
+                        icon="sap-icon://message-popup"
+                        text="{/length}"
+                        type="Emphasized"
+                        press="handleMessagePopoverPress"/>
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        id="add-button"
+                        type="Emphasized"
+                        press="saveOperation"
+                        text="{i18nGlobal>General.add}"/>
+                    <Button
+                        id="cancel-button"
+                        text="{i18nGlobal>General.cancel}"
+                        press="cancel"/>
+                </contentRight>
+            </Bar>
+        </footer>
+    </Page>
+</mvc:View>

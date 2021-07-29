@@ -1,0 +1,493 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+	Version="4.0">
+	<edmx:Reference
+		Uri="http://docs.oasis-open.org/odata/odata-data-aggregation-ext/v4.0/cs02/vocabularies/Org.OData.Aggregation.V1.xml">
+		<edmx:Include Alias="Aggregation" Namespace="Org.OData.Aggregation.V1"/>
+	</edmx:Reference>
+	<edmx:Reference
+		Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Capabilities.V1.xml">
+		<edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+	</edmx:Reference>
+	<edmx:Reference
+		Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2">
+		<edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+	</edmx:Reference>
+	<edmx:Reference
+		Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470971/Communication.xml?api=v2">
+		<edmx:Include Alias="vCard"
+			Namespace="com.sap.vocabularies.Communication.v1"/>
+	</edmx:Reference>
+	<edmx:Reference
+		Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Core.V1.xml">
+		<edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+	</edmx:Reference>
+	<edmx:Reference
+		Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Measures.V1.xml">
+		<edmx:Include Alias="CQP" Namespace="Org.OData.Measures.V1"/>
+	</edmx:Reference>
+	<edmx:Reference
+		Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2">
+		<edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="dep/so/odata/$metadata">
+		<edmx:Include Alias="depso" Namespace="SO_SRV"/>
+	</edmx:Reference>
+	<edmx:DataServices>
+
+		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm">
+			<Annotations Target="depso.ProductionOrders">
+			
+				<Annotation Term="Capabilities.SearchRestrictions">
+					<Record>
+						<PropertyValue Property="Searchable" Boolean="false"/>
+					</Record>
+				</Annotation>
+
+				<Annotation Term="UI.SelectionFields">
+					<Collection>
+						<PropertyPath>PRODUCTION_ORDER_OPERATION</PropertyPath>
+						<PropertyPath>EQUIPMENT_NUMBER</PropertyPath>						
+						<PropertyPath>MATERIAL</PropertyPath>
+                        <PropertyPath>OPERATION_STATUS</PropertyPath>							
+					</Collection>
+				</Annotation>
+                
+				<Annotation Term="UI.HeaderInfo">
+					<Record Type="UI.HeaderInfoType">
+						<PropertyValue Property="TypeName"
+							String="{@i18n&gt;LIST_REPORT_HEADER}" />
+						<PropertyValue Property="TypeNamePlural"
+							String="{@i18n&gt;LIST_REPORT_HEADER_PLURAL}" />
+						<PropertyValue Property="Title">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Label" String="{@i18n&gt;PRODUCTION_ORDER_OPERATION}"/>
+								<PropertyValue Property="Value" Path="PRODUCTION_ORDER_OPERATION"/>
+							</Record>
+						</PropertyValue>	
+					</Record>
+				</Annotation>
+				
+				<Annotation Term="Aggregation.ApplySupported">
+					<Record>
+						<PropertyValue Property="Transformations">
+							<Collection>
+								<String>aggregate</String>
+								<String>groupby</String>
+								<String>filter</String>
+							</Collection>
+						</PropertyValue>
+						<PropertyValue Property="Rollup" EnumMember="None"/>
+					</Record>
+				</Annotation>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders/EQUIPMENT_NUMBER">
+					<Annotation String="{@i18n&gt;EQUIPMENT_NUMBER}" Term="Common.Label"/>
+				</Annotations>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders/EQUIPMENT_DESCRIPTION">
+					<Annotation String="{@i18n&gt;EQUIPMENT_DESCRIPTION}" Term="Common.Label"/>
+				</Annotations>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders/PRODUCTION_ORDER_OPERATION">
+					<Annotation String="{@i18n&gt;PRODUCTION_ORDER_OPERATION}" Term="Common.Label"/>
+				</Annotations>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders/ORDER_TYPE">
+					<Annotation String="{@i18n&gt;ORDER_TYPE}" Term="Common.Label"/>
+				</Annotations>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders/EARL_SCHED_START_DATE_EXEC">
+					<Annotation String="{@i18n&gt;EARL_SCHED_START_DATE_EXEC}" Term="Common.Label"/>
+				</Annotations>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders/LATE_SCHED_FIN_DATE_EXEC">
+					<Annotation String="{@i18n&gt;LATE_SCHED_FIN_DATE_EXEC}" Term="Common.Label"/>
+				</Annotations>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders/MATERIAL">
+					<Annotation String="{@i18n&gt;MATERIAL}" Term="Common.Label"/>
+				</Annotations>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders/MATERIAL_TEXT">
+					<Annotation String="{@i18n&gt;MATERIAL_TEXT}" Term="Common.Label"/>
+				</Annotations>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders/QUANTITY">
+					<Annotation String="{@i18n&gt;QUANTITY}" Term="Common.Label"/>
+				</Annotations>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders/PRO_UNIT_OF_MEASURE_TEXT">
+					<Annotation String="{@i18n&gt;PRO_UNIT_OF_MEASURE_TEXT}" Term="Common.Label"/>
+				</Annotations>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders/UNIT">
+					<Annotation String="{@i18n&gt;UNIT}" Term="Common.Label"/>
+				</Annotations>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders/UNIT_ISO">
+					<Annotation String="{@i18n&gt;UNIT_ISO}" Term="Common.Label"/>
+				</Annotations>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders/OPERATION_STATUS">
+					<Annotation String="{@i18n&gt;OPERATION_STATUS}" Term="Common.Label"/>
+				</Annotations>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders/PRODUCTION_ORDER_STATUS">
+					<Annotation String="{@i18n&gt;PRODUCTION_ORDER_STATUS}" Term="Common.Label"/>
+				</Annotations>	
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders">
+					<Annotation Term="Org.OData.Capabilities.V1.DeleteRestrictions" >
+						<Record>
+							<PropertyValue Property="Deletable" Bool="false"/>
+						</Record>                                                          
+					</Annotation>
+				</Annotations>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders">
+					<Annotation Term="Org.OData.Capabilities.V1.SearchRestrictions" >
+						<Record>
+							<PropertyValue Property="Searchable" Bool="false"/>
+						</Record>                                                          
+					</Annotation>
+				</Annotations>
+				
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders">
+					<Annotation Term="Org.OData.Capabilities.V1.UpdateRestrictions" >
+						<Record>
+							<PropertyValue Property="Updatable" Bool="false"/>
+						</Record>                                                          
+					</Annotation>
+				</Annotations>
+
+				<Annotation Term="UI.LineItem">
+					<Collection>
+						<Record Type="UI.DataFieldForIntentBasedNavigation">
+							<PropertyValue Property="Label" String="Network Graph"/>
+							<PropertyValue Property="SemanticObject" String="networkgraph"/>
+							<PropertyValue Property="Action" String="display"/>
+							<PropertyValue Property="RequiresContext" Bool="false"/>
+							<PropertyValue Property="Inline" Bool="false"/>
+						</Record> 
+					</Collection>	
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="PRODUCTION_ORDER_OPERATION"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="EQUIPMENT_NUMBER"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="EQUIPMENT_DESCRIPTION"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="MATERIAL"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="MATERIAL_TEXT"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="QUANTITY"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="EARL_SCHED_START_DATE_EXEC"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="LATE_SCHED_FIN_DATE_EXEC"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="OPERATION_STATUS"/>
+						</Record>
+					</Collection>
+				</Annotation>
+
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrders">
+					<Annotation Term="Capabilities.InsertRestrictions" >
+						<Record>
+							<PropertyValue Property="Insertable" Bool="false"/>
+						</Record>                                                          
+					</Annotation>
+				</Annotations>
+
+			</Annotations>
+
+
+			<Annotations Target="depso.ProductionOrderDetails">
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/PRODUCTION_ORDER_OPERATION">
+					<Annotation String="{@i18n&gt;PRODUCTION_ORDER_OPERATION}" Term="Common.Label"/>
+				</Annotations>
+				
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/PRO_NUMBER">
+					<Annotation String="{@i18n&gt;PRO_NUMBER}" Term="Common.Label"/>
+				</Annotations>
+				
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/EQUIPMENT_NUMBER">
+					<Annotation String="{@i18n&gt;EQUIPMENT_NUMBER}" Term="Common.Label"/>
+				</Annotations>
+				
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/EQUIPMENT_DESCRIPTION">
+					<Annotation String="{@i18n&gt;EQUIPMENT_DESCRIPTION}" Term="Common.Label"/>
+				</Annotations>
+								
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/OPERATION_ACTIVITY_NUMBER">
+					<Annotation String="{@i18n&gt;OPERATION_ACTIVITY_NUMBER}" Term="Common.Label"/>
+				</Annotations>
+				
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/OPERATION_SHORT_TEXT">
+					<Annotation String="{@i18n&gt;OPERATION_SHORT_TEXT}" Term="Common.Label"/>
+				</Annotations>
+				
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/PROD_PLANT">
+					<Annotation String="{@i18n&gt;PROD_PLANT}" Term="Common.Label"/>
+				</Annotations>
+								
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/ORDER_TYPE">
+					<Annotation String="{@i18n&gt;ORDER_TYPE}" Term="Common.Label"/>
+				</Annotations>
+								
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/EARL_SCHED_START_DATE_EXEC">
+					<Annotation String="{@i18n&gt;EARL_SCHED_START_DATE_EXEC}" Term="Common.Label"/>
+				</Annotations>
+								
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/LATE_SCHED_FIN_DATE_EXEC">
+					<Annotation String="{@i18n&gt;LATE_SCHED_FIN_DATE_EXEC}" Term="Common.Label"/>
+				</Annotations>
+								
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/MATERIAL">
+					<Annotation String="{@i18n&gt;MATERIAL}" Term="Common.Label"/>
+				</Annotations>
+								
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/MATERIAL_TEXT">
+					<Annotation String="{@i18n&gt;MATERIAL_TEXT}" Term="Common.Label"/>
+				</Annotations>
+								
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/WORK_CENTER">
+					<Annotation String="{@i18n&gt;WORK_CENTER}" Term="Common.Label"/>
+				</Annotations>
+								
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/WORK_CENTER_TEXT">
+					<Annotation String="{@i18n&gt;WORK_CENTER_TEXT}" Term="Common.Label"/>
+				</Annotations>
+								
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/QUANTITY">
+					<Annotation String="{@i18n&gt;QUANTITY}" Term="Common.Label"/>
+				</Annotations>
+								
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/UNIT">
+					<Annotation String="{@i18n&gt;UNIT}" Term="Common.Label"/>
+				</Annotations>
+												
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/UNIT_ISO">
+					<Annotation String="{@i18n&gt;UNIT_ISO}" Term="Common.Label"/>
+				</Annotations>
+												
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/OPERATION_STATUS">
+					<Annotation String="{@i18n&gt;OPERATION_STATUS}" Term="Common.Label"/>
+				</Annotations>
+												
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/OPERATION_STATUS_TEXT">
+					<Annotation String="{@i18n&gt;OPERATION_STATUS_TEXT}" Term="Common.Label"/>
+				</Annotations>
+												
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/PRODUCTION_ORDER_STATUS">
+					<Annotation String="{@i18n&gt;PRODUCTION_ORDER_STATUS}" Term="Common.Label"/>
+				</Annotations>
+												
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/PRODUCTION_ORDER_STATUS_TEXT">
+					<Annotation String="{@i18n&gt;PRODUCTION_ORDER_STATUS_TEXT}" Term="Common.Label"/>
+				</Annotations>
+												
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/SALES_DOCUMENT_AND_ITEM">
+					<Annotation String="{@i18n&gt;SALES_DOCUMENT_AND_ITEM}" Term="Common.Label"/>
+				</Annotations>
+												
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/MATERIAL_NUMBER">
+					<Annotation String="{@i18n&gt;MATERIAL_NUMBER}" Term="Common.Label"/>
+				</Annotations>
+												
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/BATCH">
+					<Annotation String="{@i18n&gt;BATCH}" Term="Common.Label"/>
+				</Annotations>
+												
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/CUSTOMER_NUMBER">
+					<Annotation String="{@i18n&gt;CUSTOMER_NUMBER}" Term="Common.Label"/>
+				</Annotations>
+												
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/CUSTOMER_NAME">
+					<Annotation String="{@i18n&gt;CUSTOMER_NAME}" Term="Common.Label"/>
+				</Annotations>
+																
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/SALES_DOCUMENT">
+					<Annotation String="{@i18n&gt;SALES_DOCUMENT}" Term="Common.Label"/>
+				</Annotations>
+																
+				<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="depso.ProductionOrderDetails/SALES_DOCUMENT_ITEM">
+					<Annotation String="{@i18n&gt;SALES_DOCUMENT_ITEM}" Term="Common.Label"/>
+				</Annotations>
+				
+				<Annotation Term="UI.HeaderInfo">
+					<Record Type="UI.HeaderInfoType">
+						<PropertyValue Property="Title">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Label" String="{@i18n&gt;PRODUCTION_ORDER_OPERATION}" />
+								<PropertyValue Property="Value" Path="PRODUCTION_ORDER_OPERATION"/>
+							</Record>
+						</PropertyValue>	
+					</Record>
+				</Annotation>
+
+				<Annotation Term="UI.Facets">
+					<Collection>
+						<Record Type="UI.ReferenceFacet">
+							<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PO" />
+							<PropertyValue Property="Label" String="{@i18n&gt;PO_INFO}" />
+						</Record>
+						
+						<Record Type="UI.ReferenceFacet">
+							<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#OPERATION" />
+							<PropertyValue Property="Label" String="{@i18n&gt;OPERATION_INFO}" />
+						</Record>
+						<Record Type="UI.ReferenceFacet">
+							<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#EQUIPMENT" />
+							<PropertyValue Property="Label" String="{@i18n&gt;EQUIPMENT_INFO}" />
+						</Record>
+					</Collection>
+				</Annotation>
+
+				<Annotation Term="UI.FieldGroup" Qualifier="PO">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="PRO_NUMBER"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="PROD_PLANT" />
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="ORDER_TYPE" />
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="EARL_SCHED_START_DATE_EXEC"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="LATE_SCHED_FIN_DATE_EXEC"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="MATERIAL"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="MATERIAL_TEXT"/>
+						</Record>						
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="QUANTITY"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="UNIT"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="UNIT_ISO"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="PRODUCTION_ORDER_STATUS"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="BATCH"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="SALES_DOCUMENT_AND_ITEM"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="CUSTOMER_NUMBER"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="CUSTOMER_NAME"/>
+						</Record>
+					</Collection>
+				</Annotation>
+				
+				<Annotation Term="UI.FieldGroup" Qualifier="OPERATION">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="OPERATION_ACTIVITY_NUMBER"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="OPERATION_SHORT_TEXT"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="WORK_CENTER"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="WORK_CENTER_TEXT"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="OPERATION_STATUS"/>
+						</Record>
+					</Collection>
+				</Annotation>
+				
+				<Annotation Term="UI.FieldGroup" Qualifier="EQUIPMENT">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="EQUIPMENT_NUMBER"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="EQUIPMENT_DESCRIPTION"/>
+						</Record>
+					</Collection>
+				</Annotation>	
+								
+				<!--popover-->
+				<Annotations Target="depso.ProductionOrderDetails/PRODUCTION_ORDER_STATUS">
+					<Annotation Term="Common.SemanticObject" String="depAffectedProductionOrders"/>
+				</Annotations>
+			   <Annotations Target="depso.ProductionOrderStatus">
+					<Annotation Term="UI.QuickViewFacets">
+						<Collection>
+							<Record Type="UI.ReferenceFacet">
+								<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#QuickView_ProductionOrderStatuses"/>
+							</Record> 
+						</Collection>
+					</Annotation>
+					<Annotation Term="UI.FieldGroup" Qualifier="QuickView_ProductionOrderStatuses">
+						<Record>
+							<PropertyValue Property="Data">
+								<Collection>
+									<Record Type="UI.DataField">
+										<PropertyValue Property="Value" Path="PRODUCTION_ORDER_STATUS_TEXT"/>
+									</Record>							
+								</Collection>
+							</PropertyValue>
+						</Record>
+					</Annotation>    
+				</Annotations>
+
+				<Annotations Target="depso.ProductionOrderDetails/OPERATION_STATUS">
+					<Annotation Term="Common.SemanticObject" String="depAffectedProductionOrders"/>
+				</Annotations>
+				<Annotations Target="depso.OperationStatus">
+					<Annotation Term="UI.QuickViewFacets">
+						<Collection>
+							<Record Type="UI.ReferenceFacet">
+								<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#QuickView_OperationStatuses"/>
+							</Record> 
+						</Collection>
+					</Annotation>
+					<Annotation Term="UI.FieldGroup" Qualifier="QuickView_OperationStatuses">
+						<Record>
+							<PropertyValue Property="Data">
+								<Collection>
+									<Record Type="UI.DataField">
+										<PropertyValue Property="Value" Path="OPERATION_STATUS_TEXT"/>
+									</Record>							
+								</Collection>
+							</PropertyValue>
+						</Record>
+					</Annotation>    
+				</Annotations>
+				
+			
+			</Annotations>
+
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
+
+

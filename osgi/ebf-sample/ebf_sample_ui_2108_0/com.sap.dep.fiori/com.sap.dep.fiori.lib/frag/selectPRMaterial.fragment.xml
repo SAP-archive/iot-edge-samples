@@ -1,0 +1,233 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:l="sap.ui.layout">
+    <Dialog
+        title="{i18nGlobal>MaterialSelect.title}"
+        class="dep-fiori"
+        stretchOnPhone="true"
+        contentHeight="100%"
+        contentWidth="100%"
+        verticalScrolling="false"
+        afterClose="dep.fiori.lib.util.SelectPRMaterialDialog.onCancel">
+        <NavContainer id="navContainer">
+            <Page
+                showHeader="false"
+                showSubHeader="false"
+                enableScrolling="false">
+                <VBox
+                    fitContainer="true"
+                    renderType="Bare">
+                    <c:Fragment fragmentName="dep.fiori.lib.frag.filterBar" type="XML" />
+                    <ScrollContainer
+                        vertical="true"
+                        height="100%"
+                        width="100%">
+                        <Table
+                            id="materialList"
+                            items="{odata>}"
+                            noDataText="{i18nGlobal>MaterialSelect.listEmpty}"
+                            growing="true"
+                            growingScrollToLoad="true"
+                            mode="MultiSelect"
+                            selectionChange="dep.fiori.lib.util.SelectPRMaterialDialog.onMaterialSelect"
+                            itemPress="dep.fiori.lib.util.SelectPRMaterialDialog.onMaterialPress">
+                            <headerToolbar>
+                                <Toolbar>
+                                    <Title text="{i18nGlobal>MaterialSelect.listTitle}" />
+                                    <ToolbarSpacer />
+                                    <Button
+                                        tooltip="{i18nGlobal>General.sortList}"
+                                        icon="sap-icon://drop-down-list"
+                                        press="dep.fiori.lib.util.SelectPRMaterialDialog.onSortPress" />
+                                </Toolbar>
+                            </headerToolbar>
+                            <columns>
+                                <Column vAlign="Middle">
+                                    <Title text="{i18nGlobal>MaterialSelect.material}" />
+                                </Column>
+                                <Column
+                                    vAlign="Middle"
+                                    width="30%"
+                                    demandPopin="true"
+                                    minScreenWidth="Desktop"
+                                    popinDisplay="Inline">
+                                    <Title text="{i18nGlobal>General.description}" />
+                                </Column>
+                                <Column
+                                    vAlign="Middle"
+                                    demandPopin="true"
+                                    minScreenWidth="Desktop"
+                                    popinDisplay="Inline">
+                                    <Title text="{i18nGlobal>General.location}" />
+                                </Column>
+                                <Column
+                                    vAlign="Middle"
+                                    hAlign="Right">
+                                    <Title text="{i18nGlobal>General.onhand}" />
+                                </Column>
+                                <Column
+                                    vAlign="Middle"
+                                    hAlign="Right"
+                                    demandPopin="true"
+                                    minScreenWidth="Tablet"
+                                    popinDisplay="Inline">
+                                    <Title text="{i18nGlobal>General.min}" />
+                                </Column>
+                                <Column
+                                    vAlign="Middle"
+                                    hAlign="Right"
+                                    demandPopin="true"
+                                    minScreenWidth="Tablet"
+                                    popinDisplay="Inline">
+                                    <Title text="{i18nGlobal>General.max}" />
+                                </Column>
+                                <Column
+                                    vAlign="Middle"
+                                    hAlign="Right"
+                                    demandPopin="true"
+                                    minScreenWidth="Desktop"
+                                    popinDisplay="Inline">
+                                    <Title text="{i18nGlobal>MaterialSelect.quantity}" />
+                                </Column>
+                                <Column
+                                    vAlign="Middle"
+                                    demandPopin="true"
+                                    minScreenWidth="Desktop"
+                                    popinDisplay="Inline">
+                                    <Title text="{i18nGlobal>MaterialSelect.delivery}" />
+                                </Column>
+                               <!--  <Column
+                                    vAlign="Middle"
+                                    demandPopin="true"
+                                    minScreenWidth="Desktop"
+                                    popinDisplay="Inline">
+                                    <Title text="{i18nGlobal>MaterialSelect.freightMode}" />
+                                </Column> -->
+                            </columns>
+                            <items>
+                                <ColumnListItem 
+                                    vAlign="Middle"
+                                    type="{= ${filter>/LIST_PATH/value} === '/Stock_Wanted' ? 'Navigation' : 'Inactive' }" >
+                                    <cells>
+                                        <HBox
+                                            fitContainer="true"
+                                            renderType="Bare"
+                                            alignItems="Center">
+                                            <Label 
+                                                text="{odata>MATNR}"
+                                                design="Bold"
+                                                class="identifierTextBlue" />
+                                            <c:Icon
+                                                src="{
+                                                    parts: [ 'odata>MATNR', 'warning>/', 'error>/' ],
+                                                    formatter: 'dep.fiori.lib.util.SelectPRMaterialDialog.iconSrcFormatter'
+                                                }"
+                                                color="{
+                                                    parts: [ 'odata>MATNR', 'warning>/', 'error>/' ],
+                                                    formatter: 'dep.fiori.lib.util.SelectPRMaterialDialog.iconColorFormatter'
+                                                }"
+                                                class="sapUiSmallMarginBegin"
+                                                press="dep.fiori.lib.util.SelectPRMaterialDialog.onMaterialIconPress" />
+                                        </HBox>
+                                        <Label text="{odata>MAKTX}" />
+                                        <Label text="{odata>LGORT}" />
+                                        <Label text="{= ${odata>ONHAND/STOCK_ON_HAND} || '-' }" />
+                                        <Label text="{= ${filter>/LIST_PATH/value} === '/Stock_Wanted' ? ${odata>MINBE} : ${odata>BSTMI} }" />
+                                        <Label text="{= ${filter>/LIST_PATH/value} === '/Stock_Wanted' ? ${odata>MABST} : ${odata>BSTMA} }" />
+                                        <Input 
+                                            value="{odata>REQQTY}"
+                                            valueState="{= ${odata>REQQTY} ? 'None' : 'Error' }"
+                                            valueStateText="{i18nGlobal>General.required}"
+                                            type="Number"
+                                            textAlign="Right"
+                                            visible="{= ${selected>/}[${odata>MATNR}] === true }" />
+                                        <DatePicker 
+                                            value="{odata>LFDAT}"
+                                            valueFormat="yyyyMMdd"
+                                            valueState="{= ${odata>LFDAT} ? 'None' : 'Error' }"
+                                            valueStateText="{i18nGlobal>General.required}"
+                                            minDate="{ path: 'odata>/LFDAT', formatter: 'dep.fiori.lib.util.Utilities.date.currDateNoTime' }"
+                                            visible="{= ${selected>/}[${odata>MATNR}] === true }" />
+                                       <!--  <Select
+                                            selectedKey="{odata>FREIGHT_MODE}"
+                                            forceSelection="false"
+                                            showSecondaryValues="true"
+                                            visible="{= ${selected>/}[${odata>MATNR}] === true }"
+                                            items="{
+                                                path: 'lookup>/freightMode',
+                                                templateShareable: 'false'
+                                            }">
+                                            <c:ListItem 
+                                                text="{lookup>FREIGHT_DESC}" 
+                                                key="{lookup>FREIGHT_MODE}" 
+                                                additionalText="{lookup>FREIGHT_MODE}" />
+                                        </Select> -->
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </ScrollContainer>
+                </VBox>
+                <footer>
+                    <Bar>
+                        <contentRight>
+                            <Button
+                                text="{i18nGlobal>MaterialSelect.add}"
+                                type="Emphasized"
+                                press="dep.fiori.lib.util.SelectPRMaterialDialog.confirm" />
+                            <Button
+                                text="{i18nGlobal>General.cancel}"
+                                press="dep.fiori.lib.util.SelectPRMaterialDialog.close" />
+                        </contentRight>
+                    </Bar>
+                </footer>
+            </Page>
+            <Page
+                id="detailPage"
+                title="{i18nGlobal>General.material} {material>/MATNR}"
+                showNavButton="true"
+                navButtonPress="dep.fiori.lib.util.SelectPRMaterialDialog.navBack">
+                <ScrollContainer>
+                    <Table
+                        id="materialDetail"
+                        noDataText="{i18nGlobal>General.listEmpty}"
+                        items="{stockwanted>/}"
+                        growing="true"
+                        growingScrollToLoad="true">
+                        <columns>
+                            <Column vAlign="Middle">
+                                <Title text="{i18nGlobal>General.workorder}" />
+                            </Column>
+                            <Column vAlign="Middle">
+                                <Title text="{i18nGlobal>General.quantity}" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Link 
+                                        text="{stockwanted>ZAUFNR}"
+                                        emphasized="true"
+                                        href="{= ${stockwanted>ZAUFNR} ? '#depWorkorder-display&amp;/' + ${stockwanted>ZAUFNR} : '' }" />
+                                    <Label text="{stockwanted>ZSUM05}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </ScrollContainer>
+                <footer>
+                    <Bar>
+                        <contentRight>
+                            <Button
+                                text="{i18nGlobal>General.cancel}"
+                                press="dep.fiori.lib.util.SelectPRMaterialDialog.close" />
+                        </contentRight>
+                    </Bar>
+                </footer>
+            </Page>
+        </NavContainer>
+    </Dialog>
+</c:FragmentDefinition>

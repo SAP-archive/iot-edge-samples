@@ -1,0 +1,17 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <MessagePopover items="{/}">
+        <MessagePopoverItem
+            type="{= ${CONFLICT_TYPE} === 'ERROR' ? 'Error' : 'Warning' }"
+            title="{
+                parts: [ 'PR_NO_LOCAL', 'PR_STATUS' ],
+                formatter: 'dep.fiori.lib.util.SelectPRMaterialDialog.popoverTitleFormatter'
+            }"
+            subtitle="{= ${i18nGlobal>MaterialSelect.warningSubtitle}.replace('{0}', ${MATNR}).replace('{1}', ${PR_NO_LOCAL}) }"
+            description="{
+                parts: [ 'CONFLICT_TYPE', 'PR_STATUS' ],
+                formatter: 'dep.fiori.lib.util.SelectPRMaterialDialog.popoverDescriptionFormatter'
+            }" />
+    </MessagePopover>
+</c:FragmentDefinition>

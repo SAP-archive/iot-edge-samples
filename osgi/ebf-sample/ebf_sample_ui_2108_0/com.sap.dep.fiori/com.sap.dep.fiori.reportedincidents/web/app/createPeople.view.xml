@@ -1,0 +1,238 @@
+<mvc:View
+    controllerName="dep.fiori.reportedincidents.app.createPeople"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns="sap.m">
+    <Page
+        id="main"
+        showHeader="false">
+       
+		
+		
+		<f:Form id="form">
+
+            <f:toolbar>
+                <Toolbar>
+                    <Title text="{i18n>InjuredForm.creatPersonTitle}"/>
+                    <ToolbarSpacer></ToolbarSpacer>
+                </Toolbar>
+            </f:toolbar>
+
+            <f:layout>
+                <f:ResponsiveGridLayout
+                    hSpacing="2"
+                    /> 
+            </f:layout>
+
+            <f:formContainers>
+				<f:FormContainer>
+					<f:formElements>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>InjuredForm.type}"
+									required="true"/>
+							</f:label>
+							<f:fields>            
+									<RadioButtonGroup id="involvedPersonType" select = "onRadioSelect" columns="2" width="100%">
+										<buttons>
+											<RadioButton id="injuredType" text="Injured"/>
+											<RadioButton id="witnessType" text="Witness"/>
+										</buttons>
+									</RadioButtonGroup>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>InjuredForm.firstName}"
+									required="true"/>
+							</f:label>
+							<f:fields>
+								<Input
+								    id="firstName"
+									value="{INJURED_PERSON>/PERSON_DETAILS/FIRST_NAME}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>InjuredForm.lastName}"
+									required="true"/>
+							</f:label>
+							<f:fields>
+								<Input
+									id="lastName"
+									value="{INJURED_PERSON>/PERSON_DETAILS/LAST_NAME}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>InjuredForm.organizationalUnit}"/>
+							</f:label>
+							<f:fields>
+								<Input
+									styleClass="sapUiBigMarginBottom"
+									id="personOrgUnitID"                                    
+									value="{INJURED_PERSON>/PERSON_DETAILS/ORG}"
+									maxLength="40"
+									>
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+														
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>InjuredForm.company}"/>
+							</f:label>
+							<f:fields>
+								<Input
+									id="company" 
+									value="{INJURED_PERSON>/PERSON_DETAILS/COMPANY}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>InjuredForm.address}"/>
+							</f:label>
+							<f:fields>
+								<Input
+									id= "address"
+									value="{INJURED_PERSON>/PERSON_DETAILS/ADDRESS}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						 <f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>InjuredForm.phone}"/>
+							</f:label>
+							<f:fields>          
+								<Input
+									id="phone"
+									value="{INJURED_PERSON>/PERSON_DETAILS/PHONE}"
+									maxLength="40"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>						
+						<f:FormElement>
+							<f:label>
+								<Label
+									text="{i18n>InjuredForm.email}"/>
+							</f:label>
+							<f:fields>                     
+								<Input
+									id="email"
+									value="{INJURED_PERSON>/PERSON_DETAILS/EMAIL}"
+									maxLength="60"
+									class="sapUiSmallMarginBottom">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:label>
+								<Label id = "descLabel" text="{i18n>InjuredForm.injuredDescription}"/>
+							</f:label>
+							
+							<f:fields>
+								<TextArea
+									id="injuredDescription"
+									value="{INJURED_PERSON>/PERSON_DETAILS/INJURY_DESCRIPTION}"
+									rows="4">
+									<layoutData>
+										<l:GridData
+											span="L5 M5 S12">
+										</l:GridData>
+									</layoutData>
+								</TextArea>
+							</f:fields>
+						</f:FormElement>
+					   
+
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+        </f:Form>
+
+        <footer>
+            <Bar id="otbFooter">
+                <contentLeft>
+                    <Button
+                        id="messages-button"
+                        icon="sap-icon://message-popup"
+                        text="{/length}"
+                        type="Emphasized"
+                        press="handleMessagePopoverPress"/>
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        id="save-button"
+                        type="Emphasized"
+                        text="{i18nGlobal>General.save}"
+                        press="personSave"/>
+                    <Button
+                        id="cancel-button"
+                        text="{i18nGlobal>General.cancel}"
+                        press="onCancel"/>
+                </contentRight>
+            </Bar>
+        </footer> 
+    </Page>
+</mvc:View>

@@ -1,0 +1,364 @@
+<mvc:View
+    controllerName="dep.fiori.stockwanted.app.display"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:c="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:u="sap.uxap"
+    xmlns="sap.m">
+    <Page
+        id="swPage"
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <content>
+            <VBox fitContainer="true" renderType="Bare">
+                <fb:FilterBar 
+                    id="PR-filter-bar"
+                    header="{i18n>Dialog.filterBarHeader}"
+                    showRestoreButton="false"
+                    advancedMode="false"
+                    showClearButton="true"
+                    showSaveButton="true"
+                    clear="onClear" 
+                    search="onFilter"
+                    filterBarExpanded="false">
+                    <fb:filterItems>
+                        <fb:FilterItem
+                            name="point"
+                            label="{i18n>List.material}">
+                            <fb:control>
+                                <Input id="materialFilterInput" type="Text"/>
+                            </fb:control>
+                        </fb:FilterItem>
+                        <fb:FilterItem
+                            name="description"
+                            label="{i18n>Dialog.description}" >
+                            <fb:control>
+                                <Input id="descFilterInput" type="Text"/>
+                            </fb:control>
+                        </fb:FilterItem>
+                    </fb:filterItems>
+                </fb:FilterBar>
+                <Toolbar>
+                    <SearchField width="100%" id="searchInput" search="onSearch"/>
+                </Toolbar>
+                <Table 
+                    id="material-table-wrapper"
+                    mode="MultiSelect"
+                    showNoData="false">
+                    <columns>
+                        <Column vAlign="Middle">
+                            <Text text="{i18n>List.material}"/>
+                        </Column>
+                        <Column vAlign="Middle" demandPopin="true" minScreenWidth="Tablet">
+                            <Text text="{i18n>Dialog.description}" />
+                        </Column>
+                        <Column vAlign="Middle" hAlign="End">
+                            <Text text="{i18n>List.stock}" class="stockOnHandTableColumnTitle" />
+                        </Column>
+                        <Column demandPopin="true" minScreenWidth="Tablet" vAlign="Middle" width="60%"> 
+                            <l:Grid
+                                hSpacing="1"
+                                vSpacing="1"
+                                defaultSpan="L2 M2 S12"
+                                width="100%">
+                                    <Text text="{i18n>List.min}" class="minHeader">
+                                        <layoutData>
+                                            <l:GridData
+                                                spanS="12"
+                                                spanM="2"
+                                                spanL="2"/>
+                                        </layoutData>
+                                    </Text>
+
+                                    <Text text="{i18n>List.max}">
+                                        <layoutData>
+                                            <l:GridData
+                                                spanS="12"
+                                                spanM="2"
+                                                spanL="2"/>
+                                        </layoutData>
+                                    </Text>
+                                    <Text text="{i18n>List.quantity}" >
+                                        <layoutData>
+                                            <l:GridData
+                                                spanS="12"
+                                                spanM="2"
+                                                spanL="2"/>
+                                        </layoutData>
+                                    </Text>
+                                    <Text text="{i18n>List.delivery}" >
+                                        <layoutData>
+                                            <l:GridData
+                                                spanS="12"
+                                                spanM="3"
+                                                spanL="3"/>
+                                        </layoutData>
+                                    </Text>
+                                    <Text text="{i18n>List.freightMode}" >
+                                        <layoutData>
+                                            <l:GridData
+                                                spanS="12"
+                                                spanM="3"
+                                                spanL="3"/>
+                                        </layoutData>
+                                    </Text>
+                            </l:Grid>
+                        </Column>
+                    </columns>
+                </Table>
+                <ScrollContainer
+                    vertical="true"
+                    height="100%"
+                    width="100%">
+                    <Table 
+                        noDataText="{i18n>List.empty}" 
+                        id="material-table"
+                        items="{
+                            path:'ODATA_MODEL>/Stock_Wanted'
+                        }"
+                        growing="true"
+                        class="hiddenTable"
+                        mode="MultiSelect"
+                        growingScrollToLoad="true"
+                        selectionChange="onSelectionChange"
+                        itemPress="onItemPress">
+                        <columns>
+                            <Column vAlign="Middle">
+                                <Text text="{i18n>List.material}" />
+                            </Column>
+                            <Column demandPopin="true" minScreenWidth="Tablet" vAlign="Middle">
+                                <Text text="{i18n>Dialog.description}" />
+                            </Column>
+                            <Column vAlign="Middle" hAlign="End">
+                                <Text text="{i18n>List.stock}"/>
+                            </Column>
+                            <Column demandPopin="true" minScreenWidth="Tablet" vAlign="Middle" width="60%">
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem type="Active">
+                                <cells>
+                                    <HBox>
+                                        <Label text="{ODATA_MODEL>MATNR}" 
+                                            class="materialNumberLabelBlue sapUiTinyMarginTop" design="Bold" />
+                                        <core:Icon 
+                                                class="warningErrorSymbol"
+                                                src="{ parts: ['ODATA_MODEL>MATNR', 'POPUPMESSAGES>/'], formatter: '.iconSrcFormatter'}"
+                                                color="{ parts: ['ODATA_MODEL>MATNR', 'POPUPMESSAGES>/'], formatter: '.iconColorFormatter'}"
+                                                visible="{parts: [ 'ODATA_MODEL>MATNR', 'POPUPMESSAGES>/'], formatter: '.iconVisibilityFormatter'}" />
+                                    </HBox>
+                                    <Text text="{ODATA_MODEL>MAKTX}" class="materialDescriptionBold" 
+                                          width="100%" />
+                                    <Label class="stockOnHand"
+                                        text="{parts: [ 'ODATA_MODEL>MATNR', 'SELECTED>/' ], formatter: '.StockOnHandFormatter'}"  
+                                        design="Bold"/>
+                            
+                                    <l:Grid
+                                        class="gridForHidingElements"
+                                        hSpacing="2"
+                                        vSpacing="0"
+                                        defaultSpan="L2 M2 S12"
+                                        width="100%"
+                                        visible="{parts: [ 'ODATA_MODEL>MATNR', 'SELECTED>/' ], formatter: 'dep.fiori.lib.util.PurchaseRequisition.visibilityFormatter'}">
+                                        <l:content>
+                                            <HBox>
+                                                <layoutData>
+                                                    <l:GridData
+                                                        spanS="12"
+                                                        spanM="12"
+                                                        spanL="12"
+                                                        visibleS="false"
+                                                        visibleM="true"
+                                                        visibleL="true"
+                                                        visibleXL="true"/>
+                                                </layoutData>
+                                                <Text text="{ODATA_MODEL>MINBE}" class="largeFormFactorMin Min"/>
+                                                <Text text="{ODATA_MODEL>MABST}" class="largeFormFactorMax Max"/>
+                                                <Input
+                                                    value="{ODATA_MODEL>REQQTY}"
+                                                    fieldWidth="30%"
+                                                    type="Number"
+                                                    textAlign="Right"
+                                                    class="materialReqQuantity"/>
+                                                <DatePicker
+                                                    width="90%"
+                                                    placeholder="Enter Date ..."
+                                                    class="materialDeliveryByDate"
+                                                    valueFormat="yyyyMMdd"
+                                                    change="onDatePickerChange"
+                                                    value="{ path: 'SELECTED>/', formatter: 'dep.fiori.lib.util.Utilities.date.currDateFormatted'}"
+                                                    minDate="{path: 'SELECTED>/', formatter: 'dep.fiori.lib.util.Utilities.date.currDateNoTime'}"/>
+                                                <Select
+                                                    items="{
+                                                        path: 'lookup>/freightMode',
+                                                        templateShareable: 'false'
+                                                    }"
+                                                    selectedKey="{ODATA_MODEL>FREIGHT_MODE}"
+                                                    showSecondaryValues="true"
+                                                    forceSelection="false">
+                                                    <c:ListItem text="{lookup>FREIGHT_DESC}" key="{lookup>FREIGHT_MODE}" additionalText="{lookup>FREIGHT_MODE}" />
+                                                    <layoutData>
+                                                        <l:GridData
+                                                            spanS="7"
+                                                            spanM="3"
+                                                            spanL="3" />
+                                                    </layoutData>
+                                                </Select>
+                                            </HBox>
+
+                                            <HBox class="minHBox">
+                                                <layoutData>
+                                                    <l:GridData
+                                                        spanS="12"
+                                                        visibleS="true"
+                                                        visibleM="false"
+                                                        visibleL="false"
+                                                        visibleXL="false"/>
+                                                </layoutData>
+                                                <Label text="{i18n>InTable.min}" class="minLabel"/>
+                                                <Text text="{ODATA_MODEL>MINBE}" class="Min" textAlign="Center"/>
+
+                                            </HBox>
+                                            <HBox class="maxHBox">
+                                                <layoutData>
+                                                    <l:GridData
+                                                        spanS="12"
+                                                        visibleS="true"
+                                                        visibleM="false"
+                                                        visibleL="false"
+                                                        visibleXL="false"/>
+                                                </layoutData>
+                                                <Label text="{i18n>InTable.max}" class="maxLabel"/>
+                                                <Text text="{ODATA_MODEL>MABST}" class="Max" textAlign="Center"/>
+                                            </HBox>
+                                            <Label text="{i18n>List.quantity}:">
+                                                <layoutData>
+                                                    <l:GridData
+                                                        spanS="12"
+                                                        visibleS="true"
+                                                        visibleM="false"
+                                                        visibleL="false"
+                                                        visibleXL="false"/>
+                                                </layoutData>
+                                            </Label>
+                                            <Input
+                                                value="{ODATA_MODEL>REQQTY}"
+                                                type="Number"
+                                                textAlign="Right"
+                                                class="materialReqQuantity">
+                                                <layoutData>
+                                                    <l:GridData
+                                                        visibleS="true"
+                                                        visibleM="false"
+                                                        visibleL="false"
+                                                        visibleXL="false"
+                                                        spanS="5"
+                                                        spanM="3"
+                                                        spanL="3"/>
+                                                </layoutData>
+                                            </Input>
+                                            <Label text="{i18n>List.delivery}:">
+                                                <layoutData>
+                                                    <l:GridData
+                                                        spanS="12"
+                                                        visibleS="true"
+                                                        visibleM="false"
+                                                        visibleL="false"
+                                                        visibleXL="false"/>
+                                                </layoutData>
+                                            </Label>
+                                            <DatePicker
+                                                placeholder="Enter Date ..."
+                                                class="materialDeliveryByDate"
+                                                valueFormat="yyyyMMdd"
+                                                change="onDatePickerChange"
+                                                value="{ path: 'SELECTED>/', formatter: 'dep.fiori.lib.util.Utilities.date.currDateFormatted'}"
+                                                minDate="{path: 'SELECTED>/', formatter: 'dep.fiori.lib.util.Utilities.date.currDateNoTime'}"
+                                                >
+                                                <layoutData>
+                                                    <l:GridData
+                                                        visibleS="true"
+                                                        visibleM="false"
+                                                        visibleL="false"
+                                                        visibleXL="false"
+                                                        spanS="6"
+                                                        spanM="3"
+                                                        spanL="3"/>
+                                                </layoutData>
+                                            </DatePicker>
+                                            <Label text="{i18n>List.freightMode}:">
+                                                <layoutData>
+                                                    <l:GridData
+                                                        spanS="12"
+                                                        visibleS="true"
+                                                        visibleM="false"
+                                                        visibleL="false"
+                                                        visibleXL="false"/>
+                                                </layoutData>
+                                            </Label>
+                                            <Select
+                                                items="{
+                                                    path: 'lookup>/freightMode',
+                                                    templateShareable: 'false'
+                                                }"
+                                                selectedKey="{ODATA_MODEL>FREIGHT_MODE}"
+                                                showSecondaryValues="true"
+                                                forceSelection="false">
+                                                <c:ListItem text="{lookup>FREIGHT_DESC}" key="{lookup>FREIGHT_MODE}" additionalText="{lookup>FREIGHT_MODE}" />
+                                                <layoutData>
+                                                    <l:GridData
+                                                        visibleS="true"
+                                                        visibleM="false"
+                                                        visibleL="false"
+                                                        visibleXL="false"
+                                                        spanS="6"
+                                                        spanM="3"
+                                                        spanL="3"/>
+                                                </layoutData>
+                                            </Select>
+
+                                        </l:content>
+                                    </l:Grid>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </ScrollContainer>
+            </VBox>
+        </content>
+        <footer>
+            <Bar id="otbFooter" class="footerBar">
+                <contentLeft>
+                    <Button
+                        id="messages-button"
+                        icon="sap-icon://message-popup"
+                        text="{/length}"
+                        type="Emphasized"
+                        press="handleMessagePopoverPress"/>
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        id="save-button"
+                        text="{i18n>Button.CreatePR}"
+                        type="Emphasized"
+                        press="stockWantedSave"
+                        enabled="true">
+                    </Button>
+                    <Button
+                        id="cancel-button"
+                        text="{i18nGlobal>General.cancel}"
+                        press="dep.fiori.lib.util.Utilities.navHome"
+                        enabled="true">
+                    </Button>
+                </contentRight>
+            </Bar>
+        </footer>
+    </Page>
+</mvc:View>

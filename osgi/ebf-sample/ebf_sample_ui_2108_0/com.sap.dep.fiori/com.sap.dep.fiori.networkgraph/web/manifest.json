@@ -1,0 +1,48 @@
+{
+    "sap.ui5": {
+        "name": "Network Graph",
+        "version": "1.0",
+        "config": {
+            "serviceConfig": {
+                "rest": {
+                    "description": "Base URL",
+                    "url": "/ws_restful_data_controller"
+                }
+            },
+            "compactContentDensity": false
+        },
+        "routing" : {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "viewPath": "dep.fiori.networkgraph.app",
+                "targetControl": "content",
+                "targetAggregation": "pages"
+            },
+            "routes": {
+                "create": {
+                    "pattern": "",
+                    "viewId": "dep-fiori-networkgraph-create",
+                    "view": "create"
+                }
+			}
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                },
+                {
+                    "uri": "/dep_fiori_apps/com.sap.dep.fiori.lib/css/style.css",
+                    "id": "dep-lib-style"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,105 @@
+.dep-fiori .sapMInputBase,
+.dep-fiori .sapMInputBaseState {
+    height: initial;
+}
+
+.dep-fiori .sapMLabel.identifierTextBlue {
+    color: #427CAC;
+}
+
+.dep-fiori .sapMInputBase .sapMInputBaseInner:not(.sapMTextAreaInner),
+.dep-fiori .sapMInputBaseState .sapMInputBaseInner:not(.sapMTextAreaInner),
+.dep-fiori .sapMComboBoxBase {
+    height: 2.4rem;
+}
+
+.dep-fiori .sapMInputBase.sapMTextArea,
+.dep-fiori .sapMInputBaseState.sapMTextArea {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.dep-fiori .sapMInputBase.sapMComboBox,
+.dep-fiori .sapMInputBaseState.sapMComboBox,
+/*.dep-fiori .sapMSlt:not(.sapUxAPHierarchicalSelect)*/ {
+    height: 2.425rem;
+    margin-bottom: 1.1875rem;
+}
+
+.dep-fiori .sapMSlt:not(.sapUxAPHierarchicalSelect) .sapMSltLabel,
+.dep-fiori .sapMSlt:not(.sapUxAPHierarchicalSelect) .sapMSltArrow {
+    line-height: 2.425rem;
+}
+
+.dep-fiori .sapUxAPObjectPageHeaderContentItem .sapMSlt:not(.sapUxAPHierarchicalSelect) .sapMSltLabel,
+.dep-fiori .sapUxAPObjectPageHeaderContentItem .sapMSlt:not(.sapUxAPHierarchicalSelect) .sapMSltArrow {
+    line-height: 1.5rem;
+}
+
+.sapUiSizeCompact .dep-fiori .sapMInputBase .sapMInputValHelp,
+.sapUiSizeCompact .dep-fiori .sapMInputBaseState .sapMInputValHelp {
+    top: 0.25rem;
+    right: 0.0625rem;
+    width: 2rem;
+}
+
+.sapUiSizeCozy .dep-fiori .sapMInputBase .sapMInputValHelp,
+.sapUiSizeCozy .dep-fiori .sapMInputBaseState .sapMInputValHelp {
+    top: 0.25rem;
+    right: 0.425rem;
+    width: 2rem;
+}
+
+.dep-fiori .sapMInputBase .sapMInputValHelp > .sapMInputValHelpInner,
+.dep-fiori .sapMInputBaseState .sapMInputValHelp > .sapMInputValHelpInner {
+    height: 2.25rem;
+    line-height: 2.25rem;
+}
+
+.dep-fiori .sapMListTblHighlightCell {
+    height: 0;
+    width: 0;
+}
+
+.sapUiSizeCompact .dep-fiori .sapMInputBaseState .sapMInputValHelp > .sapMInputValHelpInner {
+    width: 2rem;
+}
+
+.dep-fiori .vAlignSingleSelect .sapMLIBSelected .sapMListTblSelCol {
+    vertical-align: middle;
+}
+
+.dep-fiori .borderRadiusCircle {
+	border-radius: 50%;
+}
+
+/* medium-up styles */
+@media (min-width: 601px) {
+	/* 
+	 * This appears to have been added to adjust label alignment in forms, but this can be
+	 * done by setting the form "editable" property instead. This should eventually be removed.
+	 */
+    .dep-fiori:not(.sapMDialog) div:not(.sapUxAPBlockContainer) > .sapUiRespGrid .sapMLabel,
+    .dep-fiori .dep-fiori-dialog-form .sapUiRespGrid .sapMLabel {
+        line-height: 2.25rem;
+        margin-top: 0.25rem;
+    }
+    
+    /*
+     * This reverses the above for forms that have editable=true, otherwise the alignment
+     * gets messed up. It can be removed when the above is removed.
+     */
+    .dep-fiori:not(.sapMDialog) .sapUiFormEdit .sapUiFormResGridCont.sapUiRespGrid .sapMLabel {
+        line-height: normal;
+        margin-top: 0;
+    }
+
+    .dep-fiori .dep-fiori-dialog-form .sapMText,
+    .dep-fiori .dep-fiori-dialog-form .sapMTitle {
+        line-height: 2.5rem;
+    }
+}
+
+.dep-fiori .sapMTokenIcon {
+	vertical-align: top;
+}

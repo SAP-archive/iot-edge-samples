@@ -1,0 +1,15 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <ViewSettingsDialog confirm="dep.fiori.lib.util.SelectPRMaterialDialog.onSort">
+        <sortItems>
+            <ViewSettingsItem
+                text="{i18nGlobal>MaterialSelect.material}"
+                key="MATNR"
+                selected="true" />
+            <ViewSettingsItem
+                text="{i18nGlobal>General.description}"
+                key="MAKTX" />
+        </sortItems>
+    </ViewSettingsDialog>
+</core:FragmentDefinition>

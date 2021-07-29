@@ -1,0 +1,32 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog title="{i18n>FactorCategoryDialog.title}">
+
+        <endButton>
+            <Button text="{i18nGlobal>General.cancel}" press="factorCategoryCancel"/>
+        </endButton>
+
+        <SearchField width="100%" placeholder=" ..." liveChange="filterFactorCategory"/>
+
+        <Table id="factorCategoryCancelTable" items="{INFLUENCING_FACTORS_CATEGORIES>/}">
+
+            <columns>
+                <Column demandPopin="true">
+                    <Label text="{i18n>InfluencingFactorCategoryForm.id}"/>
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem type="Active" press="addInflucingFactorCategory">
+                    <cells>
+                        <Text text="{INFLUENCING_FACTORS_CATEGORIES>INFLUEN_FACTOR_CAT_ID}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+
+        </Table>
+    </Dialog>
+</core:FragmentDefinition>

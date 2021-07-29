@@ -1,0 +1,514 @@
+<mvc:View
+    controllerName="dep.fiori.servicecall.app.detail"
+    class="dep-fiori"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:c="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+    <Page
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <u:ObjectPageLayout 
+            id="content"
+            alwaysShowContentHeader="true"
+            useIconTabBar="true"
+            navigate="onBlockSelect">
+
+            <u:headerTitle>
+                <u:ObjectPageHeader objectTitle="{i18n>Detail.title}: {/ID_LOCAL}" />
+            </u:headerTitle>
+
+            <u:headerContent>
+                <VBox
+                    fitContainer="true"
+                    renderType="Bare">
+                    <ObjectStatus
+                        visible="{= !${/ID} }" 
+                        title="{i18n>ServiceCall.syncStatus}"
+                        text="{i18n>SyncStatus.pending}"
+                        state="Warning" />
+                    <ObjectAttribute
+                        title="{i18n>ServiceCall.businessPartner}"
+                        text="{/BUSINESS_PARTNER_NAME}" />
+                </VBox>
+            </u:headerContent>
+
+            <u:sections>
+                <u:ObjectPageSection
+                    id="details" 
+                    title="{i18n>Detail.details}">
+                    <u:subSections>
+                        <u:ObjectPageSubSection>
+                            <u:blocks>
+                                <f:Form editable="true">
+                                    <f:layout>
+                                        <f:ResponsiveGridLayout labelSpanL="2" />
+                                    </f:layout>
+                                    <f:toolbar>
+                                        <Toolbar class="sapUiTinyMarginBottom">
+                                            <Title text="{i18n>Detail.details}" />
+                                        </Toolbar>
+                                    </f:toolbar>
+                                    <f:FormContainer>
+                                        <f:layoutData>
+                                            <l:GridData span="L12 M12 S12" />
+                                        </f:layoutData>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>ServiceCall.subject}"
+                                                    tooltip="{i18n>ServiceCall.subject}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{/SUBJECT}">
+                                                <layoutData>
+                                                    <l:GridData span="L10 M9 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>ServiceCall.priority}"
+                                                    tooltip="{i18n>ServiceCall.priority}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" linebreak="true" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{/PRIORITY}"
+                                                tooltip="{/PRIORITY}">
+                                                <layoutData>
+                                                    <l:GridData span="L4 M3 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>ServiceCall.status}"
+                                                    tooltip="{i18n>ServiceCall.status}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{/STATUS_NAME}"
+                                                tooltip="{/STATUS_NAME}">
+                                                <layoutData>
+                                                    <l:GridData span="L4 M3 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>ServiceCall.problemType}"
+                                                    tooltip="{i18n>ServiceCall.problemType}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{/PROBLEM_TYPE_NAME}"
+                                                tooltip="{/PROBLEM_TYPE_NAME}">
+                                                <layoutData>
+                                                    <l:GridData span="L4 M3 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>ServiceCall.origin}"
+                                                    tooltip="{i18n>ServiceCall.origin}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{/ORIGIN_NAME}"
+                                                tooltip="{/ORIGIN_NAME}">
+                                                <layoutData>
+                                                    <l:GridData span="L4 M3 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>ServiceCall.contact}"
+                                                    tooltip="{i18n>ServiceCall.contact}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{/CONTACT_NAME}"
+                                                tooltip="{/CONTACT_NAME}">
+                                                <layoutData>
+                                                    <l:GridData span="L4 M3 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>ServiceCall.startDate}"
+                                                    tooltip="{i18n>ServiceCall.startDate}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{
+                                                    path: '/START_DATE_TIME',
+                                                    formatter: '.dateFormatter'
+                                                }"
+                                                tooltip="{
+                                                    path: '/START_DATE_TIME',
+                                                    formatter: '.dateFormatter'
+                                                }">
+                                                <layoutData>
+                                                    <l:GridData span="L4 M3 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>ServiceCall.endDate}"
+                                                    tooltip="{i18n>ServiceCall.endDate}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{
+                                                    path: '/END_DATE_TIME',
+                                                    formatter: '.dateFormatter'
+                                                }"
+                                                tooltip="{
+                                                    path: '/END_DATE_TIME',
+                                                    formatter: '.dateFormatter'
+                                                }">
+                                                <layoutData>
+                                                    <l:GridData span="L4 M3 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>ServiceCall.dueDate}"
+                                                    tooltip="{i18n>ServiceCall.dueDate}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{
+                                                    path: '/DUE_DATE_TIME',
+                                                    formatter: '.dateFormatter'
+                                                }"
+                                                tooltip="{
+                                                    path: '/DUE_DATE_TIME',
+                                                    formatter: '.dateFormatter'
+                                                }">
+                                                <layoutData>
+                                                    <l:GridData span="L4 M3 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>ServiceCall.remarks}"
+                                                    tooltip="{i18n>ServiceCall.remarks}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" linebreak="true" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{/REMARKS}"
+                                                tooltip="{/REMARKS}">
+                                                <layoutData>
+                                                    <l:GridData span="L10 M9 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>ServiceCall.resolution}"
+                                                    tooltip="{i18n>ServiceCall.resolution}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" linebreak="true" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{/RESOLUTION}"
+                                                tooltip="{/RESOLUTION}">
+                                                <layoutData>
+                                                    <l:GridData span="L10 M9 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                    </f:FormContainer>
+                                    <f:FormContainer title="{i18n>Detail.address}">
+                                        <f:layoutData>
+                                            <l:GridData span="L12 M12 S12" />
+                                        </f:layoutData>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>Address.street}"
+                                                    tooltip="{i18n>Address.street}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{/STREET}"
+                                                tooltip="{/STREET}">
+                                                <layoutData>
+                                                    <l:GridData span="L4 M3 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>Address.streetNumber}"
+                                                    tooltip="{i18n>Address.streetNumber}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{/STREET_NUMBER}"
+                                                tooltip="{/STREET_NUMBER}">
+                                                <layoutData>
+                                                    <l:GridData span="L4 M3 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>Address.city}"
+                                                    tooltip="{i18n>Address.city}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{/CITY}"
+                                                tooltip="{/CITY}">
+                                                <layoutData>
+                                                    <l:GridData span="L4 M3 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>Address.state}"
+                                                    tooltip="{i18n>Address.state}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{/STATE}"
+                                                tooltip="{/STATE}">
+                                                <layoutData>
+                                                    <l:GridData span="L4 M3 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>Address.country}"
+                                                    tooltip="{i18n>Address.country}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{/COUNTRY}"
+                                                tooltip="{/COUNTRY}">
+                                                <layoutData>
+                                                    <l:GridData span="L4 M3 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                        <f:FormElement>
+                                            <f:label>
+                                                <Label
+                                                    text="{i18n>Address.zipCode}"
+                                                    tooltip="{i18n>Address.zipCode}">
+                                                    <layoutData>
+                                                        <l:GridData span="L2 M3 S12" />
+                                                    </layoutData>
+                                                </Label>
+                                            </f:label>
+                                            <Text
+                                                text="{/ZIP_CODE}"
+                                                tooltip="{/ZIP_CODE}">
+                                                <layoutData>
+                                                    <l:GridData span="L4 M3 S12" />
+                                                </layoutData>
+                                            </Text>
+                                        </f:FormElement>
+                                    </f:FormContainer>
+                                    <f:FormContainer>
+                                        <f:layoutData>
+                                            <l:GridData span="L12 M12 S12" />
+                                        </f:layoutData>
+                                        <f:FormElement>
+                                            <Table
+                                                noDataText="{i18nGlobal>General.listEmpty}"
+                                                items="{equipment>/}"
+                                                growing="true"
+                                                growingScrollToLoad="true">
+                                                <headerToolbar>
+                                                    <Toolbar>
+                                                        <Title text="{= ${i18n>ServiceCall.equipment} + ' (' + (${equipment>/length} || 0) + ')' }" />
+                                                    </Toolbar>
+                                                </headerToolbar>
+                                                <columns>
+                                                    <Column vAlign="Middle">
+                                                        <Label text="{i18n>Equipment.name}" />
+                                                    </Column>
+                                                    <Column 
+                                                        vAlign="Middle"
+                                                        minScreenWidth="Tablet"
+                                                        demandPopin="true"
+                                                        popinDisplay="Inline">
+                                                        <Label text="{i18n>Equipment.serialNumber}" />
+                                                    </Column>
+                                                    <Column vAlign="Middle">
+                                                        <Label text="{i18n>Equipment.status}" />
+                                                    </Column>
+                                                    <Column 
+                                                        vAlign="Middle"
+                                                        minScreenWidth="Tablet"
+                                                        demandPopin="true"
+                                                        popinDisplay="Inline">
+                                                        <Label text="{i18n>Equipment.type}" />
+                                                    </Column>
+                                                </columns>
+                                                <ColumnListItem>
+                                                    <Label
+                                                        text="{equipment>NAME}"
+                                                        tooltip="{equipment>NAME}" />
+                                                    <Label
+                                                        text="{equipment>SERIAL_NUMBER}"
+                                                        tooltip="{equipment>SERIAL_NUMBER}" />
+                                                    <Label
+                                                        text="{equipment>STATUS}"
+                                                        tooltip="{equipment>STATUS}" />
+                                                    <Label
+                                                        text="{equipment>TYPE}"
+                                                        tooltip="{equipment>TYPE}" />
+                                                </ColumnListItem>
+                                            </Table>
+                                        </f:FormElement>
+                                    </f:FormContainer>
+                                    <f:FormContainer>
+                                        <f:layoutData>
+                                            <l:GridData span="L12 M12 S12" />
+                                        </f:layoutData>
+                                        <f:FormElement>
+                                            <Table
+                                                noDataText="{i18nGlobal>General.listEmpty}"
+                                                items="{responsibles>/}"
+                                                growing="true"
+                                                growingScrollToLoad="true">
+                                                <headerToolbar>
+                                                    <Toolbar>
+                                                        <Title text="{= ${i18n>ServiceCall.responsibles} + ' (' + (${responsibles>/length} || 0) + ')' }" />
+                                                    </Toolbar>
+                                                </headerToolbar>
+                                                <columns>
+                                                    <Column vAlign="Middle">
+                                                        <Label text="{i18n>Responsible.firstName}" />
+                                                    </Column>
+                                                    <Column vAlign="Middle">
+                                                        <Label text="{i18n>Responsible.lastName}" />
+                                                    </Column>
+                                                    <Column 
+                                                        vAlign="Middle"
+                                                        minScreenWidth="Tablet"
+                                                        demandPopin="true"
+                                                        popinDisplay="Inline">
+                                                        <Label text="{i18n>Responsible.mobilePhone}" />
+                                                    </Column>
+                                                    <Column 
+                                                        vAlign="Middle"
+                                                        minScreenWidth="Tablet"
+                                                        demandPopin="true"
+                                                        popinDisplay="Inline">
+                                                        <Label text="{i18n>Responsible.email}" />
+                                                    </Column>
+                                                </columns>
+                                                <ColumnListItem>
+                                                    <Label
+                                                        text="{responsibles>FIRST_NAME}"
+                                                        tooltip="{responsibles>FIRST_NAME}" />
+                                                    <Label
+                                                        text="{responsibles>LAST_NAME}"
+                                                        tooltip="{responsibles>LAST_NAME}" />
+                                                    <Label
+                                                        text="{responsibles>MOBILE_PHONE}"
+                                                        tooltip="{responsibles>MOBILE_PHONE}" />
+                                                    <Label
+                                                        text="{responsibles>EMAIL_ADDRESS}"
+                                                        tooltip="{responsibles>EMAIL_ADDRESS}" />
+                                                </ColumnListItem>
+                                            </Table>
+                                        </f:FormElement>
+                                    </f:FormContainer>
+                                </f:Form>
+                            </u:blocks>
+                        </u:ObjectPageSubSection>
+                    </u:subSections>
+                </u:ObjectPageSection>
+            </u:sections>
+        </u:ObjectPageLayout>
+
+        <footer>
+            <Bar>
+                <contentRight>
+                    <Button
+                        text="{i18nGlobal>General.cancel}"
+                        press="onCancel"/>
+                </contentRight>
+            </Bar>
+        </footer> 
+    </Page>
+</mvc:View>

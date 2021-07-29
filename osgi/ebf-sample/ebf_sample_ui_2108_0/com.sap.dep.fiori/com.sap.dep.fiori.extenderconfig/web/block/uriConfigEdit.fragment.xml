@@ -1,0 +1,154 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout">
+    <Dialog
+        title="{i18n>Config.dialogHeader}"
+        class="dep-fiori"
+        stretchOnPhone="true"
+        contentHeight="100%"
+        contentWidth="100%"
+        afterClose=".onEditDialogClose">
+        <Page
+            showHeader="false"
+            showSubHeader="false">
+            <f:Form class="dep-fiori-dialog-form">
+                <f:layout>
+                    <f:ResponsiveGridLayout hSpacing="2" />
+                </f:layout>
+                <f:FormContainer>
+                    <f:layoutData>
+                        <l:GridData span="L12 M12 S12" />
+                    </f:layoutData>
+                    <f:FormElement>
+                        <f:label>
+                            <Label
+                                text="{i18n>Label.signature}"
+                                tooltip="{i18n>Tooltip.signature}"
+                                required="true" />
+                        </f:label>
+                        <Select
+                            items="{services>/}"
+                            selectedKey="{/SIGNATURE}"
+                            showSecondaryValues="true"
+                            forceSelection="false"
+                            enabled="{= ${mode>/} === 'create' }"
+                            valueState="{= !${/SIGNATURE} ? 'Error' : 'None' }"
+                            valueStateText="{i18nGlobal>General.required}">
+                            <c:ListItem
+                                text="{services>SIGNATURE}"
+                                key="{services>SIGNATURE}" />
+                            <layoutData>
+                                <l:GridData span="L3 M4 S12" />
+                            </layoutData>
+                        </Select>
+                    </f:FormElement>
+
+                    <f:FormElement>
+                        <f:label>
+                            <Label text="{i18n>Label.uri}" tooltip="{i18n>Tooltip.uri}" />
+                        </f:label>
+                        <Input
+                            value="{/URI}"
+                            enabled="{= ${mode>/} === 'create' }">
+                            <layoutData>
+                                <l:GridData span="L6 M8 S12" />
+                            </layoutData>
+                        </Input>
+                    </f:FormElement>
+
+                    <f:FormElement>
+                        <f:label>
+                            <Label
+                                text="{i18n>Label.isPrefix}"
+                                tooltip="{i18n>Tooltip.isPrefix}"
+                                required="true" />
+                        </f:label>
+                        <Select
+                            selectedKey="{/URI_IS_PREFIX}"
+                            enabled="{= ${mode>/} === 'create' }">
+                            <c:ListItem
+                                text="{i18nGlobal>General.yes}"
+                                key="true" />
+                            <c:ListItem
+                                text="{i18nGlobal>General.no}"
+                                key="false" />
+                            <layoutData>
+                                <l:GridData span="L2 M3 S12" />
+                            </layoutData>
+                        </Select>
+                    </f:FormElement>
+
+                    <f:FormElement>
+                        <f:label>
+                            <Label text="{i18n>Label.isShared}" tooltip="{i18n>Tooltip.isShared}" />
+                        </f:label>
+                        <Select selectedKey="{/IS_SHARED}">
+                            <c:ListItem text="" key="" />
+                            <c:ListItem
+                                text="{i18nGlobal>General.yes}"
+                                key="Y" />
+                            <c:ListItem
+                                text="{i18nGlobal>General.no}"
+                                key="N" />
+                            <layoutData>
+                                <l:GridData span="L2 M3 S12" />
+                            </layoutData>
+                        </Select>
+                    </f:FormElement>
+
+                    <f:FormElement>
+                        <f:label>
+                            <Label text="{i18n>Label.hasPersonal}" tooltip="{i18n>Tooltip.hasPersonal}" />
+                        </f:label>
+                        <Select selectedKey="{/HAS_PERSONAL_DATA}">
+                            <c:ListItem text="" key="" />
+                            <c:ListItem
+                                text="{i18nGlobal>General.yes}"
+                                key="Y" />
+                            <c:ListItem
+                                text="{i18nGlobal>General.no}"
+                                key="N" />
+                            <layoutData>
+                                <l:GridData span="L2 M3 S12" />
+                            </layoutData>
+                        </Select>
+                    </f:FormElement>
+
+                    <f:FormElement>
+                        <f:label>
+                            <Label text="{i18n>Label.overrideFreq}" tooltip="{i18n>Tooltip.overrideFreq}" />
+                        </f:label>
+                        <Input
+                            type="Number"
+                            value="{/OVERRIDE_FREQ}">
+                            <layoutData>
+                                <l:GridData span="L2 M3 S12" />
+                            </layoutData>
+                        </Input>
+                    </f:FormElement>
+                </f:FormContainer>
+            </f:Form>
+
+            <footer>
+                <Toolbar>
+                    <Button
+                        text="{i18nGlobal>General.delete}"
+                        type="Reject"
+                        press=".onDelete"
+                        visible="{= ${mode>/} === 'edit' }" />
+                    <ToolbarSpacer />
+                    <Button
+                        text="{i18nGlobal>General.save}"
+                        type="Emphasized"
+                        press=".onSaveConfig" />
+                    <Button
+                        text="{i18nGlobal>General.cancel}"
+                        press=".closeEditDialog" />
+                </Toolbar>
+            </footer>
+        </Page>
+    </Dialog>
+</c:FragmentDefinition>

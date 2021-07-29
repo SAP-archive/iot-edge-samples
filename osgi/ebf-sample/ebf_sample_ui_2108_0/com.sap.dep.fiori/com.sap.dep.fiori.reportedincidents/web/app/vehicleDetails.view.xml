@@ -1,0 +1,618 @@
+<mvc:View
+    controllerName="dep.fiori.reportedincidents.app.vehicleDetails"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns="sap.m">
+    <Page
+        id="main"
+        showHeader="false">
+        <u:ObjectPageLayout alwaysShowContentHeader="true" useIconTabBar="true" showTitleInHeaderContent="false">
+            <u:headerTitle>
+				<u:ObjectPageHeader class="pageBreakCrumbs" objectTitle="{i18n>ObjectPageContentHeader.vehicleDesc}: {INVOLVED_VEHICLE_DETAILS>/VEHICLE_DESC}" isObjectTitleAlwaysVisible="true">				
+					<Breadcrumbs currentLocationText="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_DESC}">
+						<Link press="navToAssetList" text="{INVOLVED_VEHICLE_DETAILS>/ID_LOCAL}"/>
+					</Breadcrumbs>
+				</u:ObjectPageHeader>				
+            </u:headerTitle>
+			
+            <u:headerContent>
+				<VBox
+                    fitContainer="true"
+                    renderType="Bare">
+                    <HBox renderType="Bare">
+					    <VBox>                                  
+							<HBox renderType="Bare">
+								<Label
+									text="{i18n>ObjectPageContentHeader.incidentID}:"
+									class="sapUiTinyMarginEnd" />
+								<Label text="{INVOLVED_VEHICLE_DETAILS>/ID_LOCAL}"/>
+							</HBox>
+						</VBox>
+					</HBox>
+                   
+                </VBox>	
+            </u:headerContent>
+
+            <u:sections>
+                <u:ObjectPageSection title="{i18n>ObjectPageSection.equipmentDetailBasic}" id="page" >
+                    <u:subSections>
+                        <u:ObjectPageSubSection>
+                            <u:blocks>
+								<VBox fitContainer="true" renderType="Bare">
+                                <f:Form id="form">
+
+                                    <f:layout>
+                                        <f:ResponsiveGridLayout
+                                            hSpacing="2"
+                                            /> 
+                                    </f:layout>
+                                    <f:toolbar>
+										<Toolbar class="sapUiTinyMarginBottom">
+											<Title text="{i18n>FormContainer.reportedincidents}" />										
+											<ToolbarSpacer />
+											<HBox visible="{= ${INVOLVED_VEHICLE_DETAILS>/IS_SUBMITTED} === ''}">
+												<Button
+													text="{i18nGlobal>General.edit}"
+													id="vehicleEditButton"
+													press="onVehicleEdit"
+													visible="{= !${state>/editing}}" />
+												<Button
+													id="vehicleSaveButton"
+													text="{i18nGlobal>General.save}"
+													press="onVehicleSave"
+													visible="{state>/editing}" />
+												<Button
+													text="{i18nGlobal>General.cancel}"
+													press="onVehicleCancel"
+													visible="{state>/editing}" />
+											</HBox>
+										</Toolbar>
+									</f:toolbar>
+                                    <f:formContainers>
+                                        <f:FormContainer>
+										    <f:formElements>
+												<f:FormElement>
+													<f:label>
+														<Label text="{i18n>VehicleForm.vehicle}"/>
+													</f:label>
+													<f:fields>
+														<Input 
+															id="assetID"
+															showValueHelp="true"
+															value="{INVOLVED_VEHICLE_DETAILS>/ASSET_ID}"
+															valueHelpOnly="true"
+															editable="{state>/editing}"
+															enabled="false"
+															valueHelpRequest="equipmentLookupPress">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+														<Input
+															id="assetType"
+															value="{INVOLVED_VEHICLE_DETAILS>/ASSET_TYPE}"
+															visible="false">
+														</Input>
+														<Input
+															id="assetLineNumber"
+															value="{INVOLVED_VEHICLE_DETAILS>/ASSET_LINE_NO}"
+															visible="false">
+														</Input>
+													</f:fields>
+												</f:FormElement>																						
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>VehicleForm.desc}"
+															required="true">
+														</Label>
+													</f:label>
+													<f:fields>
+														<Input
+															id="vehicleDesc"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_DESC}"
+															class="sapUiSmallMarginBottom"
+															maxLength="40"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>VehicleForm.type}"/>
+													</f:label>
+													<f:fields>
+															 <Input 
+															id="vehicleType"
+															showValueHelp="true"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_TYPE}"
+															valueHelpOnly="true"
+															valueHelpRequest="equipmentTypeLookupPress"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+																				
+													</f:fields>
+												</f:FormElement>
+												<!--<f:FormElement>
+													<f:label>
+														<Label text="{i18n>VehicleForm.plantId}" required="false"/>
+													</f:label>
+
+													<f:fields>
+														<Input
+															id="vPlantID"
+															value="{plantIDModel>/PLANT_ID}"
+															enabled="false">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>-->
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>VehicleForm.manufacturer}"/>
+													</f:label>
+													<f:fields>
+														<Input
+															id= "vehicleManu"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_MANUFACTURER}"
+															maxLength="30"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												 <f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>VehicleForm.model}"/>
+													</f:label>
+													<f:fields>          
+														<Input
+															id="vehicleModel"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_MODEL}"
+															maxLength="20"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>						
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>VehicleForm.license}"/>
+													</f:label>
+													<f:fields>                     
+														<Input
+															id="vehicleLic"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_LIC_PLATE_ID}"
+															maxLength="15"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label text="{i18n>VehicleForm.addDesc}"/>
+													</f:label>
+													
+													<f:fields>
+														<TextArea
+															id="addDescription"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_ADD_DESC}"
+															rows="4"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</TextArea>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>													
+														<Label text="{i18n>VehicleForm.vehicleTitleWhoOwner}" design="Bold">
+															<layoutData>
+																<l:GridData
+																	span="L12 M12 S12">
+																</l:GridData>
+															</layoutData>
+														</Label>													
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.firstName}"
+														/>
+													</f:label>
+													<f:fields>
+														<Input
+															id="vofirstName"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_OWNER_FNAME}"
+															maxLength="60"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.lastName}"
+														/>
+													</f:label>
+													<f:fields>
+														<Input
+															id="volastName"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_OWNER_LNAME}"
+															maxLength="60"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.organizationalUnit}"/>
+													</f:label>
+													<f:fields>
+														<Input
+															styleClass="sapUiBigMarginBottom"
+															id="voOrgUnitID"                                    
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_OWNER_ORG}"
+															maxLength="640"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+																				
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.company}"/>
+													</f:label>
+													<f:fields>
+														<Input
+															id="vocompany" 
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_OWNER_COMPANY}"
+															maxLength="60"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.address}"/>
+													</f:label>
+													<f:fields>
+														<Input
+															id= "voaddress"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_OWNER_ADDRESS}"
+															maxLength="60"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												 <f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.phone}"/>
+													</f:label>
+													<f:fields>          
+														<Input
+															id="vophone"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_OWNER_PHONE}"
+															maxLength="40"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>						
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.email}"/>
+													</f:label>
+													<f:fields>                     
+														<Input
+															id="voemail"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_OWNER_EMAIL}"
+															maxLength="60"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												
+												<f:FormElement>
+														<Label text="{i18n>VehicleForm.vehicleTitleWhoDriver}" design="Bold">
+															<layoutData>
+																<l:GridData
+																	span="L12 M12 S12">
+																</l:GridData>
+															</layoutData>
+														</Label>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.firstName}"
+														/>
+													</f:label>
+													<f:fields>
+														<Input
+															id="vdfirstName"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_DRIVER_FNAME}"
+															maxLength="60"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.lastName}"
+														/>
+													</f:label>
+													<f:fields>
+														<Input
+															id="vdlastName"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_DRIVER_LNAME}"
+															maxLength="60"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.organizationalUnit}"/>
+													</f:label>
+													<f:fields>
+														<Input
+															styleClass="sapUiBigMarginBottom"
+															id="vdOrgUnitID"                                    
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_DRIVER_ORG}"
+															maxLength="40"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+																				
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.company}"/>
+													</f:label>
+													<f:fields>
+														<Input
+															id="vdcompany" 
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_DRIVER_COMPANY}"
+															maxLength="60"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.address}"/>
+													</f:label>
+													<f:fields>
+														<Input
+															id= "vdaddress"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_DRIVER_ADDRESS}"
+															maxLength="60"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+												 <f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.phone}"/>
+													</f:label>
+													<f:fields>          
+														<Input
+															id="vdphone"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_DRIVER_PHONE}"
+															maxLength="40"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>						
+												<f:FormElement>
+													<f:label>
+														<Label
+															text="{i18n>InjuredForm.email}"/>
+													</f:label>
+													<f:fields>                     
+														<Input
+															id="vdemail"
+															value="{INVOLVED_VEHICLE_DETAILS>/VEHICLE_DRIVER_EMAIL}"
+															maxLength="60"
+															class="sapUiSmallMarginBottom"
+															editable="{state>/editing}">
+															<layoutData>
+																<l:GridData
+																	span="L5 M5 S12">
+																</l:GridData>
+															</layoutData>
+														</Input>
+													</f:fields>
+												</f:FormElement>
+
+                                            </f:formElements>
+                                        </f:FormContainer>
+                                    </f:formContainers>
+                                </f:Form>
+								<Toolbar><Title text="{i18n>AssetDamages.damageListSectionTitle}" />		</Toolbar>
+								<Table
+									noDataText="{i18n>AssetDamages.listEmpty}"
+									items="{INVOLVED_EQUIPMENT_DAMAGES>/results/}"
+									growing="true"
+									growingScrollToLoad="true">
+									<headerToolbar>
+                                            <Toolbar>
+                                                <Title
+                                                    id="damageTableTitle"
+                                                    text="{ path: 'INVOLVED_EQUIPMENT_DAMAGES>/results/length', formatter: '.formatters.damageListTitle' }"
+                                                    level="H2"/>
+                                                <ToolbarSpacer></ToolbarSpacer>
+                                                <Button
+                                                    id="damageAddButton"
+                                                    tooltip="{i18n>Tooltip.addDamageButton}"
+                                                    icon="sap-icon://add"
+													visible="{= ${INVOLVED_VEHICLE_DETAILS>/IS_SUBMITTED} === ''}"
+                                                    press="createEquipmentDamage" /> 		
+                                            </Toolbar>
+                                        </headerToolbar>
+									<columns>
+										<Column vAlign="Middle">
+											<Title text="{i18n>AssetDamages.type}" />
+										</Column>
+										<Column vAlign="Middle">
+											<Title text="{i18n>AssetDamages.description}" />
+										</Column>										
+										<Column
+											vAlign="Middle"
+											hAlign="End" />
+										</columns>
+									<ColumnListItem vAlign="Middle" type="Active"  press="navToAddEquipmentDamage">
+										<Label
+											text="{INVOLVED_EQUIPMENT_DAMAGES>DAMAGE_TYPE}"/>
+										<Label
+											text="{INVOLVED_EQUIPMENT_DAMAGES>ASSET_DAMAGE_DESC}"/>
+										<Button
+												icon="sap-icon://sys-cancel"
+												type="Transparent"
+												tooltip="{i18n>AssetDamages.removeDamage}"
+												visible="{= ${INVOLVED_VEHICLE_DETAILS>/IS_SUBMITTED} === ''}"
+												press="removeEquipmentDamagePress" />
+									</ColumnListItem>
+								</Table>
+								<!--<core:Fragment fragmentName="dep.fiori.reportedincidents.app.Damages" type="XML" />-->
+								</VBox>
+                            </u:blocks>
+                        </u:ObjectPageSubSection>
+                    </u:subSections>
+                </u:ObjectPageSection>
+            </u:sections>
+        </u:ObjectPageLayout>
+
+    </Page>
+</mvc:View>

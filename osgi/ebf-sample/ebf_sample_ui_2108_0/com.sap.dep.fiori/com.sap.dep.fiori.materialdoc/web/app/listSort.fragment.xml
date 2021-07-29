@@ -1,0 +1,27 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <ViewSettingsDialog confirm="onSort">
+        <sortItems>
+            <ViewSettingsItem
+                text="{i18n>Document.number}"
+                key="MBLNR"
+                selected="true" />
+            <ViewSettingsItem
+                text="{i18n>Document.movementType}"
+                key="BWART" />
+            <ViewSettingsItem
+                text="{i18n>Document.postDate}"
+                key="BUDAT" />
+            <ViewSettingsItem
+                text="{i18n>Document.toPlant}"
+                key="UMWRK" />
+            <ViewSettingsItem
+                text="{i18nGlobal>General.workorder}"
+                key="AUFNR" />
+            <ViewSettingsItem
+                text="{i18n>Document.purchaseOrder}"
+                key="EBELN" />
+        </sortItems>
+    </ViewSettingsDialog>
+</c:FragmentDefinition>

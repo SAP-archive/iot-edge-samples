@@ -1,0 +1,181 @@
+<mvc:View
+    controllerName="dep.fiori.wonotification.app.list"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:c="sap.ui.core"
+    xmlns="sap.m">
+    <Page
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <VBox
+            fitContainer="true"
+            renderType="Bare">
+            <fb:FilterBar
+                showClearOnFB="true"
+                clear="onClearFilter"
+                search="onFilter"
+                showFilterConfiguration="false">
+                <fb:filterItems>
+                    <fb:FilterItem
+                        name="workorder"
+                        label="{i18n>WorkOrder.number}">
+                        <fb:control>
+                            <Input value="{filter>/AUFNR}" />
+                        </fb:control>
+                    </fb:FilterItem>
+                    <fb:FilterItem
+                        name="woexists"
+                        label="{i18n>WorkOrder.exists}">
+                        <fb:control>
+                            <Select selectedKey="{filter>/WO_EXISTS}">
+                                <c:Item text="" key="" />
+                                <c:Item text="{i18nGlobal>General.yes}" key="X" />
+                                <c:Item text="{i18nGlobal>General.no}" key=" " />
+                            </Select>
+                        </fb:control>
+                    </fb:FilterItem>
+                    <fb:FilterItem
+                        name="number"
+                        label="{i18n>Notification.number}">
+                        <fb:control>
+                            <Input value="{filter>/QMNUM}" />
+                        </fb:control>
+                    </fb:FilterItem>
+                    <fb:FilterItem
+                        name="equipment"
+                        label="{i18nGlobal>General.equipment}">
+                        <fb:control>
+                            <Input value="{filter>/EQUNR}" />
+                        </fb:control>
+                    </fb:FilterItem>
+                    <fb:FilterItem
+                        name="description"
+                        label="{i18nGlobal>General.description}">
+                        <fb:control>
+                            <Input value="{filter>/QMTXT}" />
+                        </fb:control>
+                    </fb:FilterItem>
+                    <fb:FilterItem
+                        name="date"
+                        label="{i18n>Notification.date}">
+                        <fb:control>
+                            <DatePicker
+                                value="{filter>/QMDAT}"
+                                valueFormat="yyyyMMdd" />
+                        </fb:control>
+                    </fb:FilterItem>
+                </fb:filterItems>
+            </fb:FilterBar>
+            <ScrollContainer
+                vertical="true"
+                height="100%"
+                width="100%">
+                <Table
+                    id="list"
+                    noDataText="{i18nGlobal>List.empty}"
+                    items="{odata>/Workorder_Notification}"
+                    growing="true"
+                    growingScrollToLoad="true"
+                    mode="SingleSelectMaster"
+                    itemPress="onListItemSelect">
+                    <headerToolbar>
+                        <Toolbar>
+                            <Title text="{i18n>List.title}" />
+                            <ToolbarSpacer />
+                            <Button
+                                tooltip="{i18n>Page.title}"
+                                icon="sap-icon://add"
+                                press="onCreate" />
+                            <Button
+                                tooltip="{i18nGlobal>General.sortList}"
+                                icon="sap-icon://drop-down-list"
+                                press="onSortPress" />
+                        </Toolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column vAlign="Middle">
+                            <Title
+                                text="{i18n>WorkOrder.number}"
+                                tooltip="{i18n>WorkOrder.number}" />
+                        </Column>
+                        <Column vAlign="Middle">
+                            <Title
+                                text="{i18n>Notification.number}"
+                                tooltip="{i18n>Notification.number}" />
+                        </Column>
+                        <Column vAlign="Middle">
+                            <Title
+                                text="{i18nGlobal>General.equipment}"
+                                tooltip="{i18nGlobal>General.equipment}" />
+                        </Column>
+                        <Column
+                            vAlign="Middle"
+                            width="30%"
+                            minScreenWidth="Desktop"
+                            demandPopin="true"
+                            popinDisplay="Inline">
+                            <Title
+                                text="{i18nGlobal>General.description}"
+                                tooltip="{i18nGlobal>General.description}" />
+                        </Column>
+                        <Column vAlign="Middle">
+                            <Title
+                                text="{i18n>Notification.date}"
+                                tooltip="{i18n>Notification.date}" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Active">
+                            <cells>
+                                <HBox
+                                    fitContainer="true"
+                                    renderType="Bare"
+                                    alignItems="Center">
+                                    <Label
+                                        text="{odata>AUFNR}"
+                                        tooltip="{odata>AUFNR}"
+                                        design="Bold"
+                                        class="identifierTextBlue sapUiTinyMarginEnd" />
+                                    <c:Icon
+                                        src="sap-icon://decline"
+                                        size="1.25rem"
+                                        color="red"
+                                        tooltip="{i18n>List.woMissing}"
+                                        visible="{= ${odata>WO_EXISTS} !== 'X' }" />
+                                    <c:Icon
+                                        src="sap-icon://accept"
+                                        size="1.25rem"
+                                        color="green"
+                                        tooltip="{i18n>List.woExists}"
+                                        visible="{= ${odata>WO_EXISTS} === 'X' }" />
+                                </HBox>
+                                <Label
+                                    text="{odata>QMNUM}"
+                                    tooltip="{odata>QMNUM}" />
+                                <Label
+                                    text="{odata>EQUNR}"
+                                    tooltip="{odata>EQUNR}" />
+                                <Label
+                                    text="{odata>QMTXT}"
+                                    tooltip="{odata>QMTXT}" />
+                                <Label
+                                    text="{
+                                        path: 'odata>QMDAT',
+                                        formatter: 'dep.fiori.lib.util.Utilities.formatters.date'
+                                    }"
+                                    tooltip="{
+                                        path: 'odata>QMDAT',
+                                        formatter: 'dep.fiori.lib.util.Utilities.formatters.date'
+                                    }" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </ScrollContainer>
+        </VBox>
+    </Page>
+</mvc:View>

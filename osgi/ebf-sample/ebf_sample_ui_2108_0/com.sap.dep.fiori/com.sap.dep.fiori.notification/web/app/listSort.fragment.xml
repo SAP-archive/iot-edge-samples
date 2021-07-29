@@ -1,0 +1,22 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <ViewSettingsDialog
+        confirm="onSort"
+        sortDescending="true">
+        <sortItems>
+            <ViewSettingsItem
+                text="{i18n>Notification.number}"
+                key="QMNUM" />
+            <ViewSettingsItem
+                text="{i18nGlobal>General.equipment}"
+                key="EQUNR" />
+            <ViewSettingsItem
+                text="{i18nGlobal>General.description}"
+                key="QMTXT" />
+            <ViewSettingsItem
+                text="{i18n>Notification.date}"
+                key="QMDAT" />
+        </sortItems>
+    </ViewSettingsDialog>
+</c:FragmentDefinition>

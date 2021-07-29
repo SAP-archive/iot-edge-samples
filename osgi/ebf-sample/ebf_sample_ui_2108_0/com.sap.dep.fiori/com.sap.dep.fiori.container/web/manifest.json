@@ -1,0 +1,57 @@
+{
+    "sap.ui5": {
+        "name": "DEP Containers",
+        "version": "1.0",
+        "config": {
+            "serviceConfig": {
+                "rest": {
+                    "description": "Base URL",
+                    "url": "/ws_restful_data_controller"
+                }
+            },
+            "compactContentDensity": false
+        },
+        "routing" : {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "viewPath": "dep.fiori.container.app",
+                "targetControl": "content",
+                "targetAggregation": "pages"
+            },
+            "routes": {
+                "display": {
+                    "pattern": "",
+                    "viewId": "dep-fiori-container-list",
+                    "view": "list"
+                },
+                "detail": {
+                    "pattern": "{CONTAINER_ID}",
+                    "viewId": "dep-fiori-container-detail",
+                    "view": "detail"
+                }
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "i18nGlobal": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "/dep_fiori_apps/com.sap.dep.fiori.lib/i18n/i18n.properties"
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                },
+                {
+                    "uri": "/dep_fiori_apps/com.sap.dep.fiori.lib/css/style.css",
+                    "id": "dep-lib-style"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,178 @@
+<mvc:View
+    controllerName="dep.fiori.reportedincidents.app.equipmentDamageDetails"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.uxap"
+    xmlns="sap.m">
+    <Page
+        id="main"
+        showHeader="false">
+         <u:ObjectPageLayout alwaysShowContentHeader="true" useIconTabBar="true" showTitleInHeaderContent="false">
+            <u:headerTitle>
+                <u:ObjectPageHeader class="pageBreakCrumbs" objectTitle="{i18n>ObjectPageHeader.equipmentDamageDetailsTitle}: {INVOLVED_EQUIPMENT_DAMAGE_DETAILS>/DAMAGE_TYPE}" isObjectTitleAlwaysVisible="true">				
+					<Breadcrumbs currentLocationText="{INVOLVED_EQUIPMENT_DAMAGE_DETAILS>/DAMAGE_TYPE}">
+						<Link press="navToAssetList" text="{INVOLVED_EQUIPMENT_DAMAGE_DETAILS>/ID_LOCAL}"/>
+						<Link press="navToAssetDetails" visible="{= ${INVOLVED_EQUIPMENT_SELECTED>/ASSET_TYPE} === '001'}" text="{INVOLVED_EQUIPMENT_SELECTED>/EQUIPMENT_DESC}"/>
+						<Link press="navToAssetDetails" visible="{= ${INVOLVED_EQUIPMENT_SELECTED>/ASSET_TYPE} === '002'}" text="{INVOLVED_EQUIPMENT_SELECTED>/VEHICLE_DESC}"/>
+						<Link press="navToAssetDetails" visible="{= ${INVOLVED_EQUIPMENT_SELECTED>/ASSET_TYPE} === '003'}" text="{INVOLVED_EQUIPMENT_SELECTED>/PROP_DESC}"/>
+					</Breadcrumbs>
+				</u:ObjectPageHeader>				
+            </u:headerTitle>
+
+            <u:headerContent>
+				<VBox
+                    fitContainer="true"
+                    renderType="Bare">
+                    <HBox renderType="Bare">
+					    <VBox>                           			
+					        <HBox renderType="Bare" visible="{= ${INVOLVED_EQUIPMENT_SELECTED>/ASSET_TYPE} === '001'}">
+								<Label
+									text="{i18n>ObjectPageContentHeader.equipmentDesc}:"
+									class="sapUiTinyMarginEnd" />
+								<Label text="{INVOLVED_EQUIPMENT_SELECTED>/EQUIPMENT_DESC}"/>
+							</HBox>
+							 <HBox renderType="Bare" visible="{= ${INVOLVED_EQUIPMENT_SELECTED>/ASSET_TYPE} === '002'}">
+								<Label
+									text="{i18n>ObjectPageContentHeader.vehicleDesc}:"
+									class="sapUiTinyMarginEnd" />
+								<Label text="{INVOLVED_EQUIPMENT_SELECTED>/VEHICLE_DESC}"/>
+							</HBox>
+							 <HBox renderType="Bare" visible="{= ${INVOLVED_EQUIPMENT_SELECTED>/ASSET_TYPE} === '003'}">
+								<Label
+									text="{i18n>ObjectPageContentHeader.propertyDesc}:"
+									class="sapUiTinyMarginEnd" />
+								<Label text="{INVOLVED_EQUIPMENT_SELECTED>/PROP_DESC}"/>
+							</HBox>
+							<HBox renderType="Bare">
+								<Label
+									text="{i18n>ObjectPageContentHeader.incidentID}:"
+									class="sapUiTinyMarginEnd" />
+								<Label text="{INVOLVED_EQUIPMENT_DAMAGE_DETAILS>/ID_LOCAL}"/>
+							</HBox>
+						</VBox>
+					</HBox>
+                   
+                </VBox>	
+            </u:headerContent>
+
+            <u:sections>
+                <u:ObjectPageSection title="{i18n>ObjectPageSection.equipmentDetailBasic}" id="page" >
+                    <u:subSections>
+                        <u:ObjectPageSubSection>
+                            <u:blocks>
+								<VBox fitContainer="true" renderType="Bare">
+                                <f:Form id="form">
+
+                                    <f:layout>
+                                        <f:ResponsiveGridLayout
+                                            hSpacing="2"
+                                            /> 
+                                    </f:layout>
+                                    <f:toolbar>
+										<Toolbar class="sapUiTinyMarginBottom">
+											<Title text="{i18n>FormContainer.reportedincidents}" />										
+											<ToolbarSpacer />
+											<HBox visible="{= ${INVOLVED_EQUIPMENT_DAMAGE_DETAILS>/IS_SUBMITTED} === ''}">
+												<Button
+													text="{i18nGlobal>General.edit}"
+													id="equipmentDamageEditButton"
+													press="onEquipmentDamageEdit"
+													visible="{= !${state>/editing}}" />
+												<Button
+													id="equipmentDamageSaveButton"
+													text="{i18nGlobal>General.save}"
+													press="onEquipmentDamageSave"
+													visible="{state>/editing}" />
+												<Button
+													text="{i18nGlobal>General.cancel}"
+													press="onEquipmentDamageCancel"
+													visible="{state>/editing}" />
+											</HBox>	
+										</Toolbar>
+									</f:toolbar>
+                                   <f:formContainers>
+								   <f:FormContainer>
+										<f:formElements>
+											<f:FormElement>
+												<f:label>
+													<Label text="{i18n>AssetForm.damageType}"/>
+												</f:label>
+												<f:fields>
+													<Input 
+														id="damageType"
+														showValueHelp="true"
+														value="{INVOLVED_EQUIPMENT_DAMAGE_DETAILS>/DAMAGE_TYPE}"
+														valueHelpOnly="true"
+														valueHelpRequest="damageTypeLookupPress"
+														editable="{state>/editing}">
+														<layoutData>
+															<l:GridData
+																span="L5 M5 S12">
+															</l:GridData>
+														</layoutData>
+													</Input>
+													<Input
+														id="assetType"
+														value="{INVOLVED_EQUIPMENT_DAMAGE_DETAILS>/ASSET_TYPE}"
+														visible="false">
+													</Input>
+													<Input
+														id="assetID"
+														value="{INVOLVED_EQUIPMENT_DAMAGE_DETAILS>/ASSET_ID}"
+														visible="false">
+													</Input>
+													<Input
+														id="assetDamageLine"
+														value="{INVOLVED_EQUIPMENT_DAMAGE_DETAILS>/ASSET_DAMAGE_LINE_NO}"
+														visible="false">
+													</Input>
+													<Input
+														id="assetLine"
+														value="{INVOLVED_EQUIPMENT_SELECTED>/ASSET_LINE_NO}"
+														visible="false">
+													</Input>
+												</f:fields>
+											</f:FormElement>						
+											<f:FormElement>
+												<f:label>
+													<Label
+														text="{i18n>AssetForm.damageDesc}"
+														required="true"/>
+												</f:label>
+												<f:fields>
+													<TextArea
+														id="damageDesc"
+														value="{INVOLVED_EQUIPMENT_DAMAGE_DETAILS>/ASSET_DAMAGE_DESC}"
+														rows="4"
+														editable="{state>/editing}">
+														<layoutData>
+															<l:GridData
+																span="L5 M5 S12">
+															</l:GridData>
+														</layoutData>
+													</TextArea>
+												</f:fields>
+											</f:FormElement>
+											
+											
+										</f:formElements>
+									</f:FormContainer>
+								</f:formContainers>
+                                </f:Form>
+								
+								</VBox>
+                            </u:blocks>
+                        </u:ObjectPageSubSection>
+                    </u:subSections>
+                </u:ObjectPageSection>
+            </u:sections>
+        </u:ObjectPageLayout>
+
+    </Page>
+</mvc:View>

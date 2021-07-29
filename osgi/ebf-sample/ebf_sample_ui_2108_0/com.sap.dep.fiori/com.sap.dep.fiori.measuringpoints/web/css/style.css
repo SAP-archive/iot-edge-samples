@@ -1,0 +1,35 @@
+#dep-fiori-measuringpoints-enter--enter-measuring-point-table-tblBody
+    .sapMLIB .sapMHBox .sapMTitle,
+#dep-fiori-measuringpoints-enter--enter-measuring-point-table-tblBody
+    .sapMLIB .sapMHBox .sapMLabel {
+    line-height: 2.5rem;
+    height: 1.825rem;
+}
+
+#dep-fiori-measuringpoints-enter--enter-measuring-point-table-tblBody
+    .sapUiRespGrid {
+    margin-bottom: 0;
+}
+
+#dep-fiori-measuringpoints-enter--enter-measuring-point-table-tblBody
+    .sapUiRespGrid .sapMLabel {
+    line-height: 1rem;
+}
+
+#dep-fiori-measuringpoints-enter--enter-measuring-point-table-tblBody
+    .sapUiRespGrid.mpointTableLastColumn > div:first-child {
+    text-align: left;
+}
+
+#dep-fiori-measuringpoints-enter--enter-measuring-point-table-tblBody
+    .sapUiRespGrid .lastRdgText {
+    padding-top: 1.125rem;
+}
+
+#dep-fiori-measuringpoints-enter--enter-measuring-point-table-tblBody .measuringPointLabelBlue {
+    color: #427CAC;
+}
+
+#dep-fiori-measuringpoints-enter--enter-measuring-point-table-listUl thead {
+    display: none;
+}

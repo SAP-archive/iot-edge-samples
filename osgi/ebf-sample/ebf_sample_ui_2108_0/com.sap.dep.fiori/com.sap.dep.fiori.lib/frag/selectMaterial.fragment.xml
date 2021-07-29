@@ -1,0 +1,98 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:l="sap.ui.layout">
+    <Dialog
+        title="{i18nGlobal>MaterialSelect.title}"
+        class="dep-fiori"
+        stretchOnPhone="true"
+        contentHeight="100%"
+        contentWidth="100%"
+        verticalScrolling="false"
+        afterClose="dep.fiori.lib.util.SelectMaterialDialog.onCancel">
+        <Page
+            showHeader="false"
+            showSubHeader="false"
+            enableScrolling="false">
+            <VBox
+                fitContainer="true"
+                renderType="Bare">
+                <core:Fragment fragmentName="dep.fiori.lib.frag.filterBar" type="XML" />
+                <ScrollContainer
+                    vertical="true"
+                    height="100%"
+                    width="100%">
+                    <Table
+                        id="list"
+                        noDataText="{i18nGlobal>MaterialSelect.listEmpty}"
+                        growing="true"
+                        growingScrollToLoad="true"
+                        mode="MultiSelect"
+                        items="{odata>}">
+                        <headerToolbar>
+                            <Toolbar>
+                                <Title text="{i18nGlobal>MaterialSelect.listTitle}" />
+                                <ToolbarSpacer />
+                                <Button
+                                    tooltip="{i18nGlobal>General.sortList}"
+                                    icon="sap-icon://drop-down-list"
+                                    press="dep.fiori.lib.util.SelectMaterialDialog.onSortPress" />
+                            </Toolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column vAlign="Middle">
+                                <Title text="{i18nGlobal>MaterialSelect.material}" />
+                            </Column>
+                            <Column vAlign="Middle">
+                                <Title text="{i18nGlobal>General.location}" />
+                            </Column>
+                            <Column
+                                vAlign="Middle"
+                                width="30%"
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                popinDisplay="Inline">
+                                <Title text="{i18nGlobal>General.description}" />
+                            </Column>
+                            <Column vAlign="Middle">
+                                <Title text="{i18nGlobal>MaterialSelect.manufacturer}" />
+                            </Column>
+                            <Column vAlign="Middle">
+                                <Title text="{i18nGlobal>MaterialSelect.manufacturerPartNo}" />
+                            </Column>
+                            <Column vAlign="Middle">
+                                <Title text="{i18nGlobal>General.bin}" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem vAlign="Middle" type="Inactive">
+                                <cells>
+                                    <Label text="{odata>MATNR}" design="Bold" class="identifierTextBlue" />
+                                    <Label text="{odata>LGORT}" />
+                                    <Label text="{odata>MAKTX}" />
+                                    <Label text="{odata>NAME1}" />
+                                    <Label text="{odata>MFRPN}" />
+                                    <Label text="{odata>LGPBE}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </ScrollContainer>
+            </VBox>
+            <footer>
+                <Bar>
+                    <contentRight>
+                        <Button
+                            text="{i18nGlobal>General.save}"
+                            press="dep.fiori.lib.util.SelectMaterialDialog.onMaterialSelect" />
+                        <Button
+                            text="{i18nGlobal>General.cancel}"
+                            press="dep.fiori.lib.util.SelectMaterialDialog.close" />
+                    </contentRight>
+                </Bar>
+            </footer>
+        </Page>
+    </Dialog>
+</core:FragmentDefinition>

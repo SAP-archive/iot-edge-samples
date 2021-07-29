@@ -1,0 +1,224 @@
+<mvc:View controllerName="dep.fiori.notification.app.create"
+    class="dep-fiori" displayBlock="true" height="100%"
+    xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.uxap" xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form" xmlns:c="sap.ui.core" xmlns="sap.m">
+    <Page showHeader="false" showSubHeader="false"
+        enableScrolling="false">
+        <f:Form id="form">
+            <f:toolbar>
+                <Toolbar>
+                    <Title id="workorderTitle" text="{i18n>Create.title}" />
+                    <ToolbarSpacer></ToolbarSpacer>
+                    <Label text="{i18n>Form.authorLabel}:" />
+                    <Image height="2.5rem" width="auto"
+                        src="{createdByImg>/imageURL}" class="borderRadiusCircle"
+                        visible="{= !!${createdByImg>/imageURL} }" />
+                    <Label text="{createdByImg>/name}"
+                        visible="{= !${createdByImg>/imageURL} }" />
+                </Toolbar>
+            </f:toolbar>
+            <f:layout>
+                <f:ResponsiveGridLayout labelSpanL="2" />
+            </f:layout>
+            <f:FormContainer>
+                <f:FormElement>
+                    <f:label>
+                        <Label text="{i18nGlobal>General.description}" />
+                    </f:label>
+                    <Input value="{/QMTXT}" editable="{state>/editing}"
+                        maxLength="40">
+                        <layoutData>
+                            <l:GridData span="L6 M9 S12" />
+                        </layoutData>
+                    </Input>
+                </f:FormElement>
+
+                <f:FormElement>
+                    <f:label>
+                        <Label text="{i18nGlobal>General.equipment}"
+                               required="true">
+                            <layoutData>
+                                <l:GridData span="L2 M2 S12" linebreak="true" />
+                            </layoutData>
+                        </Label>
+                    </f:label>
+                    <Input id="equipmentSelect" showValueHelp="true" valueHelpOnly="true"
+                        value="{/EQUNR}" valueHelpRequest="onEquipmentValueHelp">
+                        <layoutData>
+                            <l:GridData span="L2 M3 S6" />
+                        </layoutData>
+                    </Input>
+                    <Label text="{/EQKTX}" 
+                        class="inlineFormLabelS">
+                        <layoutData>
+                            <l:GridData span="L4 M6 S6" />
+                        </layoutData>
+                    </Label>
+                </f:FormElement>
+
+                <f:FormElement>
+                    <f:label>
+                        <Label text="{i18nGlobal>General.priority}">
+                            <layoutData>
+                                <l:GridData span="L2 M2 S12" linebreak="true" />
+                            </layoutData>
+                        </Label>
+                    </f:label>
+                    <Select
+                       items="{
+                              path: 'odata>/Workorder_Priority',
+                              filters: [
+                                  {
+                                      path: 'ARTPR',
+                                      operator: 'EQ',
+                                      value1: 'PM'
+                                  }
+                              ],
+                              sorter: {
+                                  path: 'PRIOK',
+                                  descending: true
+                              }
+                         }"
+                        selectedKey="{/PRIOK}">
+                        <c:Item text="{odata>PRIOKX}" key="{odata>PRIOK}" />
+                        <layoutData>
+                            <l:GridData span="L2 M3 S4" />
+                        </layoutData>
+                    </Select>
+                </f:FormElement>
+
+                <f:FormElement>
+                    <f:label>
+                        <Label text="{i18n>Form.sysCondition}">
+                            <layoutData>
+                                <l:GridData span="L2 M3 S12" />
+                            </layoutData>
+                        </Label>
+                    </f:label>
+                    <Select items="{odata>/System_Condition}"
+                        selectedKey="{/ANLZU}" forceSelection="false">
+                        <c:Item text="{odata>VALUE}" key="{odata>DO_KEY}" />
+                        <layoutData>
+                            <l:GridData span="L2 M3 S6" />
+                        </layoutData>
+                    </Select>
+                </f:FormElement>
+
+                <f:FormElement>
+                    <f:label>
+                        <Label text="{i18n>Form.damageCode}">
+                            <layoutData>
+                                <l:GridData span="L2 M2 S12" linebreak="true" />
+                            </layoutData>
+                        </Label>
+                    </f:label>
+                    <Input
+                         id="damagecodeSelect"
+                         showValueHelp="true"
+                         valueHelpOnly="true"
+                         value="{/FECOD}"
+                         class="sapUiSmallMarginBottom"
+                         valueHelpRequest="onDamageCodeValueHelp">
+                         <layoutData>
+                            <l:GridData span="L2 M3 S6" />
+                        </layoutData>
+                     </Input>
+                     <Label text="{/FETXT}" 
+                            class="inlineFormLabelS">
+                        <layoutData>
+                            <l:GridData span="L4 M6 S6" />
+                        </layoutData>
+                    </Label>
+                </f:FormElement>
+
+                <f:FormElement>
+                    <f:label>
+                        <Label text="{i18n>Form.causeCode}">
+                            <layoutData>
+                                <l:GridData span="L2 M3 S12" linebreak="true" />
+                            </layoutData>
+                        </Label>
+                    </f:label>
+                    <Input
+                         id="causecodeSelect"
+                         showValueHelp="true"
+                         valueHelpOnly="true"
+                         value="{/URCOD}"
+                         class="sapUiSmallMarginBottom"
+                         valueHelpRequest="onCauseCodeValueHelp">
+                         <layoutData>
+                            <l:GridData span="L2 M3 S6" />
+                        </layoutData>
+                     </Input>
+                     <Label text="{/URTXT}" 
+                            class="inlineFormLabelS">
+                        <layoutData>
+                            <l:GridData span="L2 M3 S6" />
+                        </layoutData>
+                    </Label>
+                </f:FormElement>
+
+                <f:FormElement>
+                    <f:label>
+                        <Label text="{i18nGlobal>General.breakdown}">
+                            <layoutData>
+                                <l:GridData span="L2 M2 S12" linebreak="true" />
+                            </layoutData>
+                        </Label>
+                    </f:label>
+                    <Checkbox selected="{= ${/MSAUS} === 'X' }"
+                        select="onBreakdownSelect" />
+                </f:FormElement>
+
+                <f:FormElement visible="{= ${/MSAUS} === 'X' }">
+                    <f:label>
+                        <Label text="{i18n>Form.malfunctionStart}">
+                            <layoutData>
+                                <l:GridData span="L2 M2 S12" linebreak="true" />
+                            </layoutData>
+                        </Label>
+                    </f:label>
+                    <DatePicker value="{/AUSVN}" valueFormat="yyyyMMdd">
+                        <layoutData>
+                            <l:GridData span="L2 M3 S6" />
+                        </layoutData>
+                    </DatePicker>
+                    <TimePicker value="{/AUZTV}" valueFormat="hhmmss">
+                        <layoutData>
+                            <l:GridData span="L2 M3 S6" />
+                        </layoutData>
+                    </TimePicker>
+                </f:FormElement>
+
+                <f:FormElement visible="{= ${/MSAUS} === 'X' }">
+                    <f:label>
+                        <Label text="{i18n>Form.malfunctionEnd}">
+                            <layoutData>
+                                <l:GridData span="L2 M2 S12" linebreak="true" />
+                            </layoutData>
+                        </Label>
+                    </f:label>
+                    <DatePicker value="{/AUSBS}" valueFormat="yyyyMMdd">
+                        <layoutData>
+                            <l:GridData span="L2 M3 S6" />
+                        </layoutData>
+                    </DatePicker>
+                    <TimePicker value="{/AUZTB}" valueFormat="hhmmss">
+                        <layoutData>
+                            <l:GridData span="L2 M3 S6" />
+                        </layoutData>
+                    </TimePicker>
+                </f:FormElement>
+            </f:FormContainer>
+        </f:Form>
+
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Button text="{i18nGlobal>General.save}" type="Emphasized"
+                    press="onSave" />
+                <Button text="{i18nGlobal>General.cancel}" press="onCancel" />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

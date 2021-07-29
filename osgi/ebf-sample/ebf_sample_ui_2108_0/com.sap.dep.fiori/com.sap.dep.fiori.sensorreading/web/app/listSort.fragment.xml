@@ -1,0 +1,33 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <ViewSettingsDialog confirm="onSort">
+        <sortItems>
+            <ViewSettingsItem
+                text="{i18n>Part.internalId}"
+                key="INTERNAL_ID"
+                selected="true" />
+            <ViewSettingsItem
+                text="{i18nGlobal>General.description}"
+                key="DESCRIPTION" />
+            <ViewSettingsItem
+                text="{i18n>Part.subclass}"
+                key="SUBCLASS" />
+            <ViewSettingsItem
+                text="{i18n>Part.source}"
+                key="SOURCE" />
+            <ViewSettingsItem
+                text="{i18n>Part.manufacturer}"
+                key="MANUFACTURER" />
+            <ViewSettingsItem
+                text="{i18n>Part.mfrPartNumber}"
+                key="MFR_PART_NUMBER" />
+            <ViewSettingsItem
+                text="{i18n>Part.eanNumber}"
+                key="EAN_NUMBER" />
+            <ViewSettingsItem
+                text="{i18n>Part.uom}"
+                key="UOM" />
+        </sortItems>
+    </ViewSettingsDialog>
+</c:FragmentDefinition>

@@ -1,0 +1,186 @@
+<c:View
+    controllerName="dep.fiori.workorder.block.history"
+    xmlns:c="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+    <VBox
+        fitContainer="true"
+        renderType="Bare">
+        <f:Form>
+            <f:layout>
+                <f:ResponsiveGridLayout labelSpanL="2" />
+            </f:layout>
+            <f:toolbar>
+                <Toolbar class="sapUiTinyMarginBottom">
+                    <Title text="{i18n>History.title}" />
+                    <ToolbarSpacer />
+                    <Button
+                        tooltip="{i18nGlobal>General.listRefresh}"
+                        icon="sap-icon://refresh"
+                        press="refreshDetail" />
+                </Toolbar>
+            </f:toolbar>
+            <f:FormContainer>
+                <f:FormElement>
+                    <f:label>
+                        <Label
+                            text="{i18nGlobal>General.equipment}"
+                            tooltip="{i18nGlobal>General.equipment}">
+                            <layoutData>
+                                <l:GridData span="L2 M3 S12" />
+                            </layoutData>
+                        </Label>
+                    </f:label>
+                    <Label
+                        text="{/EQUNR}"
+                        tooltip="{/EQUNR}">
+                        <layoutData>
+                            <l:GridData span="L2 M3 S12" />
+                        </layoutData>
+                    </Label>
+                    <Label
+                        text="{/EQKTX}"
+                        tooltip="{/EQKTX}">
+                        <layoutData>
+                            <l:GridData span="L3 M6 S12" />
+                        </layoutData>
+                    </Label>
+                </f:FormElement>
+
+                <f:FormElement>
+                    <f:label>
+                        <Label
+                            text="{i18n>Form.locationLabel}"
+                            tooltip="{i18n>Form.locationLabel}">
+                            <layoutData>
+                                <l:GridData span="L2 M3 S12" linebreak="true" />
+                            </layoutData>
+                        </Label>
+                    </f:label>
+                    <Label
+                        text="{/TPLNR}"
+                        tooltip="{/TPLNR}">
+                        <layoutData>
+                            <l:GridData span="L2 M3 S12" />
+                        </layoutData>
+                    </Label>
+                    <Label
+                        text="{/PLTXT}"
+                        tooltip="{/PLTXT}">
+                        <layoutData>
+                            <l:GridData span="L3 M6 S12" />
+                        </layoutData>
+                    </Label>
+                </f:FormElement>
+
+                <f:FormElement>
+                    <f:label>
+                        <Label
+                            text="{i18n>History.notifications}"
+                            tooltip="{i18n>History.notifications}">
+                            <layoutData>
+                                <l:GridData span="L2 M3 S12" linebreak="true" />
+                            </layoutData>
+                        </Label>
+                    </f:label>
+                    <TextArea
+                        value="{historyDetail>/WO_HISTORY_NOTES}"
+                        rows="4"
+                        editable="false">
+                        <layoutData>
+                            <l:GridData span="L8 M9 S12" />
+                        </layoutData>
+                    </TextArea>
+                </f:FormElement>
+
+                <f:FormElement visible="{= ${/USER_STATUS}.substr(0, 4) !== 'CMPL' &amp;&amp; ${/USER_STATUS}.substr(0, 4) !== 'TECO' }">
+                    <f:label>
+                        <Label
+                            text="{i18n>History.append}"
+                            tooltip="{i18n>History.append}">
+                            <layoutData>
+                                <l:GridData span="L2 M3 S12" linebreak="true" />
+                            </layoutData>
+                        </Label>
+                    </f:label>
+                    <TextArea value="{historyDetail>/LTXT_ADD}">
+                        <layoutData>
+                            <l:GridData span="L6 M7 S9" />
+                        </layoutData>
+                    </TextArea>
+                    <Button
+                        text="{i18nGlobal>General.save}"
+                        type="Emphasized"
+                        press="appendNote">
+                        <layoutData>
+                            <l:GridData span="L2 M2 S3" />
+                        </layoutData>
+                    </Button>
+                </f:FormElement>
+            </f:FormContainer>
+        </f:Form>
+        <Table
+            noDataText="{i18n>History.listEmpty}"
+            items="{history>/}"
+            growing="true"
+            growingScrollToLoad="true"
+            itemPress="onListItemSelect">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{= ${i18n>History.listTitle} + ' (' + (${history>/length} || 0) + ')' }" />
+                    <ToolbarSpacer />
+                    <Button
+                        tooltip="{i18nGlobal>General.listRefresh}"
+                        icon="sap-icon://refresh"
+                        press="refreshList" />
+                </Toolbar>
+            </headerToolbar>
+            <columns>
+                <Column vAlign="Middle">
+                    <Title text="{i18n>Workorder.number}" />
+                </Column>
+                <Column vAlign="Middle">
+                    <Title text="{i18n>Workorder.userStatus}" />
+                </Column>
+                <Column
+                    vAlign="Middle"
+                    width="35%"
+                    minScreenWidth="Desktop"
+                    demandPopin="true"
+                    popinDisplay="Inline">
+                    <Title text="{i18nGlobal>General.description}" />
+                </Column>
+                <Column
+                    vAlign="Middle"
+                    minScreenWidth="Tablet"
+                    demandPopin="true"
+                    popinDisplay="Inline">
+                    <Title text="{i18n>History.endDate}" />
+                </Column>
+                <Column
+                    vAlign="Middle"
+                    hAlign="End" />
+            </columns>
+            <ColumnListItem>
+                <Label
+                    text="{history>AUFNR}"
+                    tooltip="{history>AUFNR}"
+                    design="Bold"
+                    class="identifierTextBlue" />
+                <Label
+                    text="{history>USER_STATUS}"
+                    tooltip="{history>USER_STATUS}" />
+                <Label
+                    text="{history>KTEXT}"
+                    tooltip="{history>KTEXT}" />
+                <Label
+                    text="{history>END_DATE}"
+                    tooltip="{history>END_DATE}" />
+                <Button
+                    text="{i18n>History.notes}"
+                    press="onNotePress" />
+            </ColumnListItem>
+        </Table>
+    </VBox>
+</c:View>

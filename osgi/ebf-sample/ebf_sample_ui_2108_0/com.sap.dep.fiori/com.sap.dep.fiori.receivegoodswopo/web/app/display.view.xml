@@ -1,0 +1,128 @@
+<mvc:View 
+	controllerName="dep.fiori.receivegoodswopo.app.display"
+	class="dep-fiori" 
+	displayBlock="true" 
+	height="100%"
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:u="sap.uxap" 
+	xmlns:l="sap.ui.layout"
+	xmlns:c="sap.ui.core" 
+	xmlns="sap.m">
+	<Page 
+		showHeader="false" 
+		showSubHeader="false"
+		enableScrolling="false">
+		<u:ObjectPageLayout useIconTabBar="true">
+
+			<u:headerTitle>
+				<u:ObjectPageHeader
+					objectTitle="{i18n>Page.title}" />
+			</u:headerTitle>
+
+			<u:sections>
+				<u:ObjectPageSection>
+					<u:subSections>
+						<u:ObjectPageSubSection>
+							<u:blocks>
+								<Table 
+									noDataText="{i18n>List.empty}"
+									growing="true"
+									items="{material>/}"
+									mode="Delete"
+									delete="onRemoveMaterial"
+									growingScrollToLoad="true">
+									<headerToolbar>
+										<Toolbar>
+											<Title text="{i18nGlobal>General.items} ({material>/length})" />
+											<ToolbarSpacer />
+											<Button 
+												tooltip="{i18n>List.addMaterial}"
+												icon="sap-icon://add" press="onAddMaterial" />
+										</Toolbar>
+									</headerToolbar>
+									<columns>
+										<Column vAlign="Middle">
+											<Title 
+												text="{i18nGlobal>General.material}"
+												tooltip="{i18nGlobal>General.material}" />
+										</Column>
+										<Column 
+											vAlign="Middle" 
+											width="35%"
+											minScreenWidth="Desktop" 
+											demandPopin="true"
+											popinDisplay="Inline">
+											<Title 
+												text="{i18nGlobal>General.description}"
+												tooltip="{i18nGlobal>General.description}" />
+										</Column>
+										<Column vAlign="Middle" minScreenWidth="Tablet"
+											demandPopin="true" popinDisplay="Inline">
+											<Title text="{i18n>Material.location}"
+												tooltip="{i18n>Material.location}" />
+										</Column>
+										<Column vAlign="Middle" minScreenWidth="Tablet"
+											demandPopin="true" popinDisplay="Inline">
+											<Title 
+												text="{i18n>Material.bin}"
+												tooltip="{i18n>Material.bin}" />
+										</Column>
+										<Column 
+											vAlign="Middle" 
+											hAlign="Right"
+											minScreenWidth="Tablet" 
+											demandPopin="true"
+											popinDisplay="Inline">
+											<Title 
+												text="{i18nGlobal>General.onhand}"
+												tooltip="{i18nGlobal>General.onhand}" />
+										</Column>
+										<Column
+											vAlign="Middle"
+											hAlign="Right">
+											<Title
+												text="{i18nGlobal>General.quantity}"
+												tooltip="{i18nGlobal>General.quantity}" />
+										</Column>
+									</columns>
+									<ColumnListItem vAlign="Middle">
+										<Label
+											text="{material>MATNR}"
+											tooltip="{material>MATNR}"
+											design="Bold"
+											class="identifierTextBlue" />
+										<Label 
+											text="{material>MAKTX}"
+											tooltip="{material>MAKTX}" />
+										<Label
+											text="{material>LGORT}"
+											tooltip="{material>LGORT}" />
+										<Label
+											text="{material>LGPBE}"
+											tooltip="{material>LGPBE}" />
+										<Label 
+											text="{material>QUANT}" />
+										<Input
+											placeholder="0"
+											textAlign="Right"
+											valueState="{= !${material>ERFMG} || ${material>ERFMG} &lt; 1 ? 'Error' : 'None' }"
+											value="{material>ERFMG}" />
+									</ColumnListItem>
+								</Table>
+							</u:blocks>
+						</u:ObjectPageSubSection>
+					</u:subSections>
+				</u:ObjectPageSection>
+			</u:sections>
+		</u:ObjectPageLayout>
+
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer />
+				<Button text="{i18n>Footer.receiveGoods}" type="Emphasized"
+					enabled="{= ${material>/length} > 0 }" press="onReceive" />
+				<Button text="{i18nGlobal>General.cancel}" press="onCancel" />
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

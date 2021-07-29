@@ -1,0 +1,59 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:l="sap.ui.layout">
+    <Dialog
+        title="{i18n>Dialog.stockReceived}"
+        class="dep-fiori"
+        stretchOnPhone="true"
+        type="Message"
+        verticalScrolling="false"
+        afterClose="onDialogClose">
+        <!-- <Page
+            showHeader="false"
+            showSubHeader="false"
+            enableScrolling="false"> -->
+            <VBox
+                fitContainer="true"
+                renderType="Bare">
+                <l:VerticalLayout
+                    fitContainer="true"
+                    renderType="Bare"
+                    content="{/}">
+                    <HBox
+                        fitContainer="true"
+                        renderType="Bare"
+                        alignItems="Center">
+                        <Label
+                            text="{EBELN}"
+                            tooltip="{EBELN}"
+                            design="Bold"
+                            class="sapUiTinyMarginEnd" />
+                        <c:Icon
+                            src="sap-icon://message-error"
+                            size="1.25rem"
+                            color="red"
+                            visible="{= !!${ERROR} }"
+                            class="sapUiTinyMarginEnd" />
+                        <c:Icon
+                            src="sap-icon://accept"
+                            size="1.25rem"
+                            color="green"
+                            visible="{= !${ERROR} }"
+                            class="sapUiTinyMarginEnd" />
+                        <Label
+                            text="{ERROR}"
+                            tooltip="{ERROR}" />
+                    </HBox>
+                </l:VerticalLayout>
+            </VBox>
+        <!-- </Page> -->
+        <buttons>
+            <Button
+                text="{i18nGlobal>General.close}"
+                press="closeDialog" />
+        </buttons>
+    </Dialog>
+</c:FragmentDefinition>

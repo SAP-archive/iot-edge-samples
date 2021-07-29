@@ -1,0 +1,49 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+
+    <Dialog title="{i18n>Equipment.title}" stretchOnPhone="true">
+        <endButton>
+            <Button text="Cancel" press="equipmentDialogCancel"/>
+        </endButton>
+
+        <SearchField
+            width="100%"
+            placeholder="{i18n>Enter Equipment Description} ..."
+            liveChange="equipmentFilter"/>
+        <Table
+            id="equipmentTable"
+            inset="true"
+            items="{odata>/Equipment}"
+            growing="true"
+            growingScrollToLoad="true">
+            <columns>
+                <Column demandPopin="true">
+                    <Label text="{i18n>Form.locationLabel}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet">
+                    <Label text="{i18n>Equipment.locationLabel}"/>
+                </Column>
+                <Column demandPopin="true">
+                    <Label text="{i18n>Equipment.equipmentNumberLabel}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet">
+                    <Label text="{i18n>Equipment.equipmentDescriptionLabel}"/>
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem
+                    type="Active"
+                    press="onEquipmentSelect">
+                    <cells>
+                        <Text text="{odata>TPLNR}"/>
+                        <Text text="{odata>PLTXT}"/>
+                        <Text text="{odata>EQUNR}"/>
+                        <Text text="{odata>EQKTX}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Dialog>
+</c:FragmentDefinition>

@@ -1,0 +1,254 @@
+<mvc:View
+    controllerName="dep.fiori.notification.app.detail"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:u="sap.uxap"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:c="sap.ui.core"
+    xmlns="sap.m">
+    <Page
+        showHeader="false"
+        showSubHeader="false"
+        enableScrolling="false">
+        <u:ObjectPageLayout
+            id="content" 
+            useIconTabBar="true">
+
+            <u:headerTitle>
+                <u:ObjectPageHeader objectTitle="{i18n>Detail.title} {/QMNUM}">
+                    <u:ObjectPageHeaderActionButton
+                        icon="sap-icon://cancel"
+                        hideText="false"
+                        text="{i18n>Cancel.cancelNotification}"
+                        tooltip="{i18n>Cancel.cancelNotification}"
+                        press="onCancelNotificationPress" />
+                    <u:ObjectPageHeaderActionButton
+                        icon="sap-icon://message-error"
+                        text="{i18nGlobal>General.hasEdgeErrors}"
+                        tooltip="{i18nGlobal>General.hasEdgeErrors}"
+                        importance="High"
+                        visible="{= !!${/EDGE_ERRORS} }"
+                        type="Reject"
+                        press="handleResponsivePopoverPress" />
+                </u:ObjectPageHeader>
+            </u:headerTitle>
+
+            <u:headerContent>
+                <VBox
+                    fitContainer="true"
+                    renderType="Bare">
+                    <HBox
+                        fitContainer="true"
+                        renderType="Bare"
+                        alignItems="Center"
+                        visible="{= ${/WO_EXISTS} !== 'X' }">
+                        <Button
+                            text="{i18n>WorkOrder.create}"
+                            press="onCreateWorkOrderPress" />
+                    </HBox>
+                    <HBox
+                        fitContainer="true"
+                        renderType="Bare"
+                        alignItems="Center"
+                        visible="{= ${/WO_EXISTS} === 'X' }">
+                        <c:Icon
+                            src="sap-icon://accept"
+                            size="1.25rem"
+                            color="green"
+                            tooltip="{i18n>List.woExists}"
+                            class="sapUiTinyMarginEnd" />
+                        <Label
+                            text="{i18n>List.woExists}"
+                            tooltip="{i18n>List.woExists}"
+                            class="sapUiTinyMarginEnd" />
+                        <Button
+                            text="{i18n>WorkOrder.view}"
+                            press="onViewWorkOrderPress" />
+                    </HBox>
+                </VBox>
+            </u:headerContent>
+
+            <u:sections>
+                <u:ObjectPageSection>
+                    <u:ObjectPageSubSection>
+                        <VBox
+                            fitContainer="true"
+                            renderType="Bare">
+                            <f:Form>
+                                <f:layout>
+                                    <f:ResponsiveGridLayout labelSpanL="2" />
+                                </f:layout>
+                                <f:FormContainer>
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label text="{i18nGlobal>General.description}" />
+                                        </f:label>
+                                        <Label
+                                            text="{/QMTXT}"
+                                            tooltip="{/QMTXT}" />
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label
+                                                text="{i18nGlobal>General.equipment}"
+                                                tooltip="{i18nGlobal>General.equipment}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M2 S12" linebreak="true" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <Label
+                                            text="{/EQUNR}"
+                                            tooltip="{/EQUNR}">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S4" />
+                                            </layoutData>
+                                        </Label>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label
+                                                text="{i18n>Form.damageCode}"
+                                                tooltip="{i18n>Form.damageCode}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M2 S12" linebreak="true" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <Input id="damagecodeSelect"
+                                               showValueHelp="true"
+                                               valueHelpOnly="true"
+                                               value="{/FECOD}"
+                                               class="sapUiSmallMarginBottom"
+                                               valueHelpRequest="onDamageCodeValueHelp">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </Input>
+                                        <Label text="{/FETXT}"
+                                               class="inlineFormLabelS">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                         </Label>
+                                    </f:FormElement>
+
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label
+                                                text="{i18n>Form.causeCode}"
+                                                tooltip="{i18n>Form.causeCode}">
+                                                <layoutData>
+                                                   <l:GridData span="L2 M3 S12" linebreak="true" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <Input id="causecodeSelect"
+                                               showValueHelp="true"
+                                               valueHelpOnly="true"
+                                               value="{/URCOD}"
+                                               class="sapUiSmallMarginBottom"
+                                               valueHelpRequest="onCauseCodeValueHelp">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </Input>
+                                        <Label text="{/URTXT}" class="inlineFormLabelS">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </Label>
+                                    </f:FormElement>
+                                    <f:FormElement>
+                                        <f:label>
+                                            <Label
+                                                text="{i18nGlobal>General.breakdown}"
+                                                tooltip="{i18nGlobal>General.breakdown}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M2 S12" linebreak="true" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <Checkbox
+                                            selected="{= ${/MSAUS} === 'X' }"
+                                            select="onBreakdownSelect" />
+                                    </f:FormElement>
+
+                                    <f:FormElement visible="{= ${/MSAUS} === 'X' }">
+                                        <f:label>
+                                            <Label
+                                                text="{i18n>Form.malfunctionStart}"
+                                                tooltip="{i18n>Form.malfunctionStart}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M2 S12" linebreak="true" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <DatePicker
+                                            value="{/AUSVN}"
+                                            valueFormat="yyyyMMdd">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </DatePicker>
+                                        <TimePicker
+                                            value="{/AUZTV}"
+                                            valueFormat="hhmmss">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </TimePicker>
+                                    </f:FormElement>
+
+                                    <f:FormElement visible="{= ${/MSAUS} === 'X' }">
+                                        <f:label>
+                                            <Label
+                                                text="{i18n>Form.malfunctionEnd}"
+                                                tooltip="{i18n>Form.malfunctionEnd}">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M2 S12" linebreak="true" />
+                                                </layoutData>
+                                            </Label>
+                                        </f:label>
+                                        <DatePicker
+                                            value="{/AUSBS}"
+                                            valueFormat="yyyyMMdd">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </DatePicker>
+                                        <TimePicker
+                                            value="{/AUZTB}"
+                                            valueFormat="hhmmss">
+                                            <layoutData>
+                                                <l:GridData span="L2 M3 S6" />
+                                            </layoutData>
+                                        </TimePicker>
+                                    </f:FormElement>
+                                </f:FormContainer>
+                            </f:Form>
+                        </VBox>
+                    </u:ObjectPageSubSection>
+                </u:ObjectPageSection>
+            </u:sections>
+        </u:ObjectPageLayout>
+
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Button
+                    text="{i18nGlobal>General.save}"
+                    type="Emphasized"
+                    press="onSave" />
+                <Button
+                    text="{i18nGlobal>General.cancel}"
+                    press="onCancel" />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

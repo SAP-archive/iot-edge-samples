@@ -1,0 +1,193 @@
+<mvc:View
+    controllerName="dep.fiori.purchasereq.app.create"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.uxap"
+    xmlns="sap.m">
+
+    <Page showHeader="false">
+        <u:ObjectPageLayout useIconTabBar="true">
+
+            <u:headerTitle>
+                <u:ObjectPageHeader objectTitle="{i18n>Page.createPurchaseReq}">                                 
+                </u:ObjectPageHeader>
+            </u:headerTitle>
+
+            <u:headerContent>
+                <l:Grid defaultSpan="L6 M6 S12">
+                    <l:VerticalLayout width="100%">
+                        <Label text="{i18nGlobal>General.description}:"/>
+                        <Input 
+                            value="{/TDTXT}"
+                            placeholder="{i18n>Page.prDescription}"
+                            change="onDescriptionChange" />
+                    </l:VerticalLayout>
+                </l:Grid>
+            </u:headerContent>
+
+            <u:sections>
+                <u:ObjectPageSection title="{i18n>Page.materials}" id="page" >
+                    <u:subSections>
+                        <u:ObjectPageSubSection id="matlistSubSection">
+                            <u:blocks>
+                                <ScrollContainer
+                                    vertical="true"
+                                    height="100%"
+                                    width="100%">
+                                    <Table
+                                        id="prMaterialList" 
+                                        noDataText="{i18nGlobal>General.listEmpty}"
+                                        growing="true"
+                                        growingScrollToLoad="true"
+                                        mode="Delete"
+                                        items="{/PRItemArray}"
+                                        delete="onRemoveMaterial">
+                                        <headerToolbar>
+                                            <Toolbar>
+                                                <Title text="{i18n>Page.materials} ({/PRItemArray/length})"/>
+                                                <ToolbarSpacer></ToolbarSpacer>
+                                                <SearchField
+                                                    width="20%"
+                                                    id="prMaterialSearch"
+                                                    placeholder="{i18nGlobal>General.search}"
+                                                    liveChange="onSearch"/>
+                                                <Button
+                                                    id="materialAddButton"
+                                                    tooltip="{i18n>Tooltip.addMaterial}"
+                                                    icon="sap-icon://add"
+                                                    press="onAddMaterial" />
+                                            </Toolbar>
+                                        </headerToolbar>
+                                        <columns>
+                                            <Column>
+                                                <Text text="{i18n>List.material}" textAlign="Center"/>
+                                            </Column>
+                                            <Column
+                                                demandPopin="true"
+                                                minScreenWidth="Desktop"
+                                                vAlign="Middle">
+                                                <Text text="{i18nGlobal>General.description}" />
+                                            </Column>
+                                            <Column 
+                                                demandPopin="true" 
+                                                vAlign="Middle"
+                                                class="colOnHandTitle"
+                                                width="10%">
+                                                <Text text="{i18n>List.stock}"/>
+                                            </Column>
+                                            <Column
+                                                demandPopin="true"
+                                                minScreenWidth="Desktop"
+                                                vAlign="Middle"
+                                                width="10%">
+                                                <Text text="{i18n>List.min}" />
+                                            </Column>
+                                            <Column
+                                                demandPopin="true"
+                                                minScreenWidth="Desktop"
+                                                vAlign="Middle"
+                                                width="10%">
+                                                <Text text="{i18n>List.max}" />
+                                            </Column>
+                                            <Column
+                                                demandPopin="true"
+                                                minScreenWidth="Tablet"
+                                                vAlign="Middle"
+                                                width="10%">
+                                                <Text text="{i18n>List.quantity}" />
+                                            </Column>
+                                            <Column
+                                                demandPopin="true"
+                                                minScreenWidth="Tablet"
+                                                vAlign="Middle">
+                                                <Text text="{i18n>List.delivery}" />
+                                            </Column>
+                                           <!--  <Column
+                                                demandPopin="true"
+                                                minScreenWidth="Tablet"
+                                                vAlign="Middle">
+                                                <Text text="{i18n>PR.freightMode}" />
+                                            </Column> -->
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem vAlign="Middle">
+                                                <cells>
+                                                    <HBox alignItems="Center" renderType="Bare">
+                                                        <Label
+                                                            text="{MATNR}"
+                                                            class="identifierTextBlue"
+                                                            design="Bold"/>
+                                                        <core:Icon
+                                                            src="{
+                                                                parts: [ 'MATNR', 'warning>/', 'error>/' ],
+                                                                formatter: 'dep.fiori.lib.util.SelectPRMaterialDialog.iconSrcFormatter'
+                                                            }"
+                                                            color="{
+                                                                parts: [ 'MATNR', 'warning>/', 'error>/' ],
+                                                                formatter: 'dep.fiori.lib.util.SelectPRMaterialDialog.iconColorFormatter'
+                                                            }"
+                                                            class="sapUiSmallMarginBegin"
+                                                            press="onMaterialIconPress" />
+                                                    </HBox>
+                                                    <Label text="{TXZ01}"/>
+                                                    <Label text="{STOCK_ON_HAND}" />
+                                                    <Label text="{BSTMI}" />
+                                                    <Label text="{BSTMA}" />
+                                                    <Input
+                                                        value="{MENGE}"
+                                                        valueState="{= ${MENGE} ? 'None' : 'Error' }"
+                                                        valueStateText="{i18nGlobal>General.required}"
+                                                        type="Number" />
+                                                    <DatePicker
+                                                        value="{LFDAT}"
+                                                        valueFormat="yyyyMMdd"
+                                                        valueState="{= ${LFDAT} ? 'None' : 'Error' }"
+                                                        valueStateText="{i18nGlobal>General.required}"
+                                                        minDate="{path: 'LFDAT', formatter: 'dep.fiori.lib.util.Utilities.date.currDateNoTime'}" />
+                                                    <!-- <Select
+                                                        selectedKey="{FREIGHT_MODE}"
+                                                        forceSelection="false"
+                                                        showSecondaryValues="true"
+                                                        items="{
+                                                            path: 'lookup>/freightMode',
+                                                            templateShareable: 'false'
+                                                        }">
+                                                        <core:ListItem 
+                                                            text="{lookup>FREIGHT_DESC}" 
+                                                            key="{lookup>FREIGHT_MODE}" 
+                                                            additionalText="{lookup>FREIGHT_MODE}" />
+                                                    </Select> -->
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </ScrollContainer>
+                            </u:blocks>
+                        </u:ObjectPageSubSection>
+                    </u:subSections>
+                </u:ObjectPageSection>
+            </u:sections>
+        </u:ObjectPageLayout>
+
+        <footer>
+            <Bar id="otbFooter">
+                <contentRight>
+                    <Button
+                        id="save-button"
+                        type="Emphasized"
+                        text="{i18nGlobal>General.save}"
+                        press="onSave"
+                        enabled="{= ${/PRItemArray/length} > 0 }"/>
+                    <Button
+                        id="cancel-button"
+                        text="{i18nGlobal>General.cancel}"
+                        press="onCancel"/>
+                </contentRight>
+            </Bar>
+        </footer> 
+    </Page>
+</mvc:View>

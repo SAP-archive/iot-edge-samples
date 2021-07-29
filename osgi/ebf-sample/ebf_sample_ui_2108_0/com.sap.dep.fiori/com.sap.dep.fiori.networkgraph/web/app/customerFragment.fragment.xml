@@ -1,0 +1,98 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<Popover
+		title="{i18n>title.Details}"
+		class="sapUiContentPadding"
+		placement="Right"
+		contentMinWidth="500px"
+		initialFocus="closeButton">
+					
+		<f:Form editable="false">		
+			<f:layout>
+				<f:ResponsiveGridLayout
+					labelSpanXL="4"
+					labelSpanL="4"
+					labelSpanM="4"
+					labelSpanS="4"
+					adjustLabelSpan="false"
+					emptySpanXL="1"
+					emptySpanL="1"
+					emptySpanM="1"
+					emptySpanS="0"
+					columnsXL="1"
+					columnsL="1"
+					columnsM="1"
+					singleContainerFullSize="false" />
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer>
+					<f:formElements>
+					    <f:FormElement label="{i18n>customer.Number}">
+							<f:fields>
+								<Text text="{/title}" />
+							</f:fields>
+						</f:FormElement>	
+						<f:FormElement label="{i18n>customer.Name}">
+							<f:fields>
+								<Text text="{/Name}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>customer.Priority}">
+							<f:fields>
+								<Text text="{/Priority}"/>
+							</f:fields>
+						</f:FormElement>										
+						<f:FormElement label="{i18n>customer.Street}">
+							<f:fields>
+								<Text text="{/Str}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>customer.City}">
+							<f:fields>
+								<Text text="{/City}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>customer.State}">
+							<f:fields>
+								<Text text="{/State}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>customer.Zip}">
+							<f:fields>
+								<Text text="{/ZIP}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>customer.Country}">
+							<f:fields>
+								<Text text="{/Country}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>customer.Phone}">
+							<f:fields>
+								<Text text="{/Phone}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>customer.Fax}">
+							<f:fields>
+								<Text text="{/Fax}" />
+							</f:fields>
+						</f:FormElement>						
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+		<footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button
+					text="Close"
+					press="closePopover" />
+			</OverflowToolbar>
+		</footer>
+			
+		
+	</Popover>
+</core:FragmentDefinition>

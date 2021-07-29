@@ -1,0 +1,121 @@
+<mvc:View
+    controllerName="dep.fiori.networkgraph.app.create"
+    class="dep-fiori"
+    displayBlock="true"
+    height="100%"	
+	xmlns:core="sap.ui.core"
+	xmlns:layout="sap.suite.ui.commons.networkgraph.layout"
+    xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.suite.ui.commons.networkgraph"
+	xmlns:m="sap.m">
+    <m:Page
+        id="main"
+        showHeader="false">
+		<m:subHeader>
+			<m:Toolbar>
+			<m:ToolbarSpacer/>
+			    <m:Text text="{i18n>equipmentFilter}"/>
+				<m:Select 
+					forceSelection="true"
+					id="equipmentList"
+					change="onSelectEquipment"
+					items="{
+						path: '/nodes'
+					}">
+					<core:Item key="{title}" text="{title}"/>
+					</m:Select>
+			</m:Toolbar>
+		</m:subHeader>
+       	<Graph  enableWheelZoom="true"
+			id="graph"
+			height="100%"
+			width="100%"
+			nodes="{/nodes}"
+			lines="{/lines}"
+			groups="{/groups}">
+		<statuses>
+			<Status key="CustomStatus" backgroundColor="darkblue" />
+		</statuses>
+		<nodes>
+			<Node
+					key="{key}"
+					title="{title}" 
+					group="{group}"
+
+					width="225px"
+					icon="{icon}"
+					attributes="{path:'attributes', templateShareable:true}"
+					showActionLinksButton="false"
+					status="{status}"
+					shape="Box">
+					<customData visible="{= ${groups} === '4'}">
+					    <core:CustomData key="title" value="{title}"/>
+						<core:CustomData key="Name" value="{Name}"/>
+						<core:CustomData key="Priority" value="{Priority}"/>
+						<core:CustomData key="Str" value="{Str}"/>
+						<core:CustomData key="City" value="{City}"/>
+						<core:CustomData key="State" value="{State}"/>
+						<core:CustomData key="ZIP" value="{ZIP}"/>
+						<core:CustomData key="Country" value="{Country}"/>
+						<core:CustomData key="Phone" value="{Phone}"/>
+						<core:CustomData key="Fax" value="{Fax}"/>
+					</customData>
+					<customData visible="{= ${groups} === '3'}">
+					    <core:CustomData key="title" value="{title}"/>
+						<core:CustomData key="DeliveryDate" value="{DeliveryDate}"/>
+						<core:CustomData key="Price" value="{Price}"/>
+						<core:CustomData key="SalesItem" value="{SalesItem}"/>
+						<core:CustomData key="SalesOrg" value="{SalesOrg}"/>
+						<core:CustomData key="SalesOrgName" value="{SalesOrgName}"/>						
+					</customData>
+					<customData visible="{= ${groups} === '2'}">
+					    <core:CustomData key="title" value="{title}"/>
+						<core:CustomData key="Quantity" value="{Quantity}"/>
+						<core:CustomData key="DueDate" value="{DueDate}"/>
+						<core:CustomData key="Operation" value="{Operation}"/>
+						<core:CustomData key="OperationNumber" value="{OperationNumber}"/>
+						<core:CustomData key="OperationText" value="{OperationText}"/>
+						<core:CustomData key="OperationStatus" value="{OperationStatus}"/>
+						<core:CustomData key="OrderStatus" value="{OrderStatus}"/>						
+					</customData>
+					<customData visible="{= ${groups} === '1'}">
+					    <core:CustomData key="title" value="{title}"/>
+						<core:CustomData key="Description" value="{Description}"/>
+
+						<core:CustomData key="CostCenter" value="{CostCenter}"/>				
+					</customData>
+				<attributes>
+					<ElementAttribute
+							label="{label}"
+							value="{value}"
+							visible="true"/>
+				</attributes>
+				
+			</Node>
+		</nodes>
+		<lines>
+			<Line
+					from="{from}"
+					to="{to}"
+					attributes="{path:'attributes', templateShareable:true}"
+					status="{status}">
+				<attributes>
+					<ElementAttribute
+							label="{label}"
+							value="{value}"/>
+				</attributes>
+			</Line>
+		</lines>
+		<groups>
+			<Group
+				headerCheckBoxState="{headerCheckboxState}"
+				status="{status}"
+				icon="sap-icon://measure"
+				collapsed="{collapsed}"
+				key="{key}"
+				title="{title}">
+			</Group>
+		</groups>
+	</Graph>
+    </m:Page>
+</mvc:View>
