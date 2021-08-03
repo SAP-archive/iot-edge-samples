@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.sap.iot.edgeservices:PersistenceService:3.2002.0">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/sap/iot/edgeservices/PersistenceService/3.2002.0/PersistenceService-3.2002.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/sap/iot/edgeservices/PersistenceService/3.2002.0/PersistenceService-3.2002.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/sap/iot/edgeservices/PersistenceService/3.2002.0/PersistenceService-3.2002.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

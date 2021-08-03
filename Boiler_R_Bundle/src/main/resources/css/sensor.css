@@ -1,0 +1,84 @@
+.mainVBox {
+}
+
+.bottomHBox {
+}
+
+.sensorFrame {
+}
+
+#rateFrame.sapVizFrame {
+    width: 600px !important;
+}
+
+.sapMFlexItemAlignAuto #divider {
+    width: 100% !important;
+    height: 5px !important;
+    border-color: #9c3a3a;
+}
+
+.eventtable {
+	width: 100%; 
+}
+
+hr {
+    width: 100% !important;
+    height: 5px !important;
+    border-color: #9c3a3a;      
+}
+
+.eventLabels {
+    font-size: 1em !important;
+    font-weight: bold !important;
+    
+}
+
+.#myShell .span.sapUiUx35ShellHeaderTilteLeft {
+    font-size: 2em;
+}
+
+.reading_rate_frame {
+    margin-right: 35px;
+}
+
+.reading_title_box {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.reading_title {
+	font-size: 1.25em;
+}
+
+.reading_total_box {
+    width: 100%;
+}
+
+.reading_total {
+	font-size: 1.0em;
+	margin-right: 50px;
+}
+
+.reading_total_value {
+	margin-left: 50px;
+	font-size: 1.0em;
+}
+
+.reading_persec_box {
+    width: 100%;
+}
+
+.reading_persec {
+	font-size: 1.0em;
+}
+
+.reading_persec_value {
+	margin-left: 50px;
+	font-size: 1.0em;
+}
+
+.asFormLabel {
+    padding: 0rem 1.25rem 2rem 2rem;
+    margin-top : 2em;
+}
+
