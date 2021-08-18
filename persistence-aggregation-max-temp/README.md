@@ -212,9 +212,3 @@ To actually see the MAX function working correctly, send in multiple samples wit
 
 These samples are provided "as-is" basis with detailed documentation on how to use them.
 
-
-## Copyright and License
-
-Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
-
-License provided by [SAP SAMPLE CODE LICENSE AGREEMENT](https://github.com/SAP/iot-edge-services-samples/tree/master/persistence-aggregation-max-temp/LICENSE)
