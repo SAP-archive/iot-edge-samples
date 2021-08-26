@@ -13,9 +13,8 @@ Take a look at the list below for links to all the separate samples for your ver
 
 | Version      | Description      | Link          |
 | ------------- | ------------- | ------------- |
-| SAP IoT Edge Services | All the samples for the containerized version of Edge Services. | [Containerized Edge](https://github.com/SAP/iot-edge-samples/tree/master/IoT_Edge)  |
-| OSGi | This folder contains all the OSGI samples, implementale with [SAP Edge Services, cloud edition](https://help.sap.com/viewer/p/EDGE_SERVICES) and
-[SAP Edge Services, on-premise edition](https://help.sap.com/viewer/p/SAP_EDGE_SERVICES_OP) | [OSGi](https://github.com/SAP/iot-edge-samples/tree/master/OSGI)  |
+| SAP IoT Edge Services | All the samples for the containerized version of Edge Services. | [Containerized Edge](https://github.com/SAP/iot-edge-samples/tree/main/IoT_Edge)  |
+| OSGi | This folder contains all the OSGI samples, implementate with SAP Edge Services, cloud edition and SAP Edge Services, on-premise edition. | [OSGi](https://github.com/SAP/iot-edge-samples/tree/main/OSGI)  |
 
 
 ## How to obtain support
