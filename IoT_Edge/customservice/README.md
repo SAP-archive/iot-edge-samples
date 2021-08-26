@@ -1,7 +1,7 @@
 # Proxy Application Extension Service
 
 ## Overview
-This sample implements a Proxy application designed to operate with the SAP Edge Gateway Service REST. 
+This sample implements a Proxy application designed to operate with the SAP Edge Gateway Service REST.
 
 The application ingests user defined payloads measurement packets, convert them in the standard SAP IoT JSON format and forward it to the SAP Edge Gateway Service.
 
@@ -50,15 +50,16 @@ The following requirements must be satisfied for this sample:
 7. Docker registry (or [Docker Hub](https://hub.docker.com) subscription)
 8. An HTTP client ([Postman](https://www.postman.com) is used in this sample)
 9. An Edge Node with [k3s](https://k3s.io/) runtime installed
+10. Edge Gateway Service installed in the Edge Node
 
 ##Preliminary Operations
 
 There are some preliminary operations that are undocumented here that the user has to complete to be able to make the base sample up and running:
 
-1. Onboard the Edge Node into the Lyfecycle Management component. The documentation could be found [here](https://help.sap.com/viewer/DRAFT/247022ddd1744053af376344471c0821/2106a/en-US/7e0ddf3d1ef24a42b68cd75fc526302c.html#a87466766a704c83bd129208a1eda8b3.html)
+1. Onboard the Edge Node into the Lyfecycle Management component. The documentation could be found [here](https://help.sap.com/viewer/9d5719aae5aa4d479083253ba79c23f9/SHIP/en-US/0a222b9c99d94f56abdcfe27f5be0afa.html)
 2. Onboard the Edge Gateway Service into your configured Edge Node (protocol REST, specify only the mandatory parameters)
-3. You have already specified your _Custom Registry_ in the Policy Service as documented in the [Container Repositories section](https://help.sap.com/viewer/DRAFT/247022ddd1744053af376344471c0821/2106a/en-US/16b6665724604622b96aa8359ab112a5.html)
-4. Have access to the [EAC Program](https://help.sap.com/viewer/DRAFT/6207c716025a46ac903072ecd8d71053/2106a/en-US) to enable File Transfer Service Feature
+3. You have already specified your _Custom Registry_ in the Policy Service as documented in the [Container Repositories section](https://help.sap.com/viewer/247022ddd1744053af376344471c0821/LATEST/en-US/16b6665724604622b96aa8359ab112a5.html)
+4. Have access to the [EAC Program](https://help.sap.com/viewer/6207c716025a46ac903072ecd8d71053/LATEST/en-US) to enable File Transfer Service Feature
 5. Access and familiarity with SAP IoT Device Connectivity APIs and Thing Modeler
 
 ### SAP IoT Device Model and Configuration
@@ -69,7 +70,7 @@ The following Device Model needs to be setup on SAP IoT for this sample. You can
 - **alternateId:**	10
 - **name:**	outlet air pressure
 - **properties:**
-		
+
 | Property Name 	| Property Type 	|
 |:-------------:	|:-------------:	|
 | value 	| float 	|
@@ -90,7 +91,7 @@ The following Device Model needs to be setup on SAP IoT for this sample. You can
 - **sensorType name:**			SAM_ST
 - **alternateId:**     	986
 - **capabilities:**
-  
+
 | Capability	| Type 	|
 |:-------------:	|:-------------:	|
 | outlet air pressure 	| measure 	|
@@ -107,7 +108,7 @@ The following Device Model needs to be setup on SAP IoT for this sample. You can
 
 ### Download the sample app
 
-    git clone https://github.com/SAP/iot-edge-samples.git
+    git clone https://github.com/SAP-Samples/iot-edge-samples.git
     cd iot-edge-samples
 
 ### Customize the source of the Java sub-project
@@ -136,11 +137,11 @@ Copy the generated jar file in the Docker Image folder
 In this sample I'm using docker.io as Registry, some commands could be differently accordingly with the registry configuration.
 
 Login in your docker registry and type the credentials once required.
-    
+
     docker login docker.io
 
 Build the docker image locally, supposing the version of your image is 1.0.0
-    
+
     cd Iot_Edge/customservice/docker-customservice
     docker build -t {YOUR DOCKER HUB USERNAME HERE}/customservice:1.0.0 .
 
@@ -188,11 +189,11 @@ Verify that a file **customservice-_{VERSION OF THE PROJECT}_.tgz** has been cor
 
 ### Deploy the HELM chart
 
-Open the Policy Service and create a [new Extension Service](https://help.sap.com/viewer/DRAFT/247022ddd1744053af376344471c0821/2106a/en-US/7fffcdd2c9464b7c9e15811dc10e94f3.html). Use as solution descriptor the HELM chart built in [this other section](#customize-the-helm-chart-project-and-build-the-tgz-solution)
+Open the Policy Service and create a new [Extension Service](https://help.sap.com/viewer/247022ddd1744053af376344471c0821/LATEST/en-US/7fffcdd2c9464b7c9e15811dc10e94f3.html). Use as solution descriptor the HELM chart built in [this other section](#customize-the-helm-chart-project-and-build-the-tgz-solution)
 
 For the _Service Bindings_ option select **Edge Gateway Service**.
 
-Now you need to create a [new configuration parameter](https://help.sap.com/viewer/DRAFT/247022ddd1744053af376344471c0821/2106a/en-US/79849f3791c84415a7ee78ec65600334.html):
+Now you need to create a [new configuration parameter](https://help.sap.com/viewer/247022ddd1744053af376344471c0821/LATEST/en-US/79849f3791c84415a7ee78ec65600334.html):
 
 >name=port; optional=false; type=String
 
@@ -229,7 +230,7 @@ Open your rest client and create a new **POST** call:
 }
 ```
 
-#### Short remark on the parameter contained in the body 
+#### Short remark on the parameter contained in the body
 The current implementation is mapping the **_E_** parameter into the IoT Device Model **_deviceAlternateId_**, **_T_** is the **_timestamp_**, **_V_** parameter correspond to the **_measures_** field contained in the standard SAP IoT ingestion packets. About the nested values **_V_** is mapped into the property called **_value_** in the device Model, **_I_**, the part before the point is the IoT Device Model **_capabilityAlternateId_**, the second part, after the point is used to populate the second property of the capability created into the Device Model, the one called **_valid_**. If the value is **_1_** will mean **_valid=true_**, otherwise it will be **_false_**.
 
 Please note that this payload will generate two different packet in the standard SAP IoT ingestion pipeline, one for the capability **_inlet air pressure_** and the other for the capability **_outlet air pressure_**
@@ -261,7 +262,7 @@ Open your rest client and create a new **POST** call:
 * **Body:** it contains the file object. If you are using Postman probably you are using a _form-data_ object as body with the following parameter:
     * **Key:** file
     * **Value:** {Browse and attach the file}
-      
+
 The service reply with _HTTP CODE_ **200** and following plain text string:
 
     CN100: OK

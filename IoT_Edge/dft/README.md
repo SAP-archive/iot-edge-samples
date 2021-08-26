@@ -2,7 +2,7 @@
 
 ## Overview
 
-This sample contains a simple implementation of Discrete Fourier Transform algorithm. it takes as input an even number of measurements and transform this signal in the frequency domain. 
+This sample contains a simple implementation of Discrete Fourier Transform algorithm. it takes as input an even number of measurements and transform this signal in the frequency domain.
 
 ## Product Documentation
 
@@ -42,17 +42,17 @@ The following requirements must be satisfied for this sample:
 
 There are some preliminary operations that are undocumented here that the user has to complete to be able to make the base sample up and running:
 
-1. Onboard the Edge Node into the Lyfecycle Management component. The documentation could be found [here](https://help.sap.com/viewer/DRAFT/247022ddd1744053af376344471c0821/2106a/en-US/7e0ddf3d1ef24a42b68cd75fc526302c.html#a87466766a704c83bd129208a1eda8b3.html)
+1. Onboard the Edge Node into the Lyfecycle Management component. The documentation could be found [here](hhttps://help.sap.com/viewer/9d5719aae5aa4d479083253ba79c23f9/SHIP/en-US/0a222b9c99d94f56abdcfe27f5be0afa.html)
 2. Onboard the Edge Gateway Service into your configured Edge Node (protocol REST, specify only the mandatory parameters)
-3. You have already specified your _Custom Registry_ in the Policy Service as documented in the [Container Repositories section](https://help.sap.com/viewer/DRAFT/247022ddd1744053af376344471c0821/2106a/en-US/16b6665724604622b96aa8359ab112a5.html)
-4. Have access to the [EAC Program](https://help.sap.com/viewer/DRAFT/6207c716025a46ac903072ecd8d71053/2106a/en-US)
+3. You have already specified your _Custom Registry_ in the Policy Service as documented in the [Container Repositories section](https://help.sap.com/viewer/247022ddd1744053af376344471c0821/LATEST/en-US/16b6665724604622b96aa8359ab112a5.html)
+4. Have access to the [EAC Program](https://help.sap.com/viewer/6207c716025a46ac903072ecd8d71053/LATEST/en-US)
 5. Access and familiarity with SAP IoT Device Connectivity APIs and Thing Modeler
 
 ## Download and Installation
 
 ### Download the sample app
 
-    git clone https://github.com/SAP/iot-edge-samples.git
+    git clone https://github.com/SAP-Samples/iot-edge-samples.git
     cd iot-edge-samples
 
 ### Build and push the Docker Image
@@ -60,11 +60,11 @@ There are some preliminary operations that are undocumented here that the user h
 In this sample I'm using docker.io as Registry, some commands could be differently accordingly with the registry configuration.
 
 Login in your docker registry and type the credentials once required.
-    
+
     docker login docker.io
 
 Build the docker image locally, supposing the version of your image is 1.0.0
-    
+
     cd Iot_Edge/dft/docker-dft
     docker build -t {YOUR DOCKER HUB USERNAME HERE}/dft:1.0.0 .
 
@@ -99,7 +99,7 @@ Verify that a file **dft-_{VERSION OF THE PROJECT}_.tgz** has been correctly cre
 
 ### Deploy the HELM chart
 
-Open the Policy Service and create a [new Extension Service](https://help.sap.com/viewer/DRAFT/247022ddd1744053af376344471c0821/2106a/en-US/7fffcdd2c9464b7c9e15811dc10e94f3.html). Use as solution descriptor the HELM chart built in [this other section](#customize-the-helm-chart-project-and-build-the-tgz-solution)
+Open the Policy Service and create a new [Extension Service](https://help.sap.com/viewer/247022ddd1744053af376344471c0821/LATEST/en-US/7fffcdd2c9464b7c9e15811dc10e94f3.html). Use as solution descriptor the HELM chart built in [this other section](#customize-the-helm-chart-project-and-build-the-tgz-solution)
 
 No other parameters are required.
 
