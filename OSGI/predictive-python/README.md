@@ -235,9 +235,3 @@ capabilityAlternateId:        validity color score
 
 These samples are provided "as-is" basis with detailed documentation on how to use them.
 
-
-## Copyright and License
-
-Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
-
-License provided by [SAP SAMPLE CODE LICENSE AGREEMENT](https://github.com/SAP-samples/iot-edge-services-samples/blob/master/predictive-python/LICENSE)
