@@ -22,9 +22,9 @@ The service is replying with an array of complex numbers representing the transf
 
 This sample is packaged into the following subprojects:
 
-* [docker-dft](https://github.com/SAP/iot-edge-samples/tree/master/dft/docker-dft): This contains the docker image source files. You need to push it into a Docker Registry
+* [docker-dft](https://github.com/SAP-samples/iot-edge-samples/tree/main/IoT_Edger/dft/docker-dft): This contains the docker image source files. You need to push it into a Docker Registry
 
-* [chart-dft](https://github.com/SAP/iot-edge-samples/tree/master/dft/chart-dft): The HELM chart that will be built to generate the tgz solution you will use it into the Policy Service.
+* [chart-dft](https://github.com/SAP-samples/iot-edge-samples/tree/main/IoT_Edge/dft/chart-dft): The HELM chart that will be built to generate the tgz solution you will use it into the Policy Service.
 
 
 ## Requirements
