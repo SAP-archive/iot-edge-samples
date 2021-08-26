@@ -231,7 +231,4 @@ sensorAlternateId:            color sensor
 capabilityAlternateId:        validity color score
 ```
 
-## How to obtain support
-
-These samples are provided "as-is" basis with detailed documentation on how to use them.
 

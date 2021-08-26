@@ -327,11 +327,3 @@ Although in principle any welding mal-function can be detected by exhaustive tra
 
 With SAP Data Intelligence it is possible automate a lot of such activities, but that is a topic for another time.
 
-
-## How to obtain support
-These samples are provided "as-is" basis with detailed documentation on how to use them.
-
-## Copyright and License
-Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
-
-License provided by [SAP SAMPLE CODE LICENSE AGREEMENT](./LICENSE)

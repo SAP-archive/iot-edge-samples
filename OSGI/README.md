@@ -16,11 +16,7 @@ This folder contains all the OSGI samples, implementale with [SAP Edge Services,
 | Edge Custom Service | This sample demonstrates how to implement custom logic with an external module intercommunication.  The service integrates the usage of the Edge Service Configuration object to support dynamic configurations. It is using an external python module to compute make some computation, SAP IoT Edge Message bus to exchange messages between the JAVA codebase and the python module (such as the configuration), SAP IoT offline operations to publish new endpoints at the edge by leveraging the integrated Netty Server. | [custom-services-additional-apis-messagebus](https://github.com/SAP/iot-edge-samples/tree/master/custom-services-additional-apis-messagebus)  |
 | EBF UI | A sample user interface for the Essential Business Functions edge database. | [EBF UI](https://github.com/SAP/iot-edge-samples/tree/master/ebf-sample)  |
 
+
 ## How to obtain support
 
 These samples are provided "as-is" basis with detailed documentation on how to use them.
-
-
-## Copyright and License
-
-Copyright (c) 2021 SAP SE or an SAP affiliate company and iot-edge-samples contributors. All rights reserved. This project is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [License](LICENSE) file.

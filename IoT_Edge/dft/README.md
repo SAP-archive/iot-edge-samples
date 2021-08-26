@@ -145,14 +145,3 @@ Verify also that the body is not returning the following json like object:
   1.6426796317045813, 1.414213562373095, 1.260472414010264, 1.1547005383792512, 1.0823922002923938, 1.035276180410083,
   1.0086289605801526]"}
 ```
-
-## How to obtain support
-
-These samples are provided "as-is" basis with detailed documentation on how to use them.
-
-
-## Copyright and License
-
-Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
-
-License provided by [SAP SAMPLE CODE LICENSE AGREEMENT](https://github.com/SAP-samples/iot-edge-samples/blob/master/customservice/LICENSE)

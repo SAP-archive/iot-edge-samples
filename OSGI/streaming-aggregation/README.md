@@ -228,8 +228,4 @@ For Streaming Aggregation:
 
 Currently, the on-premise Streaming Service requires this streaming aggregation sample to start before the Streaming Service starts. For any other issues, check the log file that this streaming aggregation sample generates as well as Streaming Service log files located at .../dep_iot_edge/log/
 
-## How to obtain support
-
-These samples are provided "as-is" basis with detailed documentation on how to use them. 
-
 

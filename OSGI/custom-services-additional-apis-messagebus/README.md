@@ -268,7 +268,4 @@ capabilityAlternateId:        snr
 
 Verify how the values change when you enable or disable the data ingestion or the filtering and while changing the behavior inside the python external module.
 
-## How to obtain support
-
-These samples are provided "as-is" basis with detailed documentation on how to use them.
 

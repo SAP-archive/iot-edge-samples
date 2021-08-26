@@ -208,7 +208,3 @@ To actually see the MAX function working correctly, send in multiple samples wit
 4. View the EdgeServicesRuntime log file (EdgeServicesRuntime\logs\sapedgeservices-stdout.yyyy-mm-dd.log) to watch INFO or DEBUG messages.
 
 
-## How to obtain support
-
-These samples are provided "as-is" basis with detailed documentation on how to use them.
-

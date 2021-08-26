@@ -273,14 +273,3 @@ Check the service has uploaded the file into your Object Store passing through t
 The forwarding of the file to our Extension Service is done without any authentication just for demo purpose, because we are simulating an infra-lan networking secured by default (e.g., via firewall).
 
 The communication between the Extension Service and the SAP IoT cloud APIs is done via device certificate, it means the the forwarding of the file to the File Transfert Service is done with security implemented. The Extension Service is automatically invoking all the required APIs to obtain a valid certificate to invoke the cloud APIs.
-
-## How to obtain support
-
-These samples are provided "as-is" basis with detailed documentation on how to use them.
-
-
-## Copyright and License
-
-Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
-
-License provided by [SAP SAMPLE CODE LICENSE AGREEMENT](https://github.com/SAP-samples/iot-edge-samples/blob/master/customservice/LICENSE)
