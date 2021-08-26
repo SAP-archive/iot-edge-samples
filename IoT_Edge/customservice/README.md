@@ -31,11 +31,11 @@ Some other methods are exposed by the same endpoint to:
 ### Deploying this sample
 
 This sample is packaged into the following subprojects:
-* [code-customservice](https://github.com/SAP/iot-edge-samples/tree/master/customservice/code-customservice): A Java Spring Boot application that is mandatory to package it.
+* [code-customservice](https://github.com/SAP-samples/iot-edge-samples/tree/main/IoT_Edge/customservice/code-customservice): A Java Spring Boot application that is mandatory to package it.
 
-* [docker-customservice](https://github.com/SAP/iot-edge-samples/tree/master/customservice/docker-customservice): This contains the docker image source files. You need to put the compiled Java Spring Boot application in this folder to be able to build the image correctly. You need also to push it into a Docker Registry
+* [docker-customservice](https://github.com/SAP-samples/iot-edge-samples/tree/main/IoT_Edge/customservice/docker-customservice): This contains the docker image source files. You need to put the compiled Java Spring Boot application in this folder to be able to build the image correctly. You need also to push it into a Docker Registry
 
-* [chart-customservice](https://github.com/SAP/iot-edge-samples/tree/master/customservice/chart-customservice): The HELM chart that will be built to generate the tgz solution you will use it into the Policy Service.
+* [chart-customservice](https://github.com/SAP-samples/iot-edge-samples/tree/main/IoT_Edge/customservice/chart-customservice): The HELM chart that will be built to generate the tgz solution you will use it into the Policy Service.
 
 
 ## Requirements
