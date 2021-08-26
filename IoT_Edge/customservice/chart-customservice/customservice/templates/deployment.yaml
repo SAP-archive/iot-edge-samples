@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "customservice.fullname" . }}
+  labels:
+    {{- include "customservice.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "customservice.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "customservice.selectorLabels" . | nindent 8 }}
+    spec:
+      imagePullSecrets: 
+      - name: {{ .Values.imagePullSecret }}
+      serviceAccountName: {{ include "customservice.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.dockerRegistry }}/{{ .Values.image.name }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: DEVICE_CONNECTIVITY
+              value: {{ .Values.deviceConnectivity | quote }}
+            - name: SERVICE_PORT
+              value: {{ .Values.port | quote }}
+            - name: CLIENT_ID
+              value: {{ .Values.clientId | quote }}
+            - name: CLIENT_SECRET
+              value: {{ .Values.clientSecret | quote }}
+            - name: OAUTH2_AUTH
+              value: {{ .Values.tokenUri | quote }}
+            - name: CERTIFICATE_DIR
+              value: {{ .Values.certificateDir | quote }}
+            - name: SERVICE_BINDINGS
+              value: {{ .Values.iot.edge.bindings | quote }}
+          volumeMounts:
+          - name: tls-storage
+            mountPath: "{{ required "required for certificateDir" .Values.certificateDir }}"
+            readOnly: true
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      - name: tls-storage
+        secret:
+          secretName: secret-tls-properties
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
