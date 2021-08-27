@@ -16,7 +16,3 @@ This folder contains all the [SAP IoT](https://help.sap.com/viewer/p/SAP_IoT) Ed
 
 These samples are provided "as-is" basis with detailed documentation on how to use them.
 
-
-## Copyright and License
-
-Copyright (c) 2018 SAP SE or an SAP affiliate company and iot-edge-samples contributors. All rights reserved. This project is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [License](LICENSE) file.
