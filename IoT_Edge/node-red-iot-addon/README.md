@@ -155,7 +155,7 @@ As deployment parameter specify the used port for the data ingestion. Standard f
 
 ## Test the service
 
-Open your and navigate to _<Node External IP Address>:16008_:
+Open your and navigate to _{Node External IP Address}:16008_
 
 Node Red UI will be shown.
 
