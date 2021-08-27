@@ -1,0 +1,15 @@
+2021-05-16 00:00:18.925 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=8h14m20s195ms).
+2021-05-16 01:53:00.645 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h12m41s371ms).
+2021-05-16 03:42:47.888 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h30m47s81ms).
+2021-05-16 04:30:55.945 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=46m36s513ms).
+2021-05-16 06:18:43.240 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h47m47s295ms).
+2021-05-16 07:04:36.577 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=44m21s769ms).
+2021-05-16 08:52:24.662 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h47m48s86ms).
+2021-05-16 08:52:54.510 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Retrograde clock change detected (housekeeper delta=29s848ms), soft-evicting connections from pool.
+2021-05-16 12:57:01.905 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4h3m5s822ms).
+2021-05-16 15:45:30.299 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h47m26s800ms).
+2021-05-16 15:46:00.009 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Retrograde clock change detected (housekeeper delta=29s710ms), soft-evicting connections from pool.
+2021-05-16 17:33:49.962 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h47m49s953ms).
+2021-05-16 19:22:06.382 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h47m46s434ms).
+2021-05-16 21:10:21.667 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h47m45s295ms).
+2021-05-16 22:58:08.232 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h47m46s565ms).

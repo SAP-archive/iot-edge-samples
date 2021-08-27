@@ -1,0 +1,4 @@
+
+\squid:S4684("@Replace this persistent entity with a simple POJO or DTO object.(ˆ‰Ýûÿÿÿÿ
+¾%squid:RedundantThrowsDeclarationCheck*"…Remove the declaration of thrown exception 'org.eclipse.paho.client.mqttv3.MqttException', as it cannot be thrown from method's body.(ÿהע8½‏ץµ/
+¾%squid:RedundantThrowsDeclarationCheck2"…Remove the declaration of thrown exception 'org.eclipse.paho.client.mqttv3.MqttException', as it cannot be thrown from method's body.(ÿהע8½‏ץµ/

@@ -1,0 +1,11 @@
+2021-05-15 00:00:21.417 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h13m12s134ms).
+2021-05-15 01:52:30.211 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h12m8s432ms).
+2021-05-15 03:42:28.671 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h30m58s314ms).
+2021-05-15 04:00:58.180 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m59s509ms).
+2021-05-15 10:40:06.674 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6h39m8s494ms).
+2021-05-15 10:40:36.503 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Retrograde clock change detected (housekeeper delta=29s828ms), soft-evicting connections from pool.
+2021-05-15 12:28:48.889 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h48m12s387ms).
+2021-05-15 14:17:04.179 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h47m45s280ms).
+2021-05-15 14:34:14.663 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m40s481ms).
+2021-05-15 15:44:27.202 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h10m12s539ms).
+2021-05-15 15:44:57.053 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Retrograde clock change detected (housekeeper delta=29s851ms), soft-evicting connections from pool.

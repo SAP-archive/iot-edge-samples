@@ -1,0 +1,6 @@
+
+lsquid:S2095”"MUse try-with-resources or close this "MqttAsyncClient" in a "finally" clause.(„®›Š8‰õÏøµ/
+}squid:S2293‘"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÚÆ·¤üÿÿÿÿ8‰õÏøµ/
+psquid:S00117C"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÖžŒÝ8í¦ˆýµ/
+usquid:S00117H"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ôå…·ÿÿÿÿÿ8í¦ˆýµ/
+|squid:S2293b"YReplace the type specification in this constructor call with the diamond operator ("<>").(‘¡å—øÿÿÿÿ8í¦ˆýµ/

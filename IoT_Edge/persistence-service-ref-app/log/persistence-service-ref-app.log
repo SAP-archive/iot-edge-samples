@@ -1,0 +1,13 @@
+2021-06-02 00:27:57.933 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h16m40s316ms).
+2021-06-02 01:40:08.489 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h12m10s556ms).
+2021-06-02 03:28:23.831 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h47m45s342ms).
+2021-06-02 05:17:25.278 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h40m31s411ms).
+2021-06-02 07:05:41.997 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h47m46s717ms).
+2021-06-02 08:00:41.327 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=54m59s330ms).
+2021-06-02 12:02:22.829 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4h41s489ms).
+2021-06-02 12:57:44.189 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=54m51s342ms).
+2021-06-02 13:00:19.073 INFO  [SpringContextShutdownHook] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor] [] Shutting down ExecutorService 'applicationTaskExecutor'
+2021-06-02 13:00:19.076 INFO  [SpringContextShutdownHook] [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] [] Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-06-02 13:00:19.078 INFO  [SpringContextShutdownHook] [org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl] [] HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2021-06-02 13:00:19.091 INFO  [SpringContextShutdownHook] [com.zaxxer.hikari.HikariDataSource] [] HikariPool-1 - Shutdown initiated...
+2021-06-02 13:00:19.112 INFO  [SpringContextShutdownHook] [com.zaxxer.hikari.HikariDataSource] [] HikariPool-1 - Shutdown completed.

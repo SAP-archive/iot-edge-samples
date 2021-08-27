@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.sap.iot.edgeservices.persistenceref</groupId>
+		<artifactId>persistence-ref-app-parent</artifactId>
+		<version>${project.version}</version>
+	</parent>
+	
+	<artifactId>assemble</artifactId>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>helm</module>
+	</modules>
+	
+	<properties>
+		<buildVersion>${project.version}</buildVersion>
+		<imageSuffix></imageSuffix>
+	</properties>
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<buildVersion>${project.version}-${maven.build.timestamp}</buildVersion>
+				<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+				<imageSuffix>-dev</imageSuffix>
+			</properties>
+		</profile>
+	</profiles>
+</project>

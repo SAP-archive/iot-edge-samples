@@ -1,0 +1,70 @@
+schema:
+    version: 0.1.0
+    schema: SomeURL or path
+    origin: anotherURL or path
+cloudComponent:
+    name: Persistence Ref App
+    version: 1.0.0-20210827-1458
+    ppmsObjectId: 73555000100900004782
+    description: 'Persistence Ref App'
+    uses:
+        - deploy: true
+          version: '>=0.1'
+          toBeShared: true
+          cloudComponent:
+            name: Edge Lifecycle Management
+        - version: '>=1.16'
+          toBeShared: true
+          cloudComponent:
+            name: Kubernetes
+    contains:
+        - cloudComponent:
+            name: persistence-ref-app
+            version: 1.0.0-20210827-1458
+            isDeployUnit: true
+            deployIFType: helmOperator
+            specAnnotations:
+                # CLM provided parameters 
+                - path: dockerRegistry
+                  annotations:
+                    - "urn:elmo:internal:dockerRegistry"
+                - path: imagePullSecret
+                  annotations:
+                    - "urn:elmo:internal:imagePullSecret"
+                # User provided parameters
+                - path: logLevel
+                  title: "Log Level"
+                  description: "Log level of the application. Possible values are DEBUG, INFO, WARN, ERROR."
+                  type: string
+                  required: true
+                  annotations:
+                    - "urn:elmo:ui"
+                - path: iot.edge.bindings
+                  type: string
+                  required: true
+                  annotations:
+                    - "urn:elmo:ui"
+                - path: iot.edge.clientKeyStore
+                  type: string
+                  required: true
+                  annotations:
+                    - "urn:elmo:ui"
+                    - "urn:secure:ps-ref-app-secret-tls-properties:clientKeyStore"
+                - path: iot.edge.clientKeyStorePassword
+                  type: string
+                  required: true
+                  annotations:
+                    - "urn:elmo:ui"
+                    - "urn:secure:ps-ref-app-secret-tls-properties:clientKeyStorePassword"
+                - path: iot.edge.clientTrustStore
+                  type: string
+                  required: true
+                  annotations:
+                    - "urn:elmo:ui"
+                    - "urn:secure:ps-ref-app-secret-tls-properties:clientTrustStore"
+                - path: iot.edge.clientTrustStorePassword
+                  type: string
+                  required: true
+                  annotations:
+                    - "urn:elmo:ui"
+                    - "urn:secure:ps-ref-app-secret-tls-properties:clientTrustStorePassword"

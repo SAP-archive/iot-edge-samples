@@ -1,0 +1,38 @@
+2021-06-01 14:27:16.326 INFO  [main] [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplication] [] Starting PersistenceServiceRefAppApplication on C02Z6178LVDR with PID 14284 (/Users/i518044/Documents/GitHub/persistence-service-ref-app/app/target/classes started by i518044 in /Users/i518044/Documents/GitHub/persistence-service-ref-app)
+2021-06-01 14:27:16.332 INFO  [main] [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplication] [] No active profile set, falling back to default profiles: default
+2021-06-01 14:27:17.065 INFO  [main] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-06-01 14:27:17.176 INFO  [main] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [] Finished Spring Data repository scanning in 98ms. Found 3 JPA repository interfaces.
+2021-06-01 14:27:17.639 INFO  [main] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [] Tomcat initialized with port(s): 8080 (http)
+2021-06-01 14:27:17.648 INFO  [main] [org.apache.coyote.http11.Http11NioProtocol] [] Initializing ProtocolHandler ["http-nio-8080"]
+2021-06-01 14:27:17.649 INFO  [main] [org.apache.catalina.core.StandardService] [] Starting service [Tomcat]
+2021-06-01 14:27:17.649 INFO  [main] [org.apache.catalina.core.StandardEngine] [] Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-06-01 14:27:17.756 INFO  [main] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [] Initializing Spring embedded WebApplicationContext
+2021-06-01 14:27:17.756 INFO  [main] [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] [] Root WebApplicationContext: initialization completed in 1367 ms
+2021-06-01 14:27:17.936 INFO  [main] [com.zaxxer.hikari.HikariDataSource] [] HikariPool-1 - Starting...
+2021-06-01 14:27:18.205 INFO  [main] [com.zaxxer.hikari.HikariDataSource] [] HikariPool-1 - Start completed.
+2021-06-01 14:27:18.275 INFO  [main] [org.hibernate.jpa.internal.util.LogHelper] [] HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-06-01 14:27:18.349 INFO  [main] [org.hibernate.Version] [] HHH000412: Hibernate ORM core version 5.4.25.Final
+2021-06-01 14:27:18.547 INFO  [main] [org.hibernate.annotations.common.Version] [] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-06-01 14:27:18.685 INFO  [main] [org.hibernate.dialect.Dialect] [] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2021-06-01 14:27:19.259 INFO  [main] [org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator] [] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-06-01 14:27:19.267 INFO  [main] [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] [] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-06-01 14:27:19.291 INFO  [main] [com.sap.persistenceservicerefapp.config.TableSetup] [] Retrieved datasource
+2021-06-01 14:27:19.291 INFO  [main] [com.sap.persistenceservicerefapp.config.TableSetup] [] Connected to datasource
+2021-06-01 14:27:19.291 ERROR [main] [com.sap.persistenceservicerefapp.config.TableSetup] [] Failed to get datasource
+2021-06-01 14:27:19.291 ERROR [main] [com.sap.persistenceservicerefapp.config.TableSetup] [] Table "PURCHASE_ORDER" already exists; SQL statement:
+CREATE TABLE PURCHASE_ORDER( ID int, NAME varchar(255), QUANTITY int,PRIMARY KEY( ID )); [42101-200]
+2021-06-01 14:27:19.861 WARN  [main] [org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration] [] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-06-01 14:27:19.946 INFO  [main] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor] [] Initializing ExecutorService 'applicationTaskExecutor'
+2021-06-01 14:27:20.870 INFO  [main] [org.apache.coyote.http11.Http11NioProtocol] [] Starting ProtocolHandler ["http-nio-8080"]
+2021-06-01 14:27:20.922 INFO  [main] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [] Tomcat started on port(s): 8080 (http) with context path ''
+2021-06-01 14:27:20.936 INFO  [main] [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplication] [] Started PersistenceServiceRefAppApplication in 5.53 seconds (JVM running for 6.065)
+2021-06-01 16:35:46.236 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=30m27s316ms).
+2021-06-01 16:58:20.319 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m34s50ms).
+2021-06-01 17:04:01.483 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m41s164ms).
+2021-06-01 19:52:51.155 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m48s587ms).
+2021-06-01 21:38:18.400 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=30m26s860ms).
+2021-06-01 21:59:18.304 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=19m59s921ms).
+2021-06-01 22:17:56.210 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m7s902ms).
+2021-06-01 22:35:57.725 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m1s515ms).
+2021-06-01 22:54:03.172 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m35s448ms).
+2021-06-01 23:10:47.607 WARN  [HikariPool-1 housekeeper] [com.zaxxer.hikari.pool.HikariPool] [] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m14s437ms).

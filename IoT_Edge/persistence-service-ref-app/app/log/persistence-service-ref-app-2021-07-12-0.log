@@ -1,0 +1,111 @@
+2021-07-12 10:35:43.722 INFO  [main] [org.springframework.boot.test.context.SpringBootTestContextBootstrapper] [] Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest], using SpringBootContextLoader
+2021-07-12 10:35:43.732 INFO  [main] [org.springframework.test.context.support.AbstractContextLoader] [] Could not detect default resource locations for test class [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2021-07-12 10:35:43.943 INFO  [main] [org.springframework.boot.test.context.SpringBootTestContextBootstrapper] [] Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@50b5ac82]
+2021-07-12 10:35:43.952 INFO  [main] [org.springframework.boot.test.context.SpringBootTestContextBootstrapper] [] Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest], using SpringBootContextLoader
+2021-07-12 10:35:43.953 INFO  [main] [org.springframework.test.context.support.AbstractContextLoader] [] Could not detect default resource locations for test class [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2021-07-12 10:35:43.959 INFO  [main] [org.springframework.boot.test.context.SpringBootTestContextBootstrapper] [] Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@1b1426f4]
+2021-07-12 10:35:44.477 INFO  [main] [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest] [] Starting PersistenceServiceRefAppApplicationTest on C02Z6178LVDR with PID 19224 (started by i518044 in /Users/i518044/Documents/GitHub/persistence-service-ref-app/app)
+2021-07-12 10:35:44.477 INFO  [main] [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest] [] The following profiles are active: test
+2021-07-12 10:35:44.993 INFO  [main] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-07-12 10:35:45.052 INFO  [main] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [] Finished Spring Data repository scanning in 49ms. Found 3 JPA repository interfaces.
+2021-07-12 10:35:45.923 INFO  [main] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [] Tomcat initialized with port(s): 0 (http)
+2021-07-12 10:35:45.935 INFO  [main] [org.apache.coyote.http11.Http11NioProtocol] [] Initializing ProtocolHandler ["http-nio-auto-1"]
+2021-07-12 10:35:45.936 INFO  [main] [org.apache.catalina.core.StandardService] [] Starting service [Tomcat]
+2021-07-12 10:35:45.936 INFO  [main] [org.apache.catalina.core.StandardEngine] [] Starting Servlet engine: [Apache Tomcat/9.0.46]
+2021-07-12 10:35:46.056 INFO  [main] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [] Initializing Spring embedded WebApplicationContext
+2021-07-12 10:35:46.056 INFO  [main] [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] [] Root WebApplicationContext: initialization completed in 1562 ms
+2021-07-12 10:35:46.564 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] Successfully connected to the database
+2021-07-12 10:35:46.571 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] Purchase order table is created
+2021-07-12 10:35:46.572 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] metric table is created
+2021-07-12 10:35:46.573 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] load_test_config table is created
+2021-07-12 10:35:46.573 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] Successfully connected to the database
+2021-07-12 10:35:46.701 INFO  [main] [org.hibernate.jpa.internal.util.LogHelper] [] HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-07-12 10:35:46.795 INFO  [main] [org.hibernate.Version] [] HHH000412: Hibernate ORM core version 5.4.31.Final
+2021-07-12 10:35:46.976 INFO  [main] [org.hibernate.annotations.common.Version] [] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-07-12 10:35:47.188 INFO  [main] [org.hibernate.dialect.Dialect] [] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2021-07-12 10:35:47.879 INFO  [main] [org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator] [] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-07-12 10:35:47.889 INFO  [main] [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] [] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-07-12 10:35:48.668 WARN  [main] [org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration] [] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-07-12 10:35:48.863 INFO  [main] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor] [] Initializing ExecutorService 'applicationTaskExecutor'
+2021-07-12 10:35:50.233 INFO  [main] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [] Initializing Spring TestDispatcherServlet ''
+2021-07-12 10:35:50.234 INFO  [main] [org.springframework.test.web.servlet.TestDispatcherServlet] [] Initializing Servlet ''
+2021-07-12 10:35:50.252 INFO  [main] [org.springframework.test.web.servlet.TestDispatcherServlet] [] Completed initialization in 18 ms
+2021-07-12 10:35:50.364 INFO  [main] [org.apache.coyote.http11.Http11NioProtocol] [] Starting ProtocolHandler ["http-nio-auto-1"]
+2021-07-12 10:35:50.413 INFO  [main] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [] Tomcat started on port(s): 51528 (http) with context path ''
+2021-07-12 10:35:50.426 INFO  [main] [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest] [] Started PersistenceServiceRefAppApplicationTest in 6.426 seconds (JVM running for 7.329)
+2021-07-12 10:35:50.480 INFO  [SpringContextShutdownHook] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor] [] Shutting down ExecutorService 'applicationTaskExecutor'
+2021-07-12 10:35:50.482 INFO  [SpringContextShutdownHook] [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] [] Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-07-12 10:38:38.795 INFO  [main] [org.springframework.boot.test.context.SpringBootTestContextBootstrapper] [] Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest], using SpringBootContextLoader
+2021-07-12 10:38:38.801 INFO  [main] [org.springframework.test.context.support.AbstractContextLoader] [] Could not detect default resource locations for test class [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2021-07-12 10:38:38.945 INFO  [main] [org.springframework.boot.test.context.SpringBootTestContextBootstrapper] [] Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@446293d]
+2021-07-12 10:38:38.953 INFO  [main] [org.springframework.boot.test.context.SpringBootTestContextBootstrapper] [] Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest], using SpringBootContextLoader
+2021-07-12 10:38:38.954 INFO  [main] [org.springframework.test.context.support.AbstractContextLoader] [] Could not detect default resource locations for test class [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2021-07-12 10:38:38.960 INFO  [main] [org.springframework.boot.test.context.SpringBootTestContextBootstrapper] [] Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@3e84448c]
+2021-07-12 10:38:39.431 INFO  [main] [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest] [] Starting PersistenceServiceRefAppApplicationTest on C02Z6178LVDR with PID 19368 (started by i518044 in /Users/i518044/Documents/GitHub/persistence-service-ref-app/app)
+2021-07-12 10:38:39.431 INFO  [main] [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest] [] The following profiles are active: test
+2021-07-12 10:38:39.865 INFO  [main] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-07-12 10:38:39.914 INFO  [main] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [] Finished Spring Data repository scanning in 43ms. Found 3 JPA repository interfaces.
+2021-07-12 10:38:40.591 INFO  [main] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [] Tomcat initialized with port(s): 0 (http)
+2021-07-12 10:38:40.601 INFO  [main] [org.apache.coyote.http11.Http11NioProtocol] [] Initializing ProtocolHandler ["http-nio-auto-1"]
+2021-07-12 10:38:40.602 INFO  [main] [org.apache.catalina.core.StandardService] [] Starting service [Tomcat]
+2021-07-12 10:38:40.602 INFO  [main] [org.apache.catalina.core.StandardEngine] [] Starting Servlet engine: [Apache Tomcat/9.0.46]
+2021-07-12 10:38:40.696 INFO  [main] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [] Initializing Spring embedded WebApplicationContext
+2021-07-12 10:38:40.696 INFO  [main] [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] [] Root WebApplicationContext: initialization completed in 1253 ms
+2021-07-12 10:38:41.116 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] Successfully connected to the database
+2021-07-12 10:38:41.122 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] Purchase order table is created
+2021-07-12 10:38:41.123 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] metric table is created
+2021-07-12 10:38:41.124 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] load_test_config table is created
+2021-07-12 10:38:41.124 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] Successfully connected to the database
+2021-07-12 10:38:41.215 INFO  [main] [org.hibernate.jpa.internal.util.LogHelper] [] HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-07-12 10:38:41.271 INFO  [main] [org.hibernate.Version] [] HHH000412: Hibernate ORM core version 5.4.31.Final
+2021-07-12 10:38:41.394 INFO  [main] [org.hibernate.annotations.common.Version] [] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-07-12 10:38:41.552 INFO  [main] [org.hibernate.dialect.Dialect] [] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2021-07-12 10:38:42.068 INFO  [main] [org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator] [] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-07-12 10:38:42.076 INFO  [main] [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] [] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-07-12 10:38:42.682 WARN  [main] [org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration] [] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-07-12 10:38:42.836 INFO  [main] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor] [] Initializing ExecutorService 'applicationTaskExecutor'
+2021-07-12 10:38:43.889 INFO  [main] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [] Initializing Spring TestDispatcherServlet ''
+2021-07-12 10:38:43.889 INFO  [main] [org.springframework.test.web.servlet.TestDispatcherServlet] [] Initializing Servlet ''
+2021-07-12 10:38:43.903 INFO  [main] [org.springframework.test.web.servlet.TestDispatcherServlet] [] Completed initialization in 14 ms
+2021-07-12 10:38:43.994 INFO  [main] [org.apache.coyote.http11.Http11NioProtocol] [] Starting ProtocolHandler ["http-nio-auto-1"]
+2021-07-12 10:38:44.027 INFO  [main] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [] Tomcat started on port(s): 51736 (http) with context path ''
+2021-07-12 10:38:44.035 INFO  [main] [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest] [] Started PersistenceServiceRefAppApplicationTest in 5.05 seconds (JVM running for 5.74)
+2021-07-12 10:38:44.074 INFO  [SpringContextShutdownHook] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor] [] Shutting down ExecutorService 'applicationTaskExecutor'
+2021-07-12 10:38:44.075 INFO  [SpringContextShutdownHook] [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] [] Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-07-12 10:50:00.124 INFO  [main] [org.springframework.boot.test.context.SpringBootTestContextBootstrapper] [] Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest], using SpringBootContextLoader
+2021-07-12 10:50:00.129 INFO  [main] [org.springframework.test.context.support.AbstractContextLoader] [] Could not detect default resource locations for test class [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2021-07-12 10:50:00.296 INFO  [main] [org.springframework.boot.test.context.SpringBootTestContextBootstrapper] [] Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@446293d]
+2021-07-12 10:50:00.303 INFO  [main] [org.springframework.boot.test.context.SpringBootTestContextBootstrapper] [] Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest], using SpringBootContextLoader
+2021-07-12 10:50:00.303 INFO  [main] [org.springframework.test.context.support.AbstractContextLoader] [] Could not detect default resource locations for test class [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2021-07-12 10:50:00.309 INFO  [main] [org.springframework.boot.test.context.SpringBootTestContextBootstrapper] [] Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@3e84448c]
+2021-07-12 10:50:00.823 INFO  [main] [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest] [] Starting PersistenceServiceRefAppApplicationTest on C02Z6178LVDR with PID 19711 (started by i518044 in /Users/i518044/Documents/GitHub/persistence-service-ref-app/app)
+2021-07-12 10:50:00.823 INFO  [main] [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest] [] The following profiles are active: test
+2021-07-12 10:50:01.304 INFO  [main] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-07-12 10:50:01.360 INFO  [main] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] [] Finished Spring Data repository scanning in 47ms. Found 3 JPA repository interfaces.
+2021-07-12 10:50:02.098 INFO  [main] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [] Tomcat initialized with port(s): 0 (http)
+2021-07-12 10:50:02.109 INFO  [main] [org.apache.coyote.http11.Http11NioProtocol] [] Initializing ProtocolHandler ["http-nio-auto-1"]
+2021-07-12 10:50:02.110 INFO  [main] [org.apache.catalina.core.StandardService] [] Starting service [Tomcat]
+2021-07-12 10:50:02.110 INFO  [main] [org.apache.catalina.core.StandardEngine] [] Starting Servlet engine: [Apache Tomcat/9.0.46]
+2021-07-12 10:50:02.215 INFO  [main] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [] Initializing Spring embedded WebApplicationContext
+2021-07-12 10:50:02.215 INFO  [main] [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] [] Root WebApplicationContext: initialization completed in 1376 ms
+2021-07-12 10:50:02.673 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] Successfully connected to the database
+2021-07-12 10:50:02.679 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] Purchase order table is created
+2021-07-12 10:50:02.680 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] metric table is created
+2021-07-12 10:50:02.681 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] load_test_config table is created
+2021-07-12 10:50:02.681 INFO  [main] [com.sap.persistenceservice.refapp.config.DatabaseConfiguration] [] Successfully connected to the database
+2021-07-12 10:50:02.778 INFO  [main] [org.hibernate.jpa.internal.util.LogHelper] [] HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-07-12 10:50:02.856 INFO  [main] [org.hibernate.Version] [] HHH000412: Hibernate ORM core version 5.4.31.Final
+2021-07-12 10:50:03.068 INFO  [main] [org.hibernate.annotations.common.Version] [] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-07-12 10:50:03.224 INFO  [main] [org.hibernate.dialect.Dialect] [] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2021-07-12 10:50:03.832 INFO  [main] [org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator] [] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-07-12 10:50:03.841 INFO  [main] [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] [] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-07-12 10:50:04.484 WARN  [main] [org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration] [] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-07-12 10:50:04.646 INFO  [main] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor] [] Initializing ExecutorService 'applicationTaskExecutor'
+2021-07-12 10:50:05.937 INFO  [main] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [] Initializing Spring TestDispatcherServlet ''
+2021-07-12 10:50:05.938 INFO  [main] [org.springframework.test.web.servlet.TestDispatcherServlet] [] Initializing Servlet ''
+2021-07-12 10:50:05.949 INFO  [main] [org.springframework.test.web.servlet.TestDispatcherServlet] [] Completed initialization in 11 ms
+2021-07-12 10:50:06.040 INFO  [main] [org.apache.coyote.http11.Http11NioProtocol] [] Starting ProtocolHandler ["http-nio-auto-1"]
+2021-07-12 10:50:06.077 INFO  [main] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [] Tomcat started on port(s): 52289 (http) with context path ''
+2021-07-12 10:50:06.086 INFO  [main] [com.sap.persistenceservicerefapp.PersistenceServiceRefAppApplicationTest] [] Started PersistenceServiceRefAppApplicationTest in 5.74 seconds (JVM running for 6.498)
+2021-07-12 10:50:06.124 INFO  [SpringContextShutdownHook] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor] [] Shutting down ExecutorService 'applicationTaskExecutor'
+2021-07-12 10:50:06.125 INFO  [SpringContextShutdownHook] [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] [] Closing JPA EntityManagerFactory for persistence unit 'default'
