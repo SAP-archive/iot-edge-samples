@@ -53,9 +53,12 @@ jobs:
 
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
-
+    # - name: Autobuild
+    #  uses: github/codeql-action/autobuild@v1
+    - name: action-maven
+    # You may pin to the exact commit or the version.
+    # uses: comchangs/action-maven@54db702e085ac767dad94c87e84499afb9d77162
+      uses: comchangs/action-maven@v0.4-beta
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 https://git.io/JvXDl
 
