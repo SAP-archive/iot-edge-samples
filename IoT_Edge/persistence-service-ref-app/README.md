@@ -39,20 +39,18 @@ You will need to set up a Device with a Sensor and Capability in your Edge Gatew
 
 Run the maven build:
 ```
-mvn clean install -P dev
+mvn clean install
 ```
-Note the generated image version in assemble/helm/target/values.template.yaml.
 
 ### Build and push the Docker image
 
 Build using the Dockerfile:
 ```
-Find the image version from the containerImageVersion field in assemble/helm/target/values.template.yaml
 
 cd docker
-docker build -f Dockerfile -t persistence-service-ref-app-dev:<version> .
-docker tag persistence-service-ref-app-dev:<version> <your repository>/persistence-service-ref-app-dev:<version>
-docker push <your repository>/persistence-service-ref-app-dev:<version>
+docker build -f Dockerfile -t persistence-service-ref-app:1.0.0 .
+docker tag persistence-service-ref-app:1.0.0 <your repository>/persistence-service-ref-app:1.0.0
+docker push <your repository>/persistence-service-ref-app:1.0.0
 ```
 
 ### Deploy the HELM chart
