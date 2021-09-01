@@ -1,5 +1,5 @@
 apiVersion: v2
-name: persistence-ref-app-3
+name: persistence-ref-app
 description: A helm chart for the reference application for persistence
 
 # A chart can be either an 'application' or a 'library' chart.
