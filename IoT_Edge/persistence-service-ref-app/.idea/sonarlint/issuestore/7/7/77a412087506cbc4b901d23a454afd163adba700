@@ -1,4 +1,0 @@
-
-[squid:S1444"=Make this "public static PERSISTENCE_SERVICE_URL" field final(ÙŒÙÏ8ÂÜ€Ëµ/
-˜"squid:ClassVariableVisibilityCheck"cMake PERSISTENCE_SERVICE_URL a static final constant or non-public and provide accessors if needed.(ÙŒÙÏ8ÂÜ€Ëµ/
-€squid:S3008"bRename this field "PERSISTENCE_SERVICE_URL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÙŒÙÏ8ÂÜ€Ëµ/
