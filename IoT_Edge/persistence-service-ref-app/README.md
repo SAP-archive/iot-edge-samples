@@ -55,7 +55,7 @@ docker push <your repository>/persistence-service-ref-app:1.0.0
 
 ### Deploy the HELM chart
 
-Helm chart is located in assemble/helm/target/persistence-ref-app-[VERSION]
+Helm chart is located in assemble/helm/target/persistence-ref-app-1.0.0
 ```
 Upload the helm chart in Policy Service and select bindings to Edge Gateway Service and Persistence Service
 ```
