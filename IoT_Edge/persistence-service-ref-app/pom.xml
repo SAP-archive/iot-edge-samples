@@ -14,7 +14,7 @@
 		<java.version>1.8</java.version>
 		<version.postgres>42.2.20</version.postgres>
 		<version.spring>2.3.11.RELEASE</version.spring>
-		<version.apache.httpcore>4.5</version.apache.httpcore>
+		<version.apache.httpcore>4.5.13</version.apache.httpcore>
 		<version.tomcat>9.0.41</version.tomcat>
 		<version.h2>1.4.200</version.h2>
 		<version.openapi>1.5.3</version.openapi>
