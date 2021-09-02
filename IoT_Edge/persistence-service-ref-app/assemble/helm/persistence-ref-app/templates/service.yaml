@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: persistence-service-ref-app
+  labels:
+    app: ps-ref-app
+    service: persistence-service-ref-app
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: ps-ref-app
+  selector:
+    service: persistence-service-ref-app
+  type: LoadBalancer

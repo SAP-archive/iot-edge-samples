@@ -1,0 +1,13 @@
+<configuration debug="false" scan="false">
+	<!-- for local development, you may want to switch to a more human-readable layout -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [%logger] [%mdc] %message%n</pattern>
+		</encoder>
+	</appender>
+	<root level="${LOG_ROOT_LEVEL:-INFO}">
+		<!-- Use 'STDOUT' instead for human-readable output -->
+		<appender-ref ref="STDOUT" />
+	</root>
+	<logger name="com.sap.persistenceservice.refapp" level="INFO" />
+</configuration>
