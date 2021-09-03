@@ -1,10 +1,10 @@
 # SAP IoT Edge -  Samples
-![GitHub contributors](https://img.shields.io/github/contributors-anon/SAP-Samples/iot-edge-samples)
-![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/SAP-Samples/iot-edge-samples)
-![Pull Requests](https://img.shields.io/github/issues-pr-closed-raw/SAP-Samples/iot-edge-samples)
+[![GitHub contributors](https://img.shields.io/github/contributors-anon/SAP-Samples/iot-edge-samples)](https://github.com/SAP-samples/iot-edge-samples/graphs/contributors)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/SAP-Samples/iot-edge-samples)](https://github.com/SAP-samples/iot-edge-samples/pulls?q=is%3Aopen+is%3Apr)
+[![Pull Requests](https://img.shields.io/github/issues-pr-closed-raw/SAP-Samples/iot-edge-samples)](https://github.com/SAP-samples/iot-edge-samples/pulls?q=is%3Apr+is%3Aclosed)
 
 [![CodeFactor](https://www.codefactor.io/repository/github/sap-samples/iot-edge-samples/badge/main)](https://www.codefactor.io/repository/github/sap-samples/iot-edge-samples/overview/main)
-![GitHub language count](https://img.shields.io/github/languages/count/SAP-Samples/iot-edge-samples)
+[![GitHub language count](https://img.shields.io/github/languages/count/SAP-Samples/iot-edge-samples)](https://github.com/SAP-samples/iot-edge-samples)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/iot-edge-samples)](https://api.reuse.software/info/github.com/SAP-samples/iot-edge-samples)
