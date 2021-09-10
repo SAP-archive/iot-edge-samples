@@ -32,32 +32,38 @@ spec:
           image: "{{ .Values.dockerRegistry }}/{{ .Values.image.name }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: INGESTION_URL
-              value: {{ .Values.ingestionUrl | quote }}
-            - name: SERVICE_PORT
+            - name: PORT
               value: {{ .Values.port | quote }}
-          {{- if .Values.bindServices.enabled -}}
+          {{- if .Values.bindServices.enabled }}
             - name: IOT_SERVICE_INSTANCE_ID
               value: {{ .Values.iot.edge.serviceInstanceId | quote }}
             - name: SERVICE_BINDINGS
               value: {{ .Values.iot.edge.bindings | quote }}
+            - name: SAMPLES
+              value: {{ .Values.samples | quote }}
+            - name: SPACING
+              value: {{ .Values.spacing | quote }}
+            - name: PROPERTY
+              value: {{ .Values.property | quote }}
+            - name: PROPERTY_OUT
+              value: {{ .Values.propertyOut | quote }}
           volumeMounts:
           - name: tls-storage
             mountPath: "{{ required "required for certificateDir" .Values.certificateDir }}"
             readOnly: true
-          {{- end}}
+          {{- end }}
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-    {{- if .Values.bindServices.enabled -}}
+    {{- if .Values.bindServices.enabled }}
       volumes:
       - name: tls-storage
         secret:
           secretName: secret-tls-properties
-    {{- end}}
+    {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
