@@ -5,8 +5,11 @@
 replicaCount: 1
 
 port: 1
+property: "value"
+propertyOut: "value_out"
+samples: 24
+spacing: 200
 
-ingestionUrl: ""
 
 bindServices:
   enabled: false
