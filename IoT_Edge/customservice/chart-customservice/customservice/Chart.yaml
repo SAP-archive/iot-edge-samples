@@ -1,7 +1,7 @@
 apiVersion: v2
-appVersion: 1.0.0
+appVersion: 1.0.1
 description: CustomHTTPService
 name: customservice
 type: application
-version: 1.0.0
+version: 1.0.1
 icon: https://www.sap.com/content/dam/application/shared/logos/sap-logo-svg.svg

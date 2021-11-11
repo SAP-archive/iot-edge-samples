@@ -1,0 +1,945 @@
+{
+	"info": {
+		"_postman_id": "b9fcb6d4-112a-454c-af06-3d083abc76aa",
+		"name": "SAP IoT Edge - Create Device and Thing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Step 0: GET OAuth Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"LoginTokenT1\", \"Bearer \" + data.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "text/plain"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "scope",
+						"value": "thing_stakeholder!t1.c",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "response_type",
+							"value": "token",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{client_secret}}",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "thing_stakeholder!t1.c thing_stakeholder!t1.d thingconf_stakeholder!t1.u iotas_stakeholder!t1.am.cnfg.cud iotas_stakeholder!t1.cm.c thingconf_stakeholder!t1.r iotas_stakeholder!t1.cm.d iotas_stakeholder!t1.cm.r tenant_stakeholder!t1.pers.d iotas_stakeholder!t1.cm.u tenant_stakeholder!t1.pers.c bp_stakeholder!t1.vh.r bp_stakeholder!t1.tenant.r thing_stakeholder!t1.r tenant_stakeholder!t1.pers.u tenant_stakeholder!t1.pers.r pkg_stakeholder!t1.r iotas_stakeholder!t1.businesslogging.r tenant_stakeholder!t1.org.c iotas_stakeholder!t1.am.map.cud tenant_stakeholder!t1.org.d iotas_stakeholder!t1.RS.u tg_stakeholder!t1.d cdconf_stakeholder!t1.d iotas_stakeholder!t1.RS.r tg_stakeholder!t1.c iotas_stakeholder!t1.am.ts.cud cdconf_stakeholder!t1.c iotas_stakeholder!t1.am.map.r auth_stakeholder!t1.u pkg_stakeholder!t1.d auth_stakeholder!t1.r pkg_stakeholder!t1.c iotas_stakeholder!t1.RS.d cdconf_stakeholder!t1.u iotas_stakeholder!t1.RS.e ohs_stakeholder!t1.d iotas_stakeholder!t1.RS.c ohs_stakeholder!t1.c cdconf_stakeholder!t1.r iotas_stakeholder!t1.Assignment.c pkg_stakeholder!t1.u iotas_stakeholder!t1.Assignment.d ohs_stakeholder!t1.u iotas_stakeholder!t1.cm.user iotas_stakeholder!t1.am.cnfg.r iotas_stakeholder!t1.am.ext.r ohs_stakeholder!t1.r thing_stakeholder!t1.C2CAdmin.c thingconf_stakeholder!t1.c thingconf_stakeholder!t1.d bp_stakeholder!t1.r bdm_stakeholder!t1.r advlist_stakeholder!t1.r cm-sac_stakeholder!t1.cm.audience iotas_stakeholder!t1.Assignment.r iotas_stakeholder!t1.Assignment.u thing_stakeholder!t1.TenantTSS.c bp_stakeholder!t1.u tenant_stakeholder!t1.org.u iotas_stakeholder!t1.Vocabulary.d iotas_stakeholder!t1.Vocabulary.c auth_stakeholder!t1.conf.d iotas_stakeholder!t1.seg.CUD tenant_stakeholder!t1.org.r auth_stakeholder!t1.conf.c pkg_stakeholder!t1.ShareAdmin thing_stakeholder!t1.conf.r ths_stakeholder!t1.d iotas_stakeholder!t1.Mapping.r iotas_stakeholder!t1.Vocabulary.u ths_stakeholder!t1.c iotas_stakeholder!t1.Vocabulary.r cdinstance_stakeholder!t1.r iotae_service_stakeholder!b1.dc.cud cdinstance_stakeholder!t1.u thing_stakeholder!t1.conf.c tde_stakeholder!t1.r iotas_stakeholder!t1.geolocation.c thing_stakeholder!t1.conf.d iotas_stakeholder!t1.geolocation.d ths_stakeholder!t1.u dimonitor_stakeholder!t1.r iotas_stakeholder!t1.monitor.r ths_stakeholder!t1.r iotas_stakeholder!t1.geolocation.y iotas_stakeholder!t1.AM.r iotas_stakeholder!t1.Mapping.c iotas_stakeholder!t1.Mapping.d iotas_stakeholder!t1.AM.u iotas_stakeholder!t1.seg.R iotas_stakeholder!t1.ES.r iotas_stakeholder!t1.Credentials.d iotas_stakeholder!t1.Credentials.c iotas_stakeholder!t1.am.ts.r iotas_stakeholder!t1.am.onbrd.r iotas_stakeholder!t1.AM.d iotas_stakeholder!t1.AM.c iotas_stakeholder!t1.Callback tg_stakeholder!t1.u cdinstance_stakeholder!t1.d cdinstance_stakeholder!t1.c tg_stakeholder!t1.r iotas_stakeholder!t1.RS.SysAdmin compcd_stakeholder!t1.r thngdtl_stakeholder!t1.r tde_stakeholder!t1.conf.c tde_stakeholder!t1.conf.d iotas_stakeholder!t1.am.ext.cud tde_stakeholder!t1.conf.r coldstore_stakeholder!t1.r coldstore_stakeholder!t1.d iotas_stakeholder!t1.Credentials.u iotae_service_stakeholder!b1.admin.r iotas_stakeholder!t1.Credentials.r coldstore_stakeholder!t1.c iotae_service_stakeholder!b1.dc.r tde_stakeholder!t1.c",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{identityzone}}.{{uaadomain}}/oauth/token",
+					"protocol": "https",
+					"host": [
+						"{{identityzone}}",
+						"{{uaadomain}}"
+					],
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 1.1: Get Object Group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"",
+							"if ( data.value.length == 0 ) {",
+							"    postman.setEnvironmentVariable(\"ObjectGroupId\", postman.getEnvironmentVariable(\"RootObjectGroupId\"));",
+							"} else {",
+							"    postman.setEnvironmentVariable(\"ObjectGroupId\", data.value[0].objectGroupID);",
+							"    postman.setEnvironmentVariable(\"tenantId\", data.value[0].tenant);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}"
+					}
+				],
+				"url": {
+					"raw": "https://authorization.cfapps.eu10.hana.ondemand.com/ObjectGroups/",
+					"protocol": "https",
+					"host": [
+						"authorization",
+						"cfapps",
+						"eu10",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"ObjectGroups",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 1.2: Get Tenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"TenantPackageNamespace\", data.package);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}"
+					}
+				],
+				"url": {
+					"raw": "https://business-partner.cfapps.eu10.hana.ondemand.com/Tenants('{{tenantId}}')",
+					"protocol": "https",
+					"host": [
+						"business-partner",
+						"cfapps",
+						"eu10",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"Tenants('{{tenantId}}')"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 1.3: Post a new package",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var respCode = 201;",
+							"var respMinLength = -1;",
+							"var respMaxLength = -1;",
+							"var respTime = globals.TimeoutInstant;",
+							"",
+							"eval(globals.BasicTests);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Name\": \"{{TenantPackageNamespace}}.{{package}}\",\n  \"Scope\": \"tenant\",\n  \"Description\": \"{{TenantPackageNamespace}}.{{package}}\",\n  \"Status\": \"Active\",\n  \"Descriptions\":[{\n\t\"Description\": \"{{TenantPackageNamespace}}.{{package}}\",\n\t\"LanguageCode\": \"en\"\n  }]\n}"
+				},
+				"url": {
+					"raw": "https://{{packageApi}}/Package/v1/Packages",
+					"protocol": "https",
+					"host": [
+						"{{packageApi}}"
+					],
+					"path": [
+						"Package",
+						"v1",
+						"Packages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2.1: Create Capability for IoT Device",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"CapabilityId\", data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{pstTemperature}}\",\n    \"alternateId\": \"{{pstTemperature}}\",\n    \"properties\": [\n        {\n            \"name\": \"{{pstTemperature}}\",\n            \"dataType\": \"float\",\n            \"unitOfMeasure\": \"°C\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{deviceService}}/api/v1/capabilities",
+					"protocol": "https",
+					"host": [
+						"{{deviceService}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"capabilities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2.2: Create Sensor Type for IoT Device",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"SensorTypeId\", data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"capabilities\": [\n        {\n            \"id\": \"{{CapabilityId}}\",\n            \"type\": \"measure\"\n        }\n    ],\n    \"name\": \"fridge_ST\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{deviceService}}/api/v1/sensorTypes",
+					"protocol": "https",
+					"host": [
+						"{{deviceService}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sensorTypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2.3: Create Property Set Type",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Name\": \"{{TenantPackageNamespace}}.{{package}}:{{pstTemperature}}\",\r\n  \"Description\": \"{{pstTemperature}}\",\r\n  \"DataCategory\": \"TimeSeriesData\",\r\n  \"Descriptions\": [{\r\n    \"LanguageCode\": \"en\",\r\n    \"Description\": \"{{pstTemperature}}\"\r\n  }],\r\n  \"Properties\": [\r\n    {\r\n            \"Name\": \"{{pstTemperature}}\",\r\n             \"Descriptions\": [{\r\n\t\t        \"LanguageCode\": \"en\",\r\n\t\t        \"Description\": \"{{pstTemperature}}\"\r\n\t\t      }],\r\n            \"Type\": \"NumericFlexible\",\r\n            \"PropertyLength\": \"\",\r\n            \"UnitOfMeasure\": \"\",\r\n            \"QualityCode\": \"0\"\r\n       }]\r\n}"
+				},
+				"url": {
+					"raw": "https://{{configThingApi}}/ThingConfiguration/v1/Packages('{{TenantPackageNamespace}}.{{package}}')/PropertySetTypes",
+					"protocol": "https",
+					"host": [
+						"{{configThingApi}}"
+					],
+					"path": [
+						"ThingConfiguration",
+						"v1",
+						"Packages('{{TenantPackageNamespace}}.{{package}}')",
+						"PropertySetTypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2.4: Create Thing Type",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"Name\": \"{{TenantPackageNamespace}}.{{package}}:{{thingType}}\",\r\n\t\"PackageName\": \"{{TenantPackageNamespace}}.{{package}}\",\r\n\t\"Descriptions\": [{\r\n\t\t\"LanguageCode\": \"en\",\r\n\t\t\"Description\": \"Thermometer Thing Type\"\r\n\t}],\r\n\t\"PropertySets\": [{\r\n\t\t\"Name\": \"{{pstTemperature}}\",\r\n\t\t\"PropertySetType\": \"{{TenantPackageNamespace}}.{{package}}:{{pstTemperature}}\",\r\n\t\t\"Descriptions\": [{\r\n\t\t\t\"LanguageCode\": \"en\",\r\n\t\t\t\"Description\": \"{{pstTemperature}}\"\r\n\t\t}]\r\n\t}]\r\n}"
+				},
+				"url": {
+					"raw": "https://{{configThingApi}}/ThingConfiguration/v2/Packages('{{TenantPackageNamespace}}.{{package}}')/ThingTypes",
+					"protocol": "https",
+					"host": [
+						"{{configThingApi}}"
+					],
+					"path": [
+						"ThingConfiguration",
+						"v2",
+						"Packages('{{TenantPackageNamespace}}.{{package}}')",
+						"ThingTypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2.5: Map Thing Type",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"",
+							"if ( data.id != null ) {",
+							"    postman.setEnvironmentVariable(\"SensorTypeMappingId\", data.id);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"mapping\",\r\n    \"description\": {},\r\n    \"thingTypeId\": \"{{TenantPackageNamespace}}.{{package}}:{{thingType}}\",\r\n    \"mappings\": [\r\n        {\r\n            \"sensorTypeId\": \"{{SensorTypeId}}\",\r\n            \"measures\": [\r\n                {\r\n                    \"capabilityId\": \"{{CapabilityId}}\",\r\n                    \"namedPropertySetId\": \"{{pstTemperature}}\",\r\n                    \"propertyMappings\": [\r\n                        {\r\n                            \"capabilityPropertyId\": \"{{pstTemperature}}\",\r\n                            \"npstPropertyId\": \"{{pstTemperature}}\"\r\n                        }\r\n                    ]\r\n                }\r\n            ],\r\n            \"targetValues\": []\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "https://{{dataMapping}}/v1/Mappings/",
+					"protocol": "https",
+					"host": [
+						"{{dataMapping}}"
+					],
+					"path": [
+						"v1",
+						"Mappings",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2.6: Get Sensor Type Mapping - Only if required",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"",
+							"if ( data.d.SensorTypeMappings.results.lenght != 0 ) {",
+							"    postman.setEnvironmentVariable(\"SensorTypeMappingId\", data.d.SensorTypeMappings.results[0].MappingId);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}"
+					}
+				],
+				"url": {
+					"raw": "https://config-thing-sap.cfapps.eu10.hana.ondemand.com/ThingConfiguration/v2/ThingTypes('{{TenantPackageNamespace}}.{{package}}:{{thingType}}')?$expand=SensorTypeMappings/MeasureMappings,SensorTypeMappings/TargetMappings&$format=json",
+					"protocol": "https",
+					"host": [
+						"config-thing-sap",
+						"cfapps",
+						"eu10",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"ThingConfiguration",
+						"v2",
+						"ThingTypes('{{TenantPackageNamespace}}.{{package}}:{{thingType}}')"
+					],
+					"query": [
+						{
+							"key": "$expand",
+							"value": "SensorTypeMappings/MeasureMappings,SensorTypeMappings/TargetMappings"
+						},
+						{
+							"key": "$format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 3.1: Get gateway Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"gatewayId\", data[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{deviceService}}/api/v1/gateways?filter=alternateId%20eq%20'{{gatewayAlternateId}}'",
+					"protocol": "https",
+					"host": [
+						"{{deviceService}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"gateways"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "alternateId%20eq%20'{{gatewayAlternateId}}'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 3.2: Create Device",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"DeviceId\", data.id);",
+							"postman.setEnvironmentVariable(\"SensorId\", data.sensors[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"alternateId\": \"{{deviceAlternateName}}\",\n  \"gatewayId\": \"{{gatewayId}}\",\n  \"name\": \"Fridge 1\",\n  \"sensors\": [\n    {\n      \"alternateId\": \"fridgeThermometer\",\n      \"name\": \"Fridge Thermometer\",\n      \"sensorTypeId\": \"{{SensorTypeId}}\"\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{deviceService}}/api/v1/devices/",
+					"protocol": "https",
+					"host": [
+						"{{deviceService}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"devices",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 3.3: Onboard Thing",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"_externalId\": \"{{DeviceId}}\",\r\n\t\"_name\": \"{{deviceAlternateName}}\",\r\n\t\"_description\": {\r\n\t\t\"en\": \"{{deviceAlternateName}}\"\r\n\t},\r\n\t\"_thingType\": [\"{{TenantPackageNamespace}}.{{package}}:{{thingType}}\"],\r\n\t\"_objectGroup\": \"{{ObjectGroupId}}\"\r\n}"
+				},
+				"url": {
+					"raw": "https://{{appiot}}/Things",
+					"protocol": "https",
+					"host": [
+						"{{appiot}}"
+					],
+					"path": [
+						"Things"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 3.4: Get Thing Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"thingId\", data.value[0]._id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{appiot}}/Things?$filter=_externalId eq '{{DeviceId}}'",
+					"protocol": "https",
+					"host": [
+						"{{appiot}}"
+					],
+					"path": [
+						"Things"
+					],
+					"query": [
+						{
+							"key": "$filter",
+							"value": "_externalId eq '{{DeviceId}}'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 3.5: Map Thing",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"thingId\": \"{{thingId}}\",\r\n  \"sensorIds\": [\r\n    \"{{SensorId}}\"\r\n  ],\r\n  \"mappingId\": \"{{SensorTypeMappingId}}\"\r\n}"
+				},
+				"url": {
+					"raw": "https://{{dataMapping}}/v1/Assignments",
+					"protocol": "https",
+					"host": [
+						"{{dataMapping}}"
+					],
+					"path": [
+						"v1",
+						"Assignments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 5: Send data and wait 1 min",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"capabilityAlternateId\": \"{{pstTemperature}}\",\n    \"sensorAlternateId\": \"fridgeThermometer\",\n    \"measures\": [{\n        \"temperature\": \"23\"\n      }]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-ip}}:{{local-port}}/measures/{{deviceAlternateName}}",
+					"host": [
+						"{{local-ip}}"
+					],
+					"port": "{{local-port}}",
+					"path": [
+						"measures",
+						"{{deviceAlternateName}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 6.1: Get Timeseries Data for a Thing",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{appiot}}/Things('{{thingId}}')/{{TenantPackageNamespace}}.{{package}}:{{thingType}}/{{pstTemperature}}",
+					"protocol": "https",
+					"host": [
+						"{{appiot}}"
+					],
+					"path": [
+						"Things('{{thingId}}')",
+						"{{TenantPackageNamespace}}.{{package}}:{{thingType}}",
+						"{{pstTemperature}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 6.2: Get Snapshot Data for a Thing",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{LoginTokenT1}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{appiot}}/Snapshot(thingId='{{thingId}}',fromTime='',dataCategory='')?$select={{pstTemperature}}/{{pstTemperature}}",
+					"protocol": "https",
+					"host": [
+						"{{appiot}}"
+					],
+					"path": [
+						"Snapshot(thingId='{{thingId}}',fromTime='',dataCategory='')"
+					],
+					"query": [
+						{
+							"key": "$select",
+							"value": "{{pstTemperature}}/{{pstTemperature}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
