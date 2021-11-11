@@ -11,7 +11,7 @@ bindServices:
   enabled: true
 
 image:
-  name: eternasparta/customservice
+  name: custom-registry/customservice
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "1.0.0"
@@ -22,10 +22,10 @@ imagePullSecret: secret-customer-repository-credentials
 
 certificateDir: "/etc/secrets/custom-certs"
 
-deviceConnectivity: "https://f4ed3e03-41f0-46b4-b837-472d6d96459b.eu10.cp.iot.sap"
-clientId: "sb-57261ea3-653e-4bc3-a24a-2a9f4e6d94ca!b86268|iotae_service!b5"
-clientSecret: "QfB2dLMLKtr1iJbP+nRP3uy7I14="
-tokenUri: "https://1iotpm-653a-d.authentication.eu10.hana.ondemand.com/oauth/token"
+deviceConnectivity: "https://xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.eu10.cp.iot.sap"
+clientId: "xx-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx!xxxxxx|iotae_service!b5"
+clientSecret: "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+tokenUri: "https://xxxxxxxxxxxxx.authentication.eu10.hana.ondemand.com/oauth/token"
 
 # IOT Edge parameters: added automatically by Policy
 iot:
@@ -73,11 +73,11 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: proxyapp.local
+    - host: customservice.local
       paths:
       - path: /
         backend:
-          serviceName: proxyapp.local
+          serviceName: customservice.local
           servicePort: 8080
   tls: []
   #  - secretName: chart-example-tls
@@ -108,3 +108,4 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
