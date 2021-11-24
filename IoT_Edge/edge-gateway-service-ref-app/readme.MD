@@ -1,9 +1,12 @@
 # SAP Edge Gateway Service Reference Application
 
 ## Overview
-This folder contains a sample extension-service that can be used for testing the SAP Edge Gateway Service behavior. 
+This folder contains a sample extension-service that can be used for testing the SAP Edge Gateway Service behavior.
+
 The extension service will work as a proxy, exposing on an HTTP plain transport a set of REST APIs that allow to the client to recall the corresponding Edge Gateway Service endPoints (both the REST APIs and the MQTT Bus APIs).
+
 You can find a Postman API collection in this folder (look at the file `edge-gateway-service-ref-app.postman_collection.json`) that can be used for invoking the REST APIs exposed by the extension service.
+
 The service is written in golang; there are the Docker file, for being able to generate the docker image, and the helm chart.
 
 ## Product Documentation
@@ -51,7 +54,7 @@ The following requirements must be satisfied for being able to deploy and use th
 3. Docker registry (or [Docker Hub](https://hub.docker.com) subscription)
 4. An HTTP client for invoking the HTTP APIs exposed by the extension (e.g. [Postman](https://www.postman.com))
 5. A SAP IoT Device Connectivity instance up and running
-6. An Edge Node with [k3s](https://k3s.io/) runtime installed
+6. An Edge Node with [k3s](https://k3s.io/) or [k8s](https://kubernetes.io/) runtime installed
 7. Edge Gateway Service installed in the Edge Node
 8. Access and familiarity with SAP IoT Device Connectivity APIs
 
@@ -72,19 +75,19 @@ Build the extension service Docker image:
 * Build the extension service docker image via the following command: `docker build -t <repository/image:tag> .`
 * Push the docker image on the target repository via the following command: `docker push <repository/image:tag>`
 
-### Deploy the extension service HELM chart via the SAP IoT EdgeExtension UI
+### Deploy the extension service HELM chart via the SAP IoT Edge Extensions UI
 For deploying the extension service you must follow these steps:
 * Update the helm chart for downloading the expected docker image
   * Go to the `helm/values.yaml` file and update the `image.name` and the `image.tag` properties consistently
-* Update the helm chart changing the values required for uploading the extension service on the SAP IoT EdgeExtension UI with a unique name and version
+* Update the helm chart changing the values required for uploading the extension service on the SAP IoT Edge Extensions UI with a unique name and version
   * Go to the `helm/Chart.yaml` file and update the `name` and the `version` properties as you want
 * Package the solution into the expected .tgz file
   * Open a shell on this folder
   * Run the following command to validate the solution: `helm lint ./helm`
   * Run the following command to package the solution: `helm package ./helm`
   * Verify that a file **edge-gateway-service-ref-app-<VERSION>.tgz** has been correctly created
-* Configure your docker registry on the SAP IoT EdgeExtension UI (if you need further info you can look at the SAP IoT EdgeExtension official documentation)
-* Upload the extension service via the SAP IoT EdgeExtension UI and bind it to the Edge Gateway Service (if you need further info you can look at the SAP IoT EdgeExtension official documentation)
+* Configure your docker registry on the SAP IoT Edge Extensions UI (if you need further info you can look at the SAP IoT Edge Extensions official documentation)
+* Upload the extension service via the SAP IoT Edge Extensions UI and bind it to the Edge Gateway Service (if you need further info you can look at the SAP IoT Edge Extensions official documentation)
 * Optionally, to allow to deploy the extension service customizing the default service port (9000) and the default binding to the Edge Gateway Service (that uses the Edge Gateway Service default ports), after having uploaded the extension service you can create two Deployment Configuration Parameters:
   * `iot.edge.bindings`, of type string, that can be used for overwriting the default binding to the Edge Gateway Service (e.g. via a property like this: `{"bindings":[{"type":"MQTT","id":"sap-iot-gateway","api":"MQTT API URL","url":"tcp://edge-gateway-service.sap-iot-gateway:61658"},{"type":"REST","id":"sap-iot-gateway","api":"REST API URL","url":"http://edge-gateway-service.sap-iot-gateway:61660"}]}`)
   * `service.port`, of type int, that can be used for overwritting the default service port
