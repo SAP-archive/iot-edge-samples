@@ -94,5 +94,7 @@ For deploying the extension service you must follow these steps:
 
 ## Test the service
 Once you have deployed the extension service you can start invoking its REST APIs to check the Edge Gateway Service behavior.
+
 For example, you can invoke the GET `/gateways` API and verify it returns the info related to the binded Edge Gateway Service.
-Pay attention: if you want to invoke the APIs responsible for returning the IoT Device Model, or for ingesting some data on the MQTT Bus, you must before configure your Device Model on the related SAP IoT Device Connectivity instance.
+
+**Pay attention:** if you want to invoke the APIs responsible for returning the IoT Device Model, or for ingesting some data on the MQTT Bus, you must before configure your Device Model on the related SAP IoT Device Connectivity instance.
