@@ -1,0 +1,435 @@
+{
+	"info": {
+		"_postman_id": "46bdfac2-02fb-4d52-9a61-9819abfd9ef1",
+		"name": "Extension Service Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Read Extension Service Config",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/config",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Extension Service Config",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ServerUrl\":\"edge-gateway-service.sap-iot-gateway\",\"ApiRestPort\":\"51660\",\"MqttBusPort\":\"51658\"}"
+				},
+				"url": {
+					"raw": "127.0.0.1:9000/config",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Capabilities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/capabilities",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"capabilities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Capability By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/capabilities/{capabilityId}",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"capabilities",
+						"{capabilityId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Devices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/devices",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"devices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Device By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/devices/{deviceId}",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"devices",
+						"{deviceId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Device Commands",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"deviceId\": \"752d5f5c-08df-4275-a6e0-789d95820b97\",\r\n\t\"capabilityId\": \"fce81677-ebe7-4da6-8e6c-f6db9387d509\",\r\n\t\"sensorId\": \"1d546a67-1269-4cd9-8666-49d189c3545b\",\r\n\t\"command\": {\r\n\t\t\"status\": \"test command\"\r\n\t}\t\r\n}"
+				},
+				"url": {
+					"raw": "127.0.0.1:9000/devices/commands",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"devices",
+						"commands"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gateways",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/devices",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"devices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gateway By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/gateways/{gatewayId}",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"gateways",
+						"{gatewayId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sensors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/sensors",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"sensors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sensor By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/sensors/{sensorId}",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"sensors",
+						"{sensorId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SensorTypes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/sensorTypes",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"sensorTypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SensorType By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/sensorTypes/{sensorTypeId}",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"sensorTypes",
+						"{sensorTypeId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Bus Measures",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/bus/measures",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"bus",
+						"measures"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Bus Measures",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n\t{\r\n\t\t\"deviceAlternateId\": \"testDev1\",\r\n\t\t\"sensorAlternateId\": \"TestSensor\",\r\n\t\t\"capabilityAlternateId\": \"TestCapability\",\r\n\t\t\"measures\": [\r\n\t\t\t{\r\n\t\t\t\t\"temp\": 26.3,\r\n\t\t\t\t\"pressure\": 10.1,\r\n\t\t\t\t\"status\": \"reingestion worked fine 2\"\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n]"
+				},
+				"url": {
+					"raw": "127.0.0.1:9000/bus/measures",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"bus",
+						"measures"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send and Receive Msg On Custom Topic",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "test message"
+				},
+				"url": {
+					"raw": "127.0.0.1:9000/bus/customTopic/test",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"bus",
+						"customTopic",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Extension Service Is Ready",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/ready",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"ready"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Extension Service Is Alive",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/live",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"live"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Bus Connection Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:9000/monitoring/busConnectionStatus",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9000",
+					"path": [
+						"monitoring",
+						"busConnectionStatus"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
