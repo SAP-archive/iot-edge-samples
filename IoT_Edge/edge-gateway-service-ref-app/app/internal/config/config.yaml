@@ -1,0 +1,6 @@
+# Default Test Extension Service config file
+
+defaultServiceBindings:
+  host: "edge-gateway-service.sap-iot-gateway"
+  mqttBusPort: 61658
+  apiRestPort: 61660
