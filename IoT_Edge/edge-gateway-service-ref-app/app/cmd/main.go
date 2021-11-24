@@ -67,7 +67,6 @@ func publishEndPoints() {
 	// Expose proxy endPoints for Edge Gateway Service MQTT Bus endPoints
 	router.HandleFunc("/bus/measures", apis.GetBusEgressTopicMeasures).Methods("GET")
 	router.HandleFunc("/bus/measures", apis.PostBusIngressTopicMeasures).Methods("POST")
-	router.HandleFunc("/bus/customTopic/{topic}", apis.PostAndReceiveBusCustomTopicMsg).Methods("POST")
 
 	// Expose an API to check Mqtt Bus connection/subscription status
 	router.HandleFunc("/monitoring/busConnectionStatus", IsAppConnectedToBusAndSubscribedToEgressTopic).Methods("GET")
