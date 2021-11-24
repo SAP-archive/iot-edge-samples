@@ -39,6 +39,9 @@ The service implements the following functionalities:
 * Exposes an API to check Mqtt Bus connection/subscription status:
   * GET `/monitoring/busConnectionStatus`: checks the application is connected to the Edge Gateway Service Bus and subscribed to the measures egress topic
 
+## Code Overview
+If you are interested into following the code behavior and understand how the service works, jump to the app entry point at `app\cmd\main.go` and start following the code from there.
+
 ## Deploying this sample
 
 ### Requirements
