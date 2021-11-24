@@ -4,7 +4,8 @@
 
 replicaCount: 1
 
-port: 1
+apiport: 61658
+busport: 61660
 
 ingestionUrl: ""
 
@@ -12,23 +13,12 @@ image:
   name: eternasparta/node-red-iot-addon
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.0.0"
+  tag: "2.0.0"
 
 dockerRegistry: edgeservices.docker.repositories.sap.ondemand.com
 
 imagePullSecret: secret-customer-repository-credentials
 
-certificateDir: "/etc/secrets/custom-certs"
-
-# IOT Edge parameters: added automatically by Policy
-iot:
-  edge:
-    bindings: " "
-    serviceInstanceId: " "
-    clientKeyStore: " "
-    clientKeyStorePassword: " "
-    clientTrustStore: " "
-    clientTrustStorePassword: " "
 
 nameOverride: ""
 fullnameOverride: ""

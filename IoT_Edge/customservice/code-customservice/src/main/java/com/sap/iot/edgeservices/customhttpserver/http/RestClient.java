@@ -94,7 +94,6 @@ public class RestClient {
         try {
             HttpEntity<byte[]> request = new HttpEntity<>(Files.readAllBytes(Paths.get(file.getAbsolutePath())), headers);
 
-
             responseEntityStr = restTemplate.
                     postForEntity(url, request, String.class);
             LOG.info("Response: {}", responseEntityStr);

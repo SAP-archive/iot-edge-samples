@@ -73,11 +73,9 @@ public class CustomHttpServerApplication {
 
             //Log ENV
             LOG.info("DEVICE_CONNECTIVITY: {}", System.getenv(Constants.DEVICE_CONNECTIVITY.toString()));
-            LOG.info("CERTIFICATE_DIR: {}", System.getenv(Constants.CERTIFICATE_DIR.toString()));
             LOG.info("CLIENT_ID: {}", System.getenv(Constants.CLIENT_ID.toString()));
             LOG.info("CLIENT_SECRET: {}", System.getenv(Constants.CLIENT_SECRET.toString()));
             LOG.info("OAUTH2_AUTH: {}", System.getenv(Constants.OAUTH2_AUTH.toString()));
-            LOG.info("SERVICE_BINDINGS: {}", System.getenv(Constants.SERVICE_BINDINGS.toString()));
             LOG.info("SERVICE_PORT: {}", System.getenv(Constants.SERVICE_PORT.toString()));
         };
     }

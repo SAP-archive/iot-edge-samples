@@ -5,8 +5,9 @@ public enum Constants {
     CLIENT_ID("CLIENT_ID"),
     CLIENT_SECRET("CLIENT_SECRET"),
     OAUTH2_AUTH("OAUTH2_AUTH"),
-    CERTIFICATE_DIR("CERTIFICATE_DIR"),
-    SERVICE_BINDINGS("SERVICE_BINDINGS"),
+    SERVICE_API_PORT("SERVICE_API_PORT"),
+    EDGE_HOSTNAME("edge-gateway-service.sap-iot-gateway"),
+    EDGE_API_PROTOCOL("http://"),
     SERVICE_PORT("SERVICE_PORT");
 
     private final String text;

@@ -1,25 +1,20 @@
 package com.sap.iot.edgeservices.customhttpserver.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.util.ObjectUtils;
-
-import java.util.Map;
 
 @org.springframework.context.annotation.Configuration
 @PropertySource("classpath:application.properties")
 @EnableAutoConfiguration
 public class Configuration {
 
-    @Autowired
-    private ObjectMapper mapper;
-
+    @Value("${edgePort}")
     private Integer edgePort;
+
+    @Value("${edgeAPIPort}")
+    private Integer edgeAPIPort;
 
     @Value("${ingestionUrl}")
     private String ingestionUrl;
@@ -59,10 +54,6 @@ public class Configuration {
     @Value("${sensorTypeAlternateId}")
     private String sensorTypeAlternateId;
 
-    private String certDir;
-
-    private String bindings;
-
     public String getDeviceConnectivityUrlUnproxed() {
         return deviceConnectivityUrlUnproxed;
     }
@@ -77,22 +68,6 @@ public class Configuration {
 
     public void setDeviceApiCloud(String deviceApiCloud) {
         this.deviceApiCloud = deviceApiCloud;
-    }
-
-    public String getCertDir() {
-        return certDir;
-    }
-
-    public void setCertDir(String certDir) {
-        this.certDir = certDir;
-    }
-
-    public String getBindings() {
-        return bindings;
-    }
-
-    public void setBindings(String bindings) {
-        this.bindings = bindings;
     }
 
     public String getGatewayApi() {
@@ -124,12 +99,13 @@ public class Configuration {
         if (!ObjectUtils.isEmpty(System.getenv(Constants.SERVICE_PORT.toString()))) {
             edgePort = Integer.parseInt(System.getenv(Constants.SERVICE_PORT.toString()));
         }
+        if (!ObjectUtils.isEmpty(System.getenv(Constants.SERVICE_API_PORT.toString()))) {
+            edgeAPIPort = Integer.parseInt(System.getenv(Constants.SERVICE_API_PORT.toString()));
+        }
         deviceConnectivityUrlUnproxed = System.getenv(Constants.DEVICE_CONNECTIVITY.toString());
         clientId = System.getenv(Constants.CLIENT_ID.toString());
         clientSecret = System.getenv(Constants.CLIENT_SECRET.toString());
         tokenUri = System.getenv(Constants.OAUTH2_AUTH.toString());
-        certDir = System.getenv(Constants.CERTIFICATE_DIR.toString());
-        bindings = System.getenv(Constants.SERVICE_BINDINGS.toString());
     }
 
     public String getIngestionUrl() {
@@ -162,6 +138,14 @@ public class Configuration {
 
     public void setEdgePort(Integer edgePort) {
         this.edgePort = edgePort;
+    }
+
+    public Integer getEdgeAPIPort() {
+        return edgeAPIPort;
+    }
+
+    public void setEdgeAPIPort(Integer edgeAPIPort) {
+        this.edgeAPIPort = edgeAPIPort;
     }
 
     public String getTokenUri() {
@@ -202,28 +186,5 @@ public class Configuration {
 
     public void setDeviceConnectivityUrl(String deviceConnectivityUrl) {
         this.deviceConnectivityUrl = deviceConnectivityUrl;
-    }
-
-    public JsonNode getFromBindings(Map<String, String> params) {
-        try {
-            JsonNode map = mapper.readTree(bindings);
-            JsonNode bindingsParsed = map.findValues("bindings").get(0);
-            for (JsonNode node : bindingsParsed) {
-                boolean found = true;
-                for (Map.Entry<String, String> param : params.entrySet()) {
-                    String value = node.findValues(param.getKey()).get(0).asText();
-                    if (!value.contains(param.getValue())) {
-                        found = false;
-                        break;
-                    }
-                }
-                if (found) {
-                    return node;
-                }
-            }
-        } catch (JsonProcessingException e) {
-            throw new IllegalStateException(e);
-        }
-        throw new IllegalStateException("Unable to get binding");
     }
 }

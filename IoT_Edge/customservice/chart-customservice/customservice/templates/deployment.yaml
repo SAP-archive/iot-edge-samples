@@ -20,7 +20,7 @@ spec:
       labels:
         {{- include "customservice.selectorLabels" . | nindent 8 }}
     spec:
-      imagePullSecrets: 
+      imagePullSecrets:
       - name: {{ .Values.imagePullSecret }}
       serviceAccountName: {{ include "customservice.serviceAccountName" . }}
       securityContext:
@@ -42,24 +42,14 @@ spec:
               value: {{ .Values.clientSecret | quote }}
             - name: OAUTH2_AUTH
               value: {{ .Values.tokenUri | quote }}
-            - name: CERTIFICATE_DIR
-              value: {{ .Values.certificateDir | quote }}
-            - name: SERVICE_BINDINGS
-              value: {{ .Values.iot.edge.bindings | quote }}
-          volumeMounts:
-          - name: tls-storage
-            mountPath: "{{ required "required for certificateDir" .Values.certificateDir }}"
-            readOnly: true
+            - name: SERVICE_API_PORT
+              value: {{ .Values.apiport | quote }}
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      volumes:
-      - name: tls-storage
-        secret:
-          secretName: secret-tls-properties
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
