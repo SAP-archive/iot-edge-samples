@@ -95,10 +95,6 @@ func SendToBusIngressTopic(message string) error {
 	return send(getBusIngressTopic(), message)
 }
 
-func SendToBusCustomTopic(topic, message string) error {
-	return send(topic, message)
-}
-
 func send(destination string, message string) error {
 	log.Printf("Sending message '%s' to the destination '%s'", message, destination)
 	if token := mqttBusClient.Publish(destination, 0, false, message); token.Wait() && token.Error() != nil {
@@ -112,10 +108,6 @@ func send(destination string, message string) error {
 
 func SubscribeToBusEgressTopic() error {
 	return subscribe(getBusEgressTopic(), mqttBusCacheMsgPubHandler)
-}
-
-func SubscribeToBusCustomTopic(topic string) error {
-	return subscribe(topic, mqttBusCacheMsgPubHandler)
 }
 
 func subscribe(destination string, callback mqtt.MessageHandler) error {
@@ -136,10 +128,6 @@ func DisconnectFromBus() {
 
 func ReadMessagesReceivedFromBusEgressTopic() []string {
 	return readMessagesReceivedFromTopic(getBusEgressTopic())
-}
-
-func ReadMessagesReceivedFromCustomTopic(topic string) []string {
-	return readMessagesReceivedFromTopic(topic)
 }
 
 func readMessagesReceivedFromTopic(topic string) []string {
