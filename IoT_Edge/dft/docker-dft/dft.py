@@ -105,6 +105,7 @@ if SERVICE_BINDINGS!=False:
     mqtt.Client.connected_flag=False#create flag in class
     mqtt.Client.bad_connection_flag=False
     client = mqtt.Client(client_id=CLIENT_ID, clean_session=True, transport="tcp")
+    client.username_pw_set("dft", JWT)
     client.on_connect = on_connect
     client.on_disconnect = on_disconnect
     client.on_message = on_message
