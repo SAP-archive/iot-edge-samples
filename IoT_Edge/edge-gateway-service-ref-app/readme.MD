@@ -43,7 +43,13 @@ The service implements the following functionalities:
   * GET `/monitoring/busConnectionStatus`: checks the application is connected to the Edge Gateway Service Bus and subscribed to the measures egress topic
 
 ## Code Overview
-If you are interested into following the code behavior and understand how the service works, jump to the app entry point at `app\cmd\main.go` and start following the code from there.
+If you are interested into following the code behavior and understand how the service works, jump to the app entry point at [main.go](app/cmd/main.go) and start following the code from there.
+
+### How To consume Edge Gateway Service MQTT APIs
+For understanding how to use kubernetes token for connecting to the Edge Gateway Service MQTT Bus, subscribe to the egress topic, or publish some measures to the ingress topic go to the file [mqttBusClient.go](app/internal/apis/mqttBusClient.go)
+
+### How To consume Edge Gateway Service REST APIs
+For understanding how to use kubernetes token for consuming the Edge Gateway Service REST APIs go to the file [apiUtils.go](app/internal/apis/apiUtils.go)
 
 ## Deploying this sample
 

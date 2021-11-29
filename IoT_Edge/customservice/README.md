@@ -5,7 +5,7 @@ This sample implements a Proxy application designed to operate with the SAP Edge
 
 The application ingests user defined payloads measurement packets, convert them in the standard SAP IoT JSON format and forward it to the SAP Edge Gateway Service.
 
-With this sample you can also ingest binary data. If the File Transfer Service is configured in SAP IoT, the file will be saved into the configured Object Store.
+With this sample you can also ingest binary data. If the File Transfer Service is configured in SAP Internet of Things, the file will be saved into the configured SAP Object Store.
 
 The service provide the possibility to configure custom HTTP responses and response bodies (payload) both for measurements and file ingestion.
 
@@ -35,13 +35,13 @@ This sample is packaged into the following subprojects:
 
 * [docker-customservice](https://github.com/SAP-samples/iot-edge-samples/tree/main/IoT_Edge/customservice/docker-customservice): This contains the docker image source files. You need to put the compiled Java Spring Boot application in this folder to be able to build the image correctly. You need also to push it into a Docker Registry
 
-* [chart-customservice](https://github.com/SAP-samples/iot-edge-samples/tree/main/IoT_Edge/customservice/chart-customservice): The HELM chart that will be built to generate the tgz solution you will use it into the Policy Service.
+* [chart-customservice](https://github.com/SAP-samples/iot-edge-samples/tree/main/IoT_Edge/customservice/chart-customservice): The HELM chart that will be built to generate the tgz solution you will use it into the SAP IoT Edge Extensions UI.
 
 
 ## Requirements
 
 The following requirements must be satisfied for this sample:
-1. [Java JDK](https://www.java.com/en/download/) 1.8 or above
+1. [Java JDK](https://www.java.com/en/download/) 17
 2. [Apache Maven](https://maven.apache.org/download.cgi)
 3. [Git](https://git-scm.com/downloads)  command line tool
 4. [SAP IoT](https://www.sap.com/products/iot-data-services.html)
@@ -49,7 +49,7 @@ The following requirements must be satisfied for this sample:
 6. [Docker](https://www.docker.com)
 7. Docker registry (or [Docker Hub](https://hub.docker.com) subscription)
 8. An HTTP client ([Postman](https://www.postman.com) is used in this sample)
-9. An Edge Node with [k3s](https://k3s.io/) runtime installed
+9. An Edge Node with [k3s](https://k3s.io/) or [k8s](https://kubernetes.io/) runtime installed
 10. Edge Gateway Service installed in the Edge Node
 
 ##Preliminary Operations
@@ -58,7 +58,7 @@ There are some preliminary operations that are undocumented here that the user h
 
 1. Onboard the Edge Node into the Lyfecycle Management component. The documentation could be found [here](https://help.sap.com/viewer/9d5719aae5aa4d479083253ba79c23f9/SHIP/en-US/0a222b9c99d94f56abdcfe27f5be0afa.html)
 2. Onboard the Edge Gateway Service into your configured Edge Node (protocol REST, specify only the mandatory parameters)
-3. You have already specified your _Custom Registry_ in the Policy Service as documented in the [Container Repositories section](https://help.sap.com/viewer/247022ddd1744053af376344471c0821/LATEST/en-US/16b6665724604622b96aa8359ab112a5.html)
+3. You have already specified your _Custom Registry_ in the Extensions UI as documented in the [Container Repositories section](https://help.sap.com/viewer/70108a557bb24b5da8e0ac9cfb344067/latest/en-US/16b6665724604622b96aa8359ab112a5.html)
 4. Have access to the [EAC Program](https://help.sap.com/viewer/6207c716025a46ac903072ecd8d71053/LATEST/en-US) to enable File Transfer Service Feature
 5. Access and familiarity with SAP IoT Device Connectivity APIs and Thing Modeler
 
@@ -189,20 +189,21 @@ Verify that a file **customservice-_{VERSION OF THE PROJECT}_.tgz** has been cor
 
 ### Deploy the HELM chart
 
-Open the Policy Service and create a new [Extension Service](https://help.sap.com/viewer/247022ddd1744053af376344471c0821/LATEST/en-US/7fffcdd2c9464b7c9e15811dc10e94f3.html). Use as solution descriptor the HELM chart built in [this other section](#customize-the-helm-chart-project-and-build-the-tgz-solution)
+Open the Extensions UI and create a new [Extension Service](https://help.sap.com/viewer/70108a557bb24b5da8e0ac9cfb344067/latest/en-US/f11620fabe524a1c8f3fadd3ae2ecbf5.html). Use as solution descriptor the HELM chart built in [this other section](#customize-the-helm-chart-project-and-build-the-tgz-solution)
 
 For the _Service Bindings_ option select **Edge Gateway Service**.
 
 Now you need to create a [new configuration parameter](https://help.sap.com/viewer/247022ddd1744053af376344471c0821/LATEST/en-US/79849f3791c84415a7ee78ec65600334.html):
 
 >name=port; optional=false; type=String
+>name=apiport; optional=false; type=String
 
-This parameter is used to communicate with the _Edge Gateway Service_ ingestion pipeline
+The parameter _port_ is used to communicate with the _Edge Gateway Service_ ingestion pipeline; the parameter _apiport_ is used to communicate with the _Edge Gateway Service_ [APIs](https://help.sap.com/viewer/70108a557bb24b5da8e0ac9cfb344067/latest/en-US/89fdef1262e848998a4cb9c72bedd2d4.html)
 
 ### Deploy the service
 
 Search your node in the list of nodes and Deploy the created Extension Service into your node.
-As deployment parameter specify the used port for the data ingestion. Standard for REST protocol is _8910_
+As deployment parameter specify the used port for the data ingestion. Standard for REST protocol is _61657_
 
 ## Test the service
 
