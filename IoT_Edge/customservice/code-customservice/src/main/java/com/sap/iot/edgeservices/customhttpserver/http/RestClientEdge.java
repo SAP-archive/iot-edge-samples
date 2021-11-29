@@ -13,15 +13,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -29,23 +29,44 @@ public class RestClientEdge {
 
     private final ObjectMapper mapper = new ObjectMapper();
     private static final Logger LOG = LoggerFactory.getLogger(RestClientEdge.class);
-    private RestTemplate restTemplate = null;
 
     @Autowired
     Configuration configuration;
 
+    @Autowired
+    RestTemplate restTemplate;
+
+    private boolean jwtValid = false;
+    private String jwt;
+
+    public RestClientEdge() {
+        initToken();
+    }
+
+    private void initToken() {
+        LOG.info("Init JWT token");
+        try {
+            jwt = Files.readString(Paths.get("/var/run/secrets/kubernetes.io/serviceaccount/token"));
+            jwtValid = true;
+        } catch (IOException e) {
+            LOG.error("Unable to import JWT token", e);
+            jwtValid = false;
+        }
+    }
+
     public JsonNode get(String edgeConnectivity, String query) {
         String url = edgeConnectivity + query;
-        if (restTemplate == null) {
-            restTemplate = restTemplate(new RestTemplateBuilder());
-        }
 
         JsonNode actualObj = null;
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        if (!jwtValid){
+            initToken();
+        }
+        headers.setBearerAuth(jwt);
+        HttpEntity<String> entity = new HttpEntity<>(null, headers);
         try {
-            ResponseEntity<String> responseEntityStr = restTemplate.
-                    getForEntity(url, String.class);
+            ResponseEntity<String> responseEntityStr = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 
             LOG.info("Response: {}", responseEntityStr);
             LOG.info("Response body: {}", responseEntityStr.getBody());
@@ -54,29 +75,9 @@ public class RestClientEdge {
             }
         } catch (Exception e) {
             LOG.error("Unable to invoke Edge APIs", e);
-
+            jwtValid = false;
         }
 
         return actualObj;
-    }
-
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        try {
-            char[] password = new String(Files.readAllBytes(Paths.get(configuration.getCertDir() + "/clientKeyStorePassword"))).toCharArray();
-            SSLContext sslContext = SSLContextBuilder
-                    .create()
-                    .loadKeyMaterial(ResourceUtils.getFile(configuration.getCertDir() + "/clientKeyStore"), password, password)
-                    .loadTrustMaterial(TrustAllStrategy.INSTANCE)
-                    .build();
-            HostnameVerifier hostnameVerifier = new NoopHostnameVerifier();
-            SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext, hostnameVerifier);
-
-            HttpClient client = HttpClients.custom().setSSLSocketFactory(sslSocketFactory).build();
-            return builder
-                    .requestFactory(() -> new HttpComponentsClientHttpRequestFactory(client))
-                    .build();
-        } catch (Exception e) {
-            return null;
-        }
     }
 }

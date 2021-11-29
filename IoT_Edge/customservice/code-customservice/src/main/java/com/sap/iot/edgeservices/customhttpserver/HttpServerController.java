@@ -8,6 +8,7 @@ import com.sap.iot.edgeservices.customhttpserver.http.RestClient;
 import com.sap.iot.edgeservices.customhttpserver.storage.StorageFileNotFoundException;
 import com.sap.iot.edgeservices.customhttpserver.storage.StorageService;
 import com.sap.iot.edgeservices.customhttpserver.utils.Configuration;
+import com.sap.iot.edgeservices.customhttpserver.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,8 +142,7 @@ public class HttpServerController {
 
     @PostMapping("/measures/{deviceAlternateId}")
     public ResponseEntity<String> measures(@RequestBody String body, @RequestHeader MultiValueMap<String, String> headersR, @PathVariable(required = false) String deviceAlternateId) {
-        String edgeUrl = apis.getEdgeFromBindings();
-        edgeUrl = edgeUrl.substring(0, edgeUrl.lastIndexOf(":")).replace("https", "http");
+        String edgeUrl = Constants.EDGE_API_PROTOCOL.toString() + Constants.EDGE_HOSTNAME + configuration.getEdgeAPIPort();
 
         // convert message
         List<Map<String, Object>> messages = null;

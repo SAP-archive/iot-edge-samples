@@ -4,30 +4,21 @@ import flask
 import json
 import paho.mqtt.client as mqtt
 import time
-import ssl
 import os
-from cryptography.hazmat.primitives.serialization import pkcs12
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric import rsa
-from OpenSSL import crypto
 import collections
 
+JTW_TOKEN = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+
 SERVICE_BINDINGS = os.getenv('SERVICE_BINDINGS', False)
-CLIENT_ID = os.getenv('IOT_SERVICE_INSTANCE_ID', "1234")
-TRUSTSTORE_P12 = "/etc/secrets/custom-certs/clientTrustStore"
-KEYSTORE_P12 = "/etc/secrets/custom-certs/clientKeyStore"
-TRUSTSTORE_P12_PW = "/etc/secrets/custom-certs/clientTrustStorePassword"
-KEYSTORE_P12_PW = "/etc/secrets/custom-certs/clientKeyStorePassword"
-KEY_FILE = "./keystore.pem"
-CERT_FILE = "./cert.pem"
-CA_FILE = "./truststore.pem"
+NAMESPACE = "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
+CLIENT_ID = ""
 #SERVICE_BINDINGS: {'bindings': [{'type': 'MQTT', 'id': '7ebc05fb-48d0-47c1-8496-b38059deca9e', 'api': 'MQTT API URL',
 #'url': 'ssl://edge-gateway-service.7ebc05fb-48d0-47c1-8496-b38059deca9e:61658'}, {'type': 'REST', 'id': '7ebc05fb-48d0-47c1-8496-b38059deca9e',
 #'api': 'REST API URL', 'url': 'https://edge-gateway-service.7ebc05fb-48d0-47c1-8496-b38059deca9e:8904'}]}
-MQTT_BROKER_HOST = ""
-MQTT_BROKER_PORT = ""
-BUS_TOPIC_IN = ""
-BUS_TOPIC_OUT = ""
+MQTT_BROKER_HOST = "edge-gateway-service.sap-iot-gateway"
+MQTT_BROKER_PORT = os.getenv('MQTT_BROKER_PORT', 61658)
+BUS_TOPIC_OUT="iot/edge/v1/sap-iot-gateway/measures/out"
+BUS_TOPIC_IN="iot/edge/v1/sap-iot-gateway/measures/in"
 SAMPLES = int(os.getenv('SAMPLES', 24))
 PROPERTY = os.getenv('PROPERTY', "value")
 PROPERTY_OUT = os.getenv('PROPERTY_OUT', "value_out")
@@ -98,74 +89,23 @@ def on_subscribe(client, userdata, mid, granted_qos):
 def post_measures(message):
     client.publish(BUS_TOPIC_IN, message)
 
-def import_certs_pem():
-    global TRUSTSTORE_P12
-    global TRUSTSTORE_P12_PW
-    global KEYSTORE_P12
-    global KEYSTORE_P12_PW
-    global KEY_FILE
-    global CERT_FILE
-    global CA_FILE
+def import_security(message):
+    global CLIENT_ID
+    global JTW
+    with open(NAMESPACE, 'r') as file:
+        CLIENT_ID = file.read().rstrip()
 
-    with open(KEYSTORE_P12_PW, "r") as pw_k:
-        password_ks = pw_k.read()
-
-    with open(TRUSTSTORE_P12_PW, "r") as pw_t:
-        password_ts = pw_t.read()
-
-    with open(KEYSTORE_P12, "rb") as file:
-        private_key, certificate, additional_certificates = pkcs12.load_key_and_certificates(file.read(), str.encode(password_ks))
-
-    with open(TRUSTSTORE_P12, "rb") as file:
-        private_key_t, certificate_t, additional_certificates_t = pkcs12.load_key_and_certificates(file.read(), str.encode(password_ts))
-
-    # PEM formatted private key
-    with open(KEY_FILE, "wb") as key_f:
-        key_f.write(private_key.private_bytes(encoding=serialization.Encoding.PEM, format=serialization.PrivateFormat.PKCS8, encryption_algorithm=serialization.NoEncryption()))
-
-    # PEM formatted certificate
-    with open(CERT_FILE, "wb") as cert_f:
-        cert_f.write(certificate.public_bytes(serialization.Encoding.PEM))
-
-    # PEM formatted certificates
-    with open(CA_FILE, 'wb') as ca_f:
-        for cert in additional_certificates_t:
-            ca_f.write(cert.public_bytes(serialization.Encoding.PEM))
-
-def import_endpoint():
-    global SERVICE_BINDINGS
-    global MQTT_BROKER_HOST
-    global MQTT_BROKER_PORT
-    global BUS_TOPIC_OUT
-    global BUS_TOPIC_IN
-
-    bind_json = json.loads(SERVICE_BINDINGS)
-    bindings = bind_json["bindings"]
-    for f in bindings:
-        if ("type" in f) and (f["type"]=="MQTT"):
-            url = f["url"]
-            #ssl://edge-gateway.namespace.svc.cluster.local:50100"
-            #drop protocol
-            pos = url.find('//')
-            url = url[pos+2:]
-            pos = url.find(':')
-            MQTT_BROKER_HOST = url[:pos-len(url)]
-            MQTT_BROKER_PORT = url[pos+1:]
-            gwid=f["id"]
-            BUS_TOPIC_OUT="iot/edge/v1/" + gwid + "/measures/out"
-            BUS_TOPIC_IN="iot/edge/v1/" + gwid + "/measures/in"
-
+    with open(JTW_TOKEN, 'r') as file:
+        JTW = file.read().rstrip()
 
 #issue connection only if we have SERVICE_BINDINGS
 if SERVICE_BINDINGS!=False:
 
+    import_security()
     mqtt.Client.connected_flag=False#create flag in class
     mqtt.Client.bad_connection_flag=False
-    import_certs_pem()
-    import_endpoint()
     client = mqtt.Client(client_id=CLIENT_ID, clean_session=True, transport="tcp")
-    client.tls_set(ca_certs=CA_FILE, certfile=CERT_FILE, keyfile=KEY_FILE, cert_reqs=ssl.CERT_REQUIRED, tls_version=ssl.PROTOCOL_TLSv1_2)
-    client.tls_insecure_set(True)
+    client.username_pw_set("dft", JWT)
     client.on_connect = on_connect
     client.on_disconnect = on_disconnect
     client.on_message = on_message

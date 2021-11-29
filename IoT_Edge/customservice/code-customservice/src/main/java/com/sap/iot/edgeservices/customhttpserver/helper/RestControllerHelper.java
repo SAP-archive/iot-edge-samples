@@ -11,6 +11,7 @@ import com.github.scribejava.core.oauth.OAuth20Service;
 import com.sap.iot.edgeservices.customhttpserver.http.Oauth2;
 import com.sap.iot.edgeservices.customhttpserver.http.RestClientEdge;
 import com.sap.iot.edgeservices.customhttpserver.utils.Configuration;
+import com.sap.iot.edgeservices.customhttpserver.utils.Constants;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,26 +55,9 @@ public class RestControllerHelper extends Configuration {
     }
 
     public JsonNode getGateways() {
-        String edgeConnectivity = getEdgeFromBindings();
+        String edgeConnectivity = Constants.EDGE_API_PROTOCOL.toString() + Constants.EDGE_HOSTNAME + configuration.getEdgeAPIPort();
         String url = configuration.getGatewayApi();
         return clientEdge.get(edgeConnectivity, url);
-    }
-
-    public String getEdgeFromBindings() {
-        if (Strings.isEmpty(edgeAddress)) {
-            try {
-                Map<String, String> filters = new HashMap<>();
-                filters.put("api", "REST API URL");
-                filters.put("url", "edge");
-                JsonNode edgeNodeUrl = configuration.getFromBindings(filters);
-                if (edgeNodeUrl != null) {
-                    edgeAddress = edgeNodeUrl.get("url").asText();
-                }
-            } catch (Exception e) {
-                LOG.error("edgeAddress API not found", e);
-            }
-        }
-        return edgeAddress;
     }
 
     private JsonNode invokeApi(String query) {
@@ -128,7 +112,7 @@ public class RestControllerHelper extends Configuration {
     }
 
     public JsonNode getDevices(String alternateId) {
-        String edgeConnectivity = getEdgeFromBindings();
+        String edgeConnectivity = Constants.EDGE_API_PROTOCOL.toString() + Constants.EDGE_HOSTNAME + configuration.getEdgeAPIPort();
         String query = configuration.getDeviceApi() + "?skip=0&top=100";
         List<String> filters = new ArrayList<>();
         if (!Strings.isEmpty(alternateId)) {

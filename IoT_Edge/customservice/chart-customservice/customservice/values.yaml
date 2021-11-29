@@ -5,37 +5,28 @@
 replicaCount: 1
 
 port: 1
+apiport: 1
 
 
 bindServices:
   enabled: true
 
 image:
-  name: custom-registry/customservice
+  name: eternasparta/customservice
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.0.0"
+  tag: "2.0.0"
 
 dockerRegistry: edgeservices.docker.repositories.sap.ondemand.com
 
 imagePullSecret: secret-customer-repository-credentials
 
-certificateDir: "/etc/secrets/custom-certs"
 
-deviceConnectivity: "https://xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.eu10.cp.iot.sap"
-clientId: "xx-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx!xxxxxx|iotae_service!b5"
-clientSecret: "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-tokenUri: "https://xxxxxxxxxxxxx.authentication.eu10.hana.ondemand.com/oauth/token"
+deviceConnectivity: "https://f4ed3e03-41f0-46b4-b837-472d6d96459b.eu10.cp.iot.sap"
+clientId: "sb-57261ea3-653e-4bc3-a24a-2a9f4e6d94ca!b86268|iotae_service!b5"
+clientSecret: "QfB2dLMLKtr1iJbP+nRP3uy7I14="
+tokenUri: "https://1iotpm-653a-d.authentication.eu10.hana.ondemand.com/oauth/token"
 
-# IOT Edge parameters: added automatically by Policy
-iot:
-  edge:
-    bindings: " "
-    serviceInstanceId: " "
-    clientKeyStore: " "
-    clientKeyStorePassword: " "
-    clientTrustStore: " "
-    clientTrustStorePassword: " "
 
 nameOverride: ""
 fullnameOverride: ""
@@ -108,4 +99,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
