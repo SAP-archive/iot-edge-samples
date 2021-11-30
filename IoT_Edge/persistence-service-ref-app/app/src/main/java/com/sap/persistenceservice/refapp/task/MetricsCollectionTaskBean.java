@@ -32,9 +32,13 @@ public class MetricsCollectionTaskBean {
         this.executorService = executorService;
     }
 
-    public int getMetricsCollectionDelay() { return metricsCollectionDelay; }
+    public int getMetricsCollectionDelay() {
+        return metricsCollectionDelay;
+    }
 
-    public void setMetricsCollectionDelay(int metricsCollectionDelay) { this.metricsCollectionDelay = metricsCollectionDelay; }
+    public void setMetricsCollectionDelay(int metricsCollectionDelay) {
+        this.metricsCollectionDelay = metricsCollectionDelay;
+    }
 
     public ObjectMapper getObjectMapper() {
         return objectMapper;

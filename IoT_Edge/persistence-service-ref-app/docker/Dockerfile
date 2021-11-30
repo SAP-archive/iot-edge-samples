@@ -1,9 +1,10 @@
-FROM openjdk:11
+FROM openjdk:11.0.10-jdk-slim
 
 RUN groupadd persistence_service_ref_app --gid 1000 && \
     useradd --create-home --shell /bin/bash --gid 1000 --uid 1000 persistence_service_ref_app && \
     apt-get -y update && \
-    apt-get -y install netcat
+    apt-get -y install netcat && \
+    apt-get -y install curl
 
 COPY ./imports/app*.jar /opt/persistence_service_ref_app/lib/persistence-service-ref-app.jar
 

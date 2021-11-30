@@ -26,10 +26,8 @@ import com.sap.persistenceservice.refapp.exception.PayloadValidationException;
 import com.sap.persistenceservice.refapp.iot.model.DeviceMessagePojo;
 import com.sap.persistenceservice.refapp.repository.LoadTestRepository;
 import com.sap.persistenceservice.refapp.repository.MetricRepository;
-import com.sap.persistenceservice.refapp.task.LoadGenerationTask;
-import com.sap.persistenceservice.refapp.task.MetricsCollectionTask;
-import com.sap.persistenceservice.refapp.task.MetricsCollectionTaskBean;
-import com.sap.persistenceservice.refapp.task.RetentionTriggerTask;
+import com.sap.persistenceservice.refapp.task.*;
+import com.sap.persistenceservice.refapp.utils.Constants;
 import com.sap.persistenceservice.refapp.utils.LoadTestUtil;
 import com.sap.persistenceservice.refapp.utils.MessageUtil;
 import com.sap.persistenceservice.refapp.utils.RefAppEnv;
@@ -87,33 +85,49 @@ public class LoadGeneratorService {
             savedConfig = loadTestRepository.save(request);
         }
 
-        final List<MqttAsyncClient> clients;
-        try {
-            clients = getClients(savedConfig.getConnectionUrl(), request.getNoOfThreads());
-        } catch (MqttException ex) {
-            log.error("Error while connecting ", ex);
-            return null;
+        List<LoadGenerationTask> taskList = new ArrayList<>();
+
+        if (RefAppEnv.LOAD_TEST_PROTOCOL.equals(Constants.REST)){
+
+           for (int i = 0; i < request.getNoOfThreads(); i++) {
+                taskList.add(new RESTLoadGenerationTask(objectMapper,
+                    LoadTestUtil.getRandomElement(deviceMessagePojo), maxMessages, connectionPoolManager,
+                    savedConfig.getConnectionUrl()));
+            }
+            MessageUtil.getInstance().initStartTime();
+
+            for (int i = 0; i < request.getNoOfThreads(); i++) {
+                scheduledExecutor.scheduleAtFixedRate(taskList.get(i), 0, (long) period_microseconds,
+                    TimeUnit.MICROSECONDS);
+            }
+            ScheduleTerminator scheduleTerminator = new ScheduleTerminator(scheduledExecutor, request.getDuration());
+            scheduleTerminator.start();
+
+        } else {
+            final List<MqttAsyncClient> clients;
+            try {
+                clients = getClients(savedConfig.getConnectionUrl(), request.getNoOfThreads());
+            } catch (MqttException ex) {
+                log.error("Error while connecting ", ex);
+                return null;
+            }
+           for (int i = 0; i < request.getNoOfThreads(); i++) {
+                taskList.add(new MQTTLoadGenerationTask(objectMapper, clients.get(i),
+                    LoadTestUtil.getRandomElement(deviceMessagePojo), maxMessages));
+            }
+
+            MessageUtil.getInstance().initStartTime();
+
+            for (int i = 0; i < request.getNoOfThreads(); i++) {
+                scheduledExecutor.scheduleAtFixedRate(taskList.get(i), 0, (long) period_microseconds,
+                    TimeUnit.MICROSECONDS);
+            }
+            ScheduleTerminator scheduleTerminator = new ScheduleTerminator(scheduledExecutor, request.getDuration(),
+                clients);
+            scheduleTerminator.start();
         }
 
-        List<LoadGenerationTask> taskList = new ArrayList<LoadGenerationTask>();
-        for (int i = 0; i < request.getNoOfThreads(); i++) {
-            taskList.add(new LoadGenerationTask(objectMapper, clients.get(i),
-                LoadTestUtil.getRandomElement(deviceMessagePojo), maxMessages));
-        }
-
-        MessageUtil.getInstance().initStartTime();
-
-        for (int i = 0; i < request.getNoOfThreads(); i++) {
-            scheduledExecutor.scheduleAtFixedRate(taskList.get(i), 0, (long) period_microseconds,
-                TimeUnit.MICROSECONDS);
-        }
-
-        ScheduleTerminator scheduleTerminator = new ScheduleTerminator(scheduledExecutor, request.getDuration(),
-            clients);
-
-        scheduleTerminator.start();
-
-        collectMertics(request, collectMetrics, savedConfig, scheduledExecutor);
+        collectMetrics(request, collectMetrics, savedConfig, scheduledExecutor);
 
         return savedConfig;
 
@@ -142,7 +156,7 @@ public class LoadGeneratorService {
         connOpts.setMaxReconnectDelay(60000);
         connOpts.setMaxInflight(RefAppEnv.MAX_IN_FLIGHT);
 
-        List<MqttAsyncClient> asyncClients = new ArrayList<MqttAsyncClient>();
+        List<MqttAsyncClient> asyncClients = new ArrayList<>();
 
         for (int i = 0; i < noOfThreads; i++) {
             MqttAsyncClient asyncClient = new MqttAsyncClient(connectionUrl, MqttClient.generateClientId(),
@@ -169,7 +183,7 @@ public class LoadGeneratorService {
         return iotModelService.getDeviceMessages(request.getDeviceAlternateId());
     }
 
-    private void collectMertics(LoadTestConfig request, boolean collectMetrics, LoadTestConfig savedConfig,
+    private void collectMetrics(LoadTestConfig request, boolean collectMetrics, LoadTestConfig savedConfig,
         ScheduledExecutorService scheduledExecutor) {
 
         if (collectMetrics) {

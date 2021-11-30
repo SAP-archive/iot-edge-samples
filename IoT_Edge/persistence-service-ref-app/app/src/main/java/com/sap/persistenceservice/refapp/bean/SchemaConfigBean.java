@@ -21,12 +21,6 @@ public class SchemaConfigBean {
 	@JsonProperty("uri")
 	private String uri;
 
-	@JsonProperty("sslcert")
-	private String sslcert;
-
-	@JsonProperty("sslcacert")
-	private String sslcacert;
-
 	public String getHost() {
 		return host;
 	}
@@ -49,13 +43,5 @@ public class SchemaConfigBean {
 
 	public String getUri() {
 		return uri;
-	}
-
-	public String getSslcert() {
-		return sslcert;
-	}
-
-	public String getSslcacert() {
-		return sslcacert;
 	}
 }

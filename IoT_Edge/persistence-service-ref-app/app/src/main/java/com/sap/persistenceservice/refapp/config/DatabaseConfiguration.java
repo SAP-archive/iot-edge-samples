@@ -6,7 +6,6 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.postgresql.ssl.SingleCertValidatingFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -48,13 +47,6 @@ public class DatabaseConfiguration {
 
             // Connect to db
             dataSource.setDriverClassName(Constants.POSTGRES_DRIVER);
-            Properties dbProperties = new Properties();
-            dbProperties.setProperty("ssl", "true");
-            dbProperties.setProperty("sslmode", "require");
-            dbProperties.setProperty("sslmode", "verify-ca");
-            dbProperties.setProperty("sslfactory", SingleCertValidatingFactory.class.getName());
-            dbProperties.setProperty("sslfactoryarg", schemaBean.getConfig().getSslcacert());
-            dataSource.setDbProperties(dbProperties);
             dataSource.setUsername(schemaBean.getConfig().getUser());
             dataSource.setPassword(schemaBean.getConfig().getPassword());
             dataSource.setValidationQuery(Constants.POSTGRES_VALIDATION_QUERY);

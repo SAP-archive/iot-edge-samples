@@ -21,16 +21,8 @@ public class Constants {
 
     public static final String LOCAL_TEST = "LOCAL_TEST";
 
-    public static final String FILE_SEPARATOR = "/";
-
-    public static final String CLIENT_KEYSTORE_PASSWORD = "clientKeyStorePassword";
-    public static final String CLIENT_TRUSTSTORE_PASSWORD = "clientTrustStorePassword";
-    public static final String CLIENT_KEYSTORE = "clientKeyStore";
-    public static final String CLIENT_TRUSTSTORE = "clientTrustStore";
-
-    public static final String CERTIFICATES_DIRECTORY = "CERTIFICATES_DIRECTORY";
-
     public static final String LOG_LEVEL = "LOG_LEVEL";
+    public static final String LOAD_TEST_PROTOCOL = "LOAD_TEST_PROTOCOL";
 
     public static final String MAX_IN_FLIGHT = "MAX_IN_FLIGHT";
 
@@ -53,4 +45,9 @@ public class Constants {
     public static final String MAPPER_TIME_ZONE = "UTC";
 
     public static final String TEST_PROFILE = "test";
+
+    public static final String REST = "REST";
+    public static final String MQTT = "MQTT";
+
+    public static final String TOKEN_PATH = "/var/run/secrets/kubernetes.io/serviceaccount/token";
 }

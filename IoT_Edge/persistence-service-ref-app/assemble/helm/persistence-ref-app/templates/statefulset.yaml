@@ -1,9 +1,18 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sap.sa.persistence-ref-app
+secrets:
+ - name: ps-ref-app-sa-secret
+automountServiceAccountToken: true
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: ps-ref-app-stateful
   labels:
     app: ps-ref-app
+    service: persistence-service-ref-app
 spec:
     replicas: 1
     revisionHistoryLimit: 5
@@ -19,31 +28,36 @@ spec:
             labels:
                 app: ps-ref-app
                 service: persistence-service-ref-app
+            annotations:
+                sidecar.istio.io/proxyCPU: {{ (pluck "sidecar.istio.io/proxyCPU" .Values.global.resources._default_istio_proxy | first) }}
+                sidecar.istio.io/proxyCPULimit: {{ (pluck "sidecar.istio.io/proxyCPULimit" .Values.global.resources._default_istio_proxy | first) }}
+                sidecar.istio.io/proxyMemory: {{ (pluck "sidecar.istio.io/proxyMemory" .Values.global.resources._default_istio_proxy | first) }}
+                sidecar.istio.io/proxyMemoryLimit: {{ (pluck "sidecar.istio.io/proxyMemoryLimit" .Values.global.resources._default_istio_proxy | first) }}
         spec:
+            serviceAccountName: sap.sa.persistence-ref-app
             securityContext:
               fsGroup: 1000
               runAsUser: 1000
             containers:
               - name: persistence-service-ref-app
-                image: {{ .Values.dockerRegistry }}/persistence-service-ref-app{{ .Values.containerImageSuffix }}:{{ required "A valid value is required for containerImageVersion" .Values.containerImageVersion }}
+                image: {{ required "A valid value is required for dockerRegistry" .Values.dockerRegistry }}/com.sap.iot.edgeservices/persistence-service-ref-app{{ .Values.containerImageSuffix }}:{{ required "A valid value is required for containerImageVersion" .Values.containerImageVersion }}
                 imagePullPolicy: {{ required "A valid value is required for imagePullPolicy." .Values.imagePullPolicy }}
                 env:
                   - name: LOG_LEVEL
                     value: "{{ required "A valid value is required for log level" .Values.logLevel  }}"
+                  - name: LOAD_TEST_PROTOCOL
+                    value: "{{ required "A valid value is required for loadTestProtocol" .Values.loadTestProtocol }}"
                   - name: MAX_IN_FLIGHT
                     value: "{{ required "A valid value is required for max in flight" .Values.maxInFlight  }}"
-                  - name: CERTIFICATES_DIRECTORY
-                    value: "{{ required "A valid value is required for certificateDir" .Values.certificateDir  }}"
                   - name: SERVICE_BINDINGS
-                    value: {{ .Values.iot.edge.bindings | quote }}
-                volumeMounts:
-                  - mountPath: "{{ required "A valid value is required for certificateDir" .Values.certificateDir }}"
-                    name: ps-ref-app-tls-storage
-                    readOnly: true
+                    value: {{ required "A valid value is required for serviceBindings" .Values.serviceBindings | quote }}
+              - name: persistence-service-ref-app-ui
+                image: {{ required "A valid value is required for dockerRegistry" .Values.dockerRegistry }}/com.sap.iot.edgeservices/persistence-service-ref-app-ui{{ .Values.containerImageSuffix }}:{{ required "A valid value is required for containerImageVersion" .Values.containerImageVersion }}
+                imagePullPolicy: {{ required "A valid value is required for imagePullPolicy." .Values.imagePullPolicy }}
+                env:
+                  - name: SERVICE_URL
+                    value: "http://localhost:8080"
+                  - name: UI_PORT
+                    value: "8081"
             imagePullSecrets:
-              - name: {{ .Values.imagePullSecret }}
-            volumes:
-              - name: ps-ref-app-tls-storage
-                secret:
-                  secretName: ps-ref-app-secret-tls-properties
-                  defaultMode: 0400
+              - name: "{{ required "A valid value is required for imagePullSecret" .Values.imagePullSecret }}"

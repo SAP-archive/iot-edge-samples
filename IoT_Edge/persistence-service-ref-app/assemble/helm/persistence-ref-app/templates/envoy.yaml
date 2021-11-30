@@ -1,0 +1,36 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: add-jwt-token
+  namespace: {{.Release.namespace}}
+spec:
+  workloadSelector:
+    labels:
+      app: ps-ref-app
+      service: persistence-service-ref-app
+  configPatches:
+  - applyTo: HTTP_FILTER
+    match:
+      context: SIDECAR_OUTBOUND
+      listener:
+        filterChain:
+          filter:
+            name: "envoy.filters.network.http_connection_manager"
+            subFilter:
+              name: "envoy.filters.http.router"
+    patch:
+      operation: INSERT_BEFORE
+      value: # lua filter specification
+       name: envoy.lua
+       typed_config:
+          "@type": "type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua"
+          inlineCode: |
+            function envoy_on_request(request_handle)
+              local headers = request_handle:headers()
+              local file = io.open("/var/run/secrets/kubernetes.io/serviceaccount/token", "rb")
+              local content = file:read "*a"
+              file:close()
+              local bearerContent = "Bearer " .. content
+              local auth = "Authorization"
+              request_handle:headers():add(auth, bearerContent)
+            end
