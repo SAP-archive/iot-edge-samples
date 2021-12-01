@@ -1,0 +1,4 @@
+
+IoT_Edge/persistence-service-ref-app/app/target/*
+IoT_Edge/persistence-service-ref-app/docker/imports/*
+IoT_Edge/persistence-service-ref-app/assemble/helm/target/*
