@@ -51,13 +51,5 @@ spec:
                     value: "{{ required "A valid value is required for max in flight" .Values.maxInFlight  }}"
                   - name: SERVICE_BINDINGS
                     value: {{ required "A valid value is required for serviceBindings" .Values.serviceBindings | quote }}
-              - name: persistence-service-ref-app-ui
-                image: {{ required "A valid value is required for dockerRegistry" .Values.dockerRegistry }}/com.sap.iot.edgeservices/persistence-service-ref-app-ui{{ .Values.containerImageSuffix }}:{{ required "A valid value is required for containerImageVersion" .Values.containerImageVersion }}
-                imagePullPolicy: {{ required "A valid value is required for imagePullPolicy." .Values.imagePullPolicy }}
-                env:
-                  - name: SERVICE_URL
-                    value: "http://localhost:8080"
-                  - name: UI_PORT
-                    value: "8081"
             imagePullSecrets:
-              - name: "{{ required "A valid value is required for imagePullSecret" .Values.imagePullSecret }}"
+              - name: {{ .Values.imagePullSecret }}
