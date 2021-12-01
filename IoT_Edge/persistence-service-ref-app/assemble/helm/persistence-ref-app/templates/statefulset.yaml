@@ -40,7 +40,7 @@ spec:
               runAsUser: 1000
             containers:
               - name: persistence-service-ref-app
-                image: .Values.dockerRegistry }}/persistence-service-ref-app{{ .Values.containerImageSuffix }}:{{ required "A valid value is required for containerImageVersion" .Values.containerImageVersion }}
+                image: {{.Values.dockerRegistry }}/persistence-service-ref-app{{ .Values.containerImageSuffix }}:{{ required "A valid value is required for containerImageVersion" .Values.containerImageVersion }}
                 imagePullPolicy: {{ required "A valid value is required for imagePullPolicy." .Values.imagePullPolicy }}
                 env:
                   - name: LOG_LEVEL
