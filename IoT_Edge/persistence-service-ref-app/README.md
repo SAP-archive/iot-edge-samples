@@ -48,9 +48,9 @@ Build using the Dockerfile:
 ```
 
 cd docker
-docker build -f Dockerfile -t persistence-service-ref-app:1.0.0 .
-docker tag persistence-service-ref-app:1.0.0 <your repository>/persistence-service-ref-app:1.0.0
-docker push <your repository>/persistence-service-ref-app:1.0.0
+docker build -f Dockerfile -t custom-service-ref-app:1.0.0 .
+docker tag custom-service-ref-app:1.0.0 <your repository>/custom-service-ref-app:1.0.0
+docker push <your repository>/custom-service-ref-app:1.0.0
 ```
 
 ### Deploy the HELM chart
