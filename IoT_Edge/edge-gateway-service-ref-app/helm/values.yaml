@@ -13,11 +13,6 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
-# IOT Edge parameters: added automatically by Policy Service
-iot:
-  edge:
-    bindings: ""
-
 dockerRegistry: ""
 imagePullSecret: secret-customer-repository-credentials
 
@@ -46,6 +41,7 @@ securityContext: {}
 service:
   type: LoadBalancer
   port: 9000
+  bindings: ""
 
 ingress:
   enabled: false
