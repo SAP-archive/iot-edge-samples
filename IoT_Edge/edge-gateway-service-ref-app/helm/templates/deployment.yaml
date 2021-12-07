@@ -33,7 +33,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: SERVICE_BINDINGS
-              value: {{ .Values.iot.edge.bindings | quote }}
+              value: {{ .Values.service.bindings | quote }}
             - name: SERVICE_PORT
               value: {{ .Values.service.port | quote }}
           ports:

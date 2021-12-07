@@ -16,7 +16,7 @@ Product Documentation for SAP IoT is available as follows:
 ## Description (service's functionalities)
 The service implements the following functionalities:
 * It starts with a default configuration file (look at the config.yaml file in the `app/internal/config` folder) for being able to communicate with the default Edge Gateway Service endPoints
-* Overwrites the default configuration with new binding info, in case the property `iot.edge.bindings` of the `helm\values.yaml` is overwritten once the helm chart is installed
+* Overwrites the default configuration with new binding info, in case the property `service.bindings` of the `helm\values.yaml` is overwritten once the helm chart is installed
 * Connects to the Edge Gateway Service MQTT Bus and subscribes to the measures egress topic (`iot/edge/v1/sap-iot-gateway/measures/out`): all the messages received from the Bus egress topic will be cached on the app
 * Publish an HTTP REST endPoint on the port 9000 (the default value can be overridden through the property `service.port` of the `helm\values.yaml` once the helm chart is installed)
 * Exposes a set of REST APIs that can be used for recalling the corresponding Edge Gateway Service endPoints (both the REST APIs and the MQTT Bus APIs). Here a quick description of the exposed APIs:
@@ -95,7 +95,7 @@ For deploying the extension service you must follow these steps:
 * Configure your docker registry on the SAP IoT Edge Extensions UI (if you need further info you can look at the SAP IoT Edge Extensions official documentation)
 * Upload the extension service via the SAP IoT Edge Extensions UI and bind it to the Edge Gateway Service (if you need further info you can look at the SAP IoT Edge Extensions official documentation)
 * Optionally, to allow to deploy the extension service customizing the default service port (9000) and the default binding to the Edge Gateway Service (that uses the Edge Gateway Service default ports), after having uploaded the extension service you can create two Deployment Configuration Parameters:
-  * `iot.edge.bindings`, of type string, that can be used for overwriting the default binding to the Edge Gateway Service (e.g. via a property like this: `{"bindings":[{"type":"MQTT","id":"sap-iot-gateway","api":"MQTT API URL","url":"tcp://edge-gateway-service.sap-iot-gateway:61658"},{"type":"REST","id":"sap-iot-gateway","api":"REST API URL","url":"http://edge-gateway-service.sap-iot-gateway:61660"}]}`)
+  * `service.bindings`, of type string, that can be used for overwriting the default binding to the Edge Gateway Service (e.g. via a property like this: `{"bindings":[{"type":"MQTT","id":"sap-iot-gateway","api":"MQTT API URL","url":"tcp://edge-gateway-service.sap-iot-gateway:61658"},{"type":"REST","id":"sap-iot-gateway","api":"REST API URL","url":"http://edge-gateway-service.sap-iot-gateway:61660"}]}`)
   * `service.port`, of type int, that can be used for overwritting the default service port
 
 ## Test the service
