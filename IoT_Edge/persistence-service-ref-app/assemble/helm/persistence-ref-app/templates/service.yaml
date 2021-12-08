@@ -7,13 +7,9 @@ metadata:
     service: persistence-service-ref-app
 spec:
   ports:
-    - port: 8080
-      targetPort: 8080
+    - port: 9090
+      targetPort: 9090
       name: ps-ref-app
-    - port: 8081
-      targetPort: 8081
-      name: ps-ref-app-ui
   selector:
-    app: ps-ref-app
     service: persistence-service-ref-app
   type: LoadBalancer
