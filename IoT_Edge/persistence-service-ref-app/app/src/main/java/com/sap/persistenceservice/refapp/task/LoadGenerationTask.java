@@ -1,70 +1,37 @@
 package com.sap.persistenceservice.refapp.task;
 
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
-import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.persistenceservice.refapp.bean.DeviceMessage;
 import com.sap.persistenceservice.refapp.iot.model.DeviceMessagePojo;
 import com.sap.persistenceservice.refapp.iot.model.Property;
-import com.sap.persistenceservice.refapp.utils.MessageUtil;
 
-public class LoadGenerationTask implements Runnable {
 
-    private static final Logger log = LoggerFactory.getLogger(LoadGenerationTask.class);
+public abstract class LoadGenerationTask implements Runnable {
 
-    private ObjectMapper objectMapper;
+    protected ObjectMapper objectMapper;
 
-    private MqttAsyncClient mqttClient;
+    protected DeviceMessagePojo deviceMessagePojo;
 
-    private DeviceMessagePojo deviceMessagePojo;
+    protected String capabilityAlternateId;
+    protected String sensorAlternateId;
+
+    protected double maxMessages;
+
     private Random random = new Random();
 
-    private String topic;
 
-    private String capabilityAlternateId;
-    private String sensorAlternateId;
-
-    private double maxMessages;
-
-    public LoadGenerationTask(ObjectMapper objectMapper, MqttAsyncClient mqttClient,
-        DeviceMessagePojo deviceMessagePojo, double maxMessages) {
+    public LoadGenerationTask(ObjectMapper objectMapper, DeviceMessagePojo deviceMessagePojo, double maxMessages){
         this.objectMapper = objectMapper;
-        this.mqttClient = mqttClient;
         this.deviceMessagePojo = deviceMessagePojo;
         this.maxMessages = maxMessages;
-        this.topic = "measures/" + deviceMessagePojo.getDeviceAlternateId();
         this.capabilityAlternateId = deviceMessagePojo.getCapability().getAlternateId();
         this.sensorAlternateId = deviceMessagePojo.getSensorAlternateId();
     }
 
     @Override
     public void run() {
-
-        if (MessageUtil.getInstance().getMessageCounter() >= maxMessages) {
-            return;
-        }
-
-        DeviceMessage deviceMessage = createDeviceMessage();
-        try {
-            byte[] messageBytes = objectMapper.writeValueAsBytes(deviceMessage);
-            mqttClient.publish(topic, new MqttMessage(messageBytes));
-            MessageUtil.getInstance().incrementMessageCounter();
-        } catch (MqttException | JsonProcessingException ex) {
-            log.error("Error while publishing message ", ex);
-        }
-
     }
 
     /**
@@ -73,7 +40,7 @@ public class LoadGenerationTask implements Runnable {
      * @param config
      * @return
      */
-    private DeviceMessage createDeviceMessage() {
+    protected DeviceMessage createDeviceMessage() {
         DeviceMessage message = new DeviceMessage();
 
         message.setCapabilityAlternateId(capabilityAlternateId);

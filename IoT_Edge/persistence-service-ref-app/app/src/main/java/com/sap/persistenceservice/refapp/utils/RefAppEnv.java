@@ -1,12 +1,15 @@
 package com.sap.persistenceservice.refapp.utils;
 
 import java.io.IOException;
+import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
-import com.sap.persistenceservice.refapp.exception.ServiceBindingException;
-
 public class RefAppEnv {
+
+    private static final Logger log = LoggerFactory.getLogger(RefAppEnv.class);
 
     private RefAppEnv() {
 
@@ -14,25 +17,34 @@ public class RefAppEnv {
 
     public static final boolean LOCAL_TEST = getEnvBool(Constants.LOCAL_TEST, false);
 
+    public static final boolean IS_CUSTOM_EXTENSION = getEnvBool("CUSTOM_EXTENSION", false);
+
     public static final String LOG_LEVEL = getEnvAsString(Constants.LOG_LEVEL, "INFO");
 
-    public static final String CERTIFICATES_DIRECTORY = getEnvAsString(Constants.CERTIFICATES_DIRECTORY,
-        "/opt/persistence_service_ref_app/certificate");
+    public static final String LOAD_TEST_PROTOCOL = getEnvAsString(Constants.LOAD_TEST_PROTOCOL, "MQTT");
 
     public static final String SERVICE_BINDINGS = getEnvAsString(Constants.SERVICE_BINDINGS, "");
 
     public static final int MAX_IN_FLIGHT = getEnvInt(Constants.MAX_IN_FLIGHT, 1000);
 
+    public static final int SERVER_PORT = getEnvInt("SERVER_PORT", 8080);
+
+    public static Properties getApplicationProperties() {
+        Properties appProperties = new Properties();
+        addWebServerConfiguration(appProperties);
+        return appProperties;
+    }
+
     public static String PERSISTENCE_SERVICE_URL;
 
     static {
         if (LOCAL_TEST) {
-            PERSISTENCE_SERVICE_URL = "http://localhost:8443";
+            PERSISTENCE_SERVICE_URL = "http://localhost:8080";
         } else {
             try {
                 PERSISTENCE_SERVICE_URL = ServiceBindingsUtils.getPersistenceServiceRestUrl();
-            } catch (IOException | ServiceBindingException ex) {
-                PERSISTENCE_SERVICE_URL = null;
+            } catch (IOException e) {
+                log.error("Exeption while reading the url for persistence service {}", e.getMessage());
             }
         }
     }
@@ -79,6 +91,10 @@ public class RefAppEnv {
             return false;
         }
         return defaultValue;
+    }
+
+    private static void addWebServerConfiguration(Properties appProperties) {
+        appProperties.put("server.port", SERVER_PORT);
     }
 
 }

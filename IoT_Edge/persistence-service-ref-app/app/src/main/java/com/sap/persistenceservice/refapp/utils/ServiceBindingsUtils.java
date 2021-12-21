@@ -32,14 +32,6 @@ public class ServiceBindingsUtils {
         return (String) serviceBindingInfoCache.get(Constants.PERSISTENCE_SERVICES_URL);
     }
 
-    public static List<ServiceBindingDetails> getServiceBindings() throws IOException {
-        if (serviceBindingDetails == null) {
-            ServiceBinding serviceBinding = mapper.readValue(RefAppEnv.SERVICE_BINDINGS, ServiceBinding.class);
-            serviceBindingDetails = serviceBinding.getBindings();
-        }
-        return serviceBindingDetails;
-    }
-
     public static ServiceBindingDetails getPersistenceServiceDetails() throws IOException, ServiceBindingException {
         if (!serviceBindingInfoCache.containsKey(Constants.PERSISTENCE_REST_SERVICE_BINDINGS)) {
             List<ServiceBindingDetails> serviceBindingDetails = getServiceBindings();
@@ -48,7 +40,7 @@ public class ServiceBindingsUtils {
 
             for (ServiceBindingDetails bindingDetails : serviceBindingDetails) {
                 if (bindingDetails.getType().equalsIgnoreCase(Constants.SERVICE_TYPE_REST)
-                    && bindingDetails.getUrl().contains("persistence-service")) {
+                    && bindingDetails.getId().equalsIgnoreCase("sap-iot-persistence")) {
                     persistenceServiceBinding = bindingDetails;
                     break;
                 }
@@ -76,7 +68,7 @@ public class ServiceBindingsUtils {
 
             for (ServiceBindingDetails bindingDetails : serviceBindingDetails) {
                 if (bindingDetails.getType().equalsIgnoreCase(Constants.SERVICE_TYPE_REST)
-                    && bindingDetails.getUrl().contains("edge-gateway")) {
+                    && bindingDetails.getId().equalsIgnoreCase("sap-iot-gateway")) {
                     edgeGateway = bindingDetails;
                     break;
                 }
@@ -93,5 +85,13 @@ public class ServiceBindingsUtils {
                 edgeGateway);
         }
         return (ServiceBindingDetails) serviceBindingInfoCache.get(Constants.EDGE_GATEWAY_REST_SERVICE_BINDINGS);
+    }
+
+    private static List<ServiceBindingDetails> getServiceBindings() throws IOException {
+        if (serviceBindingDetails == null) {
+            ServiceBinding serviceBinding = mapper.readValue(RefAppEnv.SERVICE_BINDINGS, ServiceBinding.class);
+            serviceBindingDetails = serviceBinding.getBindings();
+        }
+        return serviceBindingDetails;
     }
 }

@@ -7,8 +7,8 @@ metadata:
     service: persistence-service-ref-app
 spec:
   ports:
-    - port: 8080
-      targetPort: 8080
+    - port: 9090
+      targetPort: 9090
       name: ps-ref-app
   selector:
     service: persistence-service-ref-app

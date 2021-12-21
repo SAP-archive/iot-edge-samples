@@ -3,6 +3,7 @@ package com.sap.persistenceservice.refapp.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -23,6 +24,7 @@ import com.sap.persistenceservice.refapp.iot.model.DeviceMessagePojo;
 import com.sap.persistenceservice.refapp.iot.model.Sensor;
 import com.sap.persistenceservice.refapp.iot.model.SensorType;
 import com.sap.persistenceservice.refapp.utils.HttpRequestUtil;
+import com.sap.persistenceservice.refapp.utils.JwtTokenUtil;
 import com.sap.persistenceservice.refapp.utils.LoadTestUtil;
 import com.sap.persistenceservice.refapp.utils.RefAppEnv;
 import com.sap.persistenceservice.refapp.utils.ServiceBindingsUtils;
@@ -48,74 +50,91 @@ public class IotModelService {
 
     @PostConstruct
     public void init() {
+        getDevices();
+        getSensorTypes();
+        getCapabilities();
+    }
 
+    public List<Device> getDevices() {
+        return getDevices(false);
+    }
+
+    public List<Device> getDevices(boolean reload) {
+        if (devices == null || reload) {
+            devices = fetchEntityList("devices", Device[].class);
+        }
+        return devices;
+    }
+
+    public List<Sensor> getSensors() {
+        return getSensors(false);
+    }
+
+    public List<Sensor> getSensors(boolean reload) {
+        if (sensors == null || reload) {
+            sensors = fetchEntityList("sensors", Sensor[].class);
+        }
+        return sensors;
+    }
+
+    public List<SensorType> getSensorTypes() {
+        return getSensorTypes(false);
+    }
+
+    public List<SensorType> getSensorTypes(boolean reload) {
+        if (sensorTypes == null || reload) {
+            sensorTypes = fetchEntityList("sensorTypes", SensorType[].class);
+        }
+        return sensorTypes;
+    }
+
+    public List<Capability> getCapabilities() {
+        return getCapabilities(false);
+    }
+
+    public List<Capability> getCapabilities(boolean reload) {
+        if (capabilities == null || reload) {
+            capabilities = fetchEntityList("capabilities", Capability[].class);
+        }
+        return capabilities;
+    }
+
+    private <T> List<T> fetchEntityList(String entity, Class<T[]> clazz) {
         if (RefAppEnv.LOCAL_TEST) {
-            return;
+            return Collections.emptyList();
         }
-
         try {
-            String baseUrl = ServiceBindingsUtils.getEdgeServiceDetails().getUrl() + "/iot/edge/api/v1/devices";
-            HttpGet deviceRequest = new HttpGet(baseUrl);
-            String deviceResponse = HttpRequestUtil.getRawData(deviceRequest,
-                connectionPoolManager.getConnectionPoolManager());
-            devices = Arrays.asList(objectMapper.readValue(deviceResponse, Device[].class));
-        } catch (IOException | ServiceBindingException ex) {
-            log.error("Error while retrieving devices ", ex);
+            String url = ServiceBindingsUtils.getEdgeServiceDetails().getUrl() + "/iot/edge/api/v1/" + entity;
+            HttpGet httpGet = new HttpGet(url);
+            if (RefAppEnv.IS_CUSTOM_EXTENSION) {
+                log.info("Setting header for custom extension");
+                httpGet.setHeader("Authorization", "Bearer " + JwtTokenUtil.readJwtToken());
+            }
+            String response = HttpRequestUtil.getRawData(httpGet, connectionPoolManager.getIotConnectionManager());
+            return Arrays.asList(objectMapper.readValue(response, clazz));
+        } catch (IOException | ServiceBindingException e) {
+            log.error("Error while retrieving {}: {} ", entity, e.getMessage());
         }
 
-        try {
-            String baseUrl = ServiceBindingsUtils.getEdgeServiceDetails().getUrl() + "/iot/edge/api/v1/sensors";
-            HttpGet sensorRequest = new HttpGet(baseUrl);
-            String sensorResponse = HttpRequestUtil.getRawData(sensorRequest,
-                connectionPoolManager.getConnectionPoolManager());
-            sensors = Arrays.asList(objectMapper.readValue(sensorResponse, Sensor[].class));
-        } catch (IOException | ServiceBindingException ex) {
-            log.error("Error while retrieving sensors ", ex);
-        }
-
-        try {
-            String baseUrl = ServiceBindingsUtils.getEdgeServiceDetails().getUrl() + "/iot/edge/api/v1/sensorTypes";
-            HttpGet sensorTypeRequest = new HttpGet(baseUrl);
-            String sensorTypeResponse = HttpRequestUtil.getRawData(sensorTypeRequest,
-                connectionPoolManager.getConnectionPoolManager());
-            sensorTypes = Arrays.asList(objectMapper.readValue(sensorTypeResponse, SensorType[].class));
-        } catch (IOException | ServiceBindingException ex) {
-            log.error("Error while retrieving sensor types ", ex);
-        }
-
-        try {
-            String baseUrl = ServiceBindingsUtils.getEdgeServiceDetails().getUrl() + "/iot/edge/api/v1/capabilities";
-            HttpGet capabilityRequest = new HttpGet(baseUrl);
-            String capabilityResponse = HttpRequestUtil.getRawData(capabilityRequest,
-                connectionPoolManager.getConnectionPoolManager());
-            capabilities = Arrays.asList(objectMapper.readValue(capabilityResponse, Capability[].class));
-        } catch (IOException | ServiceBindingException ex) {
-            log.error("Error while retrieving capabilities ", ex);
-        }
-
+        return Collections.emptyList();
     }
 
     public List<DeviceMessagePojo> getDeviceMessages(String deviceAlternateId) throws PayloadValidationException {
         Device loadTestDevice = getDevice(deviceAlternateId);
         List<DeviceMessagePojo> deviceMessagePojo = new ArrayList<>();
-        List<Sensor> sensors = loadTestDevice.getSensors();
-        for (Sensor sensor : sensors) {
+        for (Sensor sensor : loadTestDevice.getSensors()) {
             String sensorAlternateId = sensor.getAlternateId();
             String sensorTypeAlternateId = sensor.getSensorTypeAlternateId();
 
-            List<SensorType> sensorTypes = getSensorTypes();
-
-            for (SensorType sensorType : sensorTypes) {
+            for (SensorType sensorType : getSensorTypes()) {
                 if (sensorType.getAlternateId().equals(sensorTypeAlternateId)) {
                     List<CapabilityAssignment> capabilityAssignments = sensorType.getCapabilities();
                     for (CapabilityAssignment assignment : capabilityAssignments) {
 
-                        List<Capability> capabilities = getCapabilities();
-                        for (Capability capability : capabilities) {
+                        for (Capability capability : getCapabilities()) {
                             if (assignment.getId().equals(capability.getId())) {
                                 DeviceMessagePojo message = new DeviceMessagePojo(loadTestDevice.getAlternateId(),
-                                    sensorAlternateId,
-                                    capability);
+                                    sensorAlternateId, capability);
                                 deviceMessagePojo.add(message);
                                 break;
                             }
@@ -129,46 +148,16 @@ public class IotModelService {
         return deviceMessagePojo;
     }
 
-    public List<Device> getDevices() {
-        return devices;
-    }
-
-    public List<Sensor> getSensors() {
-        return sensors;
-    }
-
-    public List<SensorType> getSensorTypes() {
-        return sensorTypes;
-    }
-
-    public List<Capability> getCapabilities() {
-        return capabilities;
-    }
-
     private Device getDevice(String deviceAlternateId) throws PayloadValidationException {
-        Device loadTestDevice = LoadTestUtil.getDevice(deviceAlternateId, getAllDevices(false));
+        Device loadTestDevice = LoadTestUtil.getDevice(deviceAlternateId, getDevices());
         if (loadTestDevice == null) {
             // Call the reload method on device before failing
-            loadTestDevice = LoadTestUtil.getDevice(deviceAlternateId, getAllDevices(true));
+            loadTestDevice = LoadTestUtil.getDevice(deviceAlternateId, getDevices(true));
             if (loadTestDevice == null) {
                 throw new PayloadValidationException("Invalid device :" + deviceAlternateId);
             }
         }
         return loadTestDevice;
 
-    }
-
-    /**
-     * This method returns the devices based on the reload
-     * 
-     * @param reload
-     * @return
-     */
-    private List<Device> getAllDevices(boolean reload) {
-        if (reload) {
-            init();
-        }
-
-        return getDevices();
     }
 }

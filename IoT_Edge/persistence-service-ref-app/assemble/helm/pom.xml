@@ -66,28 +66,65 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>3.3.0</version>
-				<configuration>
-					<finalName>persistence-ref-app-${project.version}</finalName>
-					<tarLongFileMode>posix</tarLongFileMode>
-					<descriptors>
-						<descriptor>resource/assembly.xml</descriptor>
-					</descriptors>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
+	
+	<profiles>
+		<profile>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<configuration>
+							<finalName>persistence-ref-app-${project.version}</finalName>
+							<tarLongFileMode>posix</tarLongFileMode>
+							<descriptors>
+								<descriptor>resource/assembly.xml</descriptor>
+							</descriptors>
+						</configuration>
+						<executions>
+							<execution>
+								<id>make-assembly</id>
+								<phase>package</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<configuration>
+							<finalName>persistence-ref-app-${project.version}</finalName>
+							<tarLongFileMode>posix</tarLongFileMode>
+							<descriptors>
+								<descriptor>resource/assembly.xml</descriptor>
+								<descriptor>resource/assembly-dev.xml</descriptor>
+							</descriptors>
+						</configuration>
+						<executions>
+							<execution>
+								<id>make-assembly</id>
+								<phase>package</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>

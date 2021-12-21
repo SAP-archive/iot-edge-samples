@@ -1,6 +1,5 @@
 package com.sap.persistenceservice.refapp.config;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -8,24 +7,22 @@ import java.util.Random;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 import com.sap.persistenceservice.refapp.bean.SchemaBean;
-import com.sap.persistenceservice.refapp.certificate.CertificateConsumer;
 import com.sap.persistenceservice.refapp.exception.ServiceBindingException;
 import com.sap.persistenceservice.refapp.utils.Constants;
+import com.sap.persistenceservice.refapp.utils.JwtTokenUtil;
 import com.sap.persistenceservice.refapp.utils.RefAppEnv;
 
 @Component
@@ -49,6 +46,7 @@ public class SchemaGenerator {
         schemaInput.setName(schemaName);
 
         this.schemaBean = createSchema(schemaInput);
+        log.info("Created schema {}", schemaBean.getName());
 
     }
 
@@ -75,31 +73,18 @@ public class SchemaGenerator {
             return new SchemaBean();
         }
 
-        // add certificate to request
-        HttpClient httpClient = null;
-
-        try {
-            httpClient = HttpClients.custom().setSSLSocketFactory(
-                CertificateConsumer.getSslConnectionFactory()).build();
-        } catch (IOException ex) {
-            log.error("Error while building ssl context and http client {}", ex.getMessage());
-        }
-
         RestTemplate restTemplate = new RestTemplate();
-
-        if (null != httpClient) {
-            restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory(httpClient));
-        } else {
-            restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-        }
-
-        restTemplate.setErrorHandler(new DefaultResponseErrorHandler());
+        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        headers.set("accept", "application/json");
+        headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+        if (RefAppEnv.IS_CUSTOM_EXTENSION) {
+            log.info("Setting request auth");
+            headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + JwtTokenUtil.readJwtToken());
+        }
         HttpEntity<Object> request = new HttpEntity<>(schema, headers);
-        log.info("Requesting creation of schema from persistence service");
+        log.info("Requesting creation of schema from custom service {}", RefAppEnv.PERSISTENCE_SERVICE_SCHEMA_URL);
 
         try {
             ResponseEntity<SchemaBean> response = restTemplate.postForEntity(

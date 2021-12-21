@@ -7,20 +7,25 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.persistenceservice.refapp.bean.Measure;
+import com.sap.persistenceservice.refapp.bean.MeasureBean;
+import com.sap.persistenceservice.refapp.bean.MeasureRequest;
 import com.sap.persistenceservice.refapp.bean.MeasureValue;
 import com.sap.persistenceservice.refapp.service.ConnectionPoolManager;
 import com.sap.persistenceservice.refapp.utils.Constants;
@@ -49,38 +54,35 @@ public class MeasureController {
 
     }
 
-    @GetMapping(value = "/measures/{query}", produces = { MediaType.APPLICATION_ATOM_XML_VALUE,
+    @PostMapping(value = "/measures")
+    @Operation(description = "Post a measure to rest adapter")
+    public MeasureRequest postMeasure(@RequestBody MeasureRequest request) throws IOException {
+        log.info("Request - create a measure");
+        HttpPost post = new HttpPost(
+            "http://" + request.getExternalIp() + ":61657/measures/" + request.getDeviceAlternateId());
+        MeasureBean bean = new MeasureBean();
+        bean.setCapabilityAlternateId(request.getCapabilityAlternateId());
+        bean.setMeasures(request.getMeasures());
+        bean.setSensorAlternateId(request.getSensorAlternateId());
+        String objectval = new ObjectMapper().writeValueAsString(bean);
+        log.info("Post data {}", objectval);
+        post.setEntity(new StringEntity(objectval));
+        post.setHeader("Content-Type", "application/json");
+        HttpRequestUtil.postData(post, connectionPoolManager.getIotConnectionManager());
+        return request;
+    }
+
+    @GetMapping(value = "/measures", produces = { MediaType.APPLICATION_ATOM_XML_VALUE,
         MediaType.APPLICATION_JSON_VALUE })
     @Operation(description = "Returns the device measures")
-    public ResponseEntity<String> getDeviceMeasures(@RequestParam(value = "query", required = false) String query,
-        @RequestParam(value = "measureId", required = false) String measureId, HttpServletRequest httpServletRequest) {
-        String format = httpServletRequest.getHeader(Constants.ACCEPT_HEADER);
-
-        String url = null;
-        if ("$metadata".equals(query)) {
-            url = RefAppEnv.PERSISTENCE_SERVICE_MEASURE_URL + query;
-        } else {
-            if (StringUtils.isEmpty(measureId)) {
-                url = RefAppEnv.PERSISTENCE_SERVICE_MEASURE_URL + "measures?" + query;
-            } else {
-                url = RefAppEnv.PERSISTENCE_SERVICE_MEASURE_URL + "measures('" + measureId + "')?" + query;
-            }
-
-        }
+    public ResponseEntity<String> getDeviceMeasures(HttpServletRequest httpServletRequest) {
+        String url = RefAppEnv.PERSISTENCE_SERVICE_MEASURE_URL + "measures?$expand=*";
 
         HttpGet get = new HttpGet(url);
 
-        if ("$metadata".equals(query)) {
+        ResponseEntity<String> data = HttpRequestUtil.getData(get, connectionPoolManager.getConnectionPoolManager());
 
-            if (!format.contains("xml")) {
-                get.setHeader(Constants.ACCEPT_HEADER, format);
-            }
-
-        } else {
-            get.setHeader(Constants.ACCEPT_HEADER, format);
-        }
-
-        return HttpRequestUtil.getData(get, connectionPoolManager.getConnectionPoolManager());
+        return data;
 
     }
 
