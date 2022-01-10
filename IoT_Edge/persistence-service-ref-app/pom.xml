@@ -22,7 +22,7 @@
 		<version.spring>2.3.11.RELEASE</version.spring>
 		<version.apache.httpcore>4.5.13</version.apache.httpcore>
 		<version.tomcat>9.0.41</version.tomcat>
-		<version.h2>2.0.202</version.h2>
+		<version.h2>2.0.206</version.h2>
 		<version.openapi>1.5.3</version.openapi>
 		<version.lombok>1.18.20</version.lombok>
 		<maven.compiler.target>1.8</maven.compiler.target>
