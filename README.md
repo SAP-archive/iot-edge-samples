@@ -6,7 +6,6 @@
 [![GitHub tag](https://img.shields.io/github/tag/SAP-Samples/iot-edge-samples)](https://github.com/SAP-Samples/iot-edge-samples/tags/)
 
 
-[![CodeFactor](https://www.codefactor.io/repository/github/sap-samples/iot-edge-samples/badge/main)](https://www.codefactor.io/repository/github/sap-samples/iot-edge-samples/overview/main)
 [![GitHub language count](https://img.shields.io/github/languages/count/SAP-Samples/iot-edge-samples)](https://github.com/SAP-samples/iot-edge-samples)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
