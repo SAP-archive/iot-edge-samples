@@ -40,8 +40,6 @@ spec:
                     value: "{{ required "A valid value is required for loadTestProtocol" .Values.loadTestProtocol }}"
                   - name: MAX_IN_FLIGHT
                     value: "{{ required "A valid value is required for max in flight" .Values.maxInFlight  }}"
-                  - name: CUSTOM_EXTENSION
-                    value: "true"
                   - name: SERVICE_BINDINGS
                     value: {{ required "A valid value is required for serviceBindings" .Values.serviceBindings | quote }}
             imagePullSecrets:
