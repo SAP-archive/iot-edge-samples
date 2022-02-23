@@ -1,5 +1,7 @@
 # Proxy Application Extension Service
 
+![slide](slide.png)
+
 ## Overview
 This sample implements a Proxy application designed to operate with the SAP Edge Gateway Service REST.
 
