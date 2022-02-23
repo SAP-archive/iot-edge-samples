@@ -23,7 +23,7 @@ This application exposes two POST methods, one to ingest _**measures**_ and the 
 
 Some other methods are exposed by the same endpoint to:
 * Store file locally instead of SAP IoT
-* Show a simple UI to see all the locally stored files, and optionally remove the
+* Show a simple UI to see all the locally stored files, and optionally remove them
 * Invoke a cleanup of the locally stored files
 * Download a locally stored file
 
