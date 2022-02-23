@@ -7,7 +7,7 @@ replicaCount: 1
 apiport: 61658
 busport: 61660
 
-ingestionUrl: ""
+ingestionUrl: "f4ed3e03-41f0-46b4-b837-472d6d96459b.eu10.cp.iot.sap"
 
 image:
   name: eternasparta/node-red-iot-addon
