@@ -13,70 +13,70 @@ import (
 ////////////////////////////////////////////////////////////////////////
 
 func GetGateways(response http.ResponseWriter, r *http.Request) {
-	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/gateways", Jwt)
+	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/gateways", None)
 	fillResponse(response, r, originalResponse, err)
 }
 
 func GetGatewayById(response http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/gateways/"+vars["gatewayId"], Jwt)
+	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/gateways/"+vars["gatewayId"], None)
 	fillResponse(response, r, originalResponse, err)
 }
 
 ////////////////////////////////////////////////////////////////////////
 
 func GetDevices(response http.ResponseWriter, r *http.Request) {
-	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/devices", Jwt)
+	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/devices", None)
 	fillResponse(response, r, originalResponse, err)
 }
 
 func GetDeviceById(response http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/devices/"+vars["deviceId"], Jwt)
+	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/devices/"+vars["deviceId"], None)
 	fillResponse(response, r, originalResponse, err)
 }
 
 func PostDeviceCommands(response http.ResponseWriter, r *http.Request) {
-	originalResponse, err := CallPostApi(config.Config.ApiRestPort, "/iot/edge/api/v1/devices/commands", r.Body, Jwt)
+	originalResponse, err := CallPostApi(config.Config.ApiRestPort, "/iot/edge/api/v1/devices/commands", r.Body, None)
 	fillResponse(response, r, originalResponse, err)
 }
 
 ////////////////////////////////////////////////////////////////////////
 
 func GetSensors(response http.ResponseWriter, r *http.Request) {
-	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/sensors", Jwt)
+	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/sensors", None)
 	fillResponse(response, r, originalResponse, err)
 }
 
 func GetSensorById(response http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/sensors/"+vars["sensorId"], Jwt)
+	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/sensors/"+vars["sensorId"], None)
 	fillResponse(response, r, originalResponse, err)
 }
 
 ////////////////////////////////////////////////////////////////////////
 
 func GetCapabilities(response http.ResponseWriter, r *http.Request) {
-	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/capabilities", Jwt)
+	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/capabilities", None)
 	fillResponse(response, r, originalResponse, err)
 }
 
 func GetCapabilityById(response http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/capabilities/"+vars["capabilityId"], Jwt)
+	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/capabilities/"+vars["capabilityId"], None)
 	fillResponse(response, r, originalResponse, err)
 }
 
 ////////////////////////////////////////////////////////////////////////
 
 func GetSensorTypes(response http.ResponseWriter, r *http.Request) {
-	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/sensorTypes", Jwt)
+	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/sensorTypes", None)
 	fillResponse(response, r, originalResponse, err)
 }
 
 func GetSensorTypeById(response http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/sensorTypes/"+vars["sensorTypeId"], Jwt)
+	originalResponse, err := CallGetApi(config.Config.ApiRestPort, "/iot/edge/api/v1/sensorTypes/"+vars["sensorTypeId"], None)
 	fillResponse(response, r, originalResponse, err)
 }
 
