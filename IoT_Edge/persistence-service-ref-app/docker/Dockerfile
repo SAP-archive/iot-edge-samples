@@ -1,9 +1,9 @@
 FROM alpine:3.15.0
 
 RUN addgroup -g 1000 persistence_service_ref_app && \
-	adduser -s /bin/bash -G persistence_service_ref_app -u 1000 -D persistence_service_ref_app && \
-	apk update && \
-	apk add curl && \
+    adduser -s /bin/bash -G persistence_service_ref_app -u 1000 -D persistence_service_ref_app && \
+    apk update && \
+    apk add curl && \
     apk add --no-cache openjdk11
 
 COPY ./imports/app*.jar /opt/persistence_service_ref_app/lib/persistence-service-ref-app.jar
