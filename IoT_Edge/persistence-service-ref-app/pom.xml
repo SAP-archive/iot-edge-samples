@@ -22,14 +22,14 @@
 		<version.spring>2.5.12</version.spring>
 		<version.apache.httpcore>4.5.13</version.apache.httpcore>
 		<version.tomcat>9.0.41</version.tomcat>
-		<version.h2>1.4.200</version.h2>
+		<version.h2>2.1.210</version.h2>
 		<version.openapi>1.5.3</version.openapi>
 		<version.lombok>1.18.20</version.lombok>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<version.mqtt>1.2.5</version.mqtt>
 		<version.system.rules>1.19.0</version.system.rules>
-		<version.junit>4.13</version.junit>
+		<version.junit>4.13.1</version.junit>
 		<version.spring.boot.maven.plugin>2.6.2</version.spring.boot.maven.plugin>
 	</properties>
 
@@ -117,13 +117,5 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
-	<repositories>
-        <repository>
-            <id>artifactory.build.releases</id>
-            <name>Artifactory Build Releases</name>
-            <url>https://common.repositories.cloud.sap/deploy.releases/</url>
-        </repository>
-    </repositories>
 
 </project>
