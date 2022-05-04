@@ -1,3 +1,11 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sap.sa.persistence-ref-app
+secrets:
+ - name: ps-ref-app-sa-secret
+automountServiceAccountToken: true
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -26,12 +34,13 @@ spec:
                 sidecar.istio.io/proxyMemory: {{ (pluck "sidecar.istio.io/proxyMemory" .Values.global.resources._default_istio_proxy | first) }}
                 sidecar.istio.io/proxyMemoryLimit: {{ (pluck "sidecar.istio.io/proxyMemoryLimit" .Values.global.resources._default_istio_proxy | first) }}
         spec:
+            serviceAccountName: sap.sa.persistence-ref-app
             securityContext:
               fsGroup: 1000
               runAsUser: 1000
             containers:
               - name: persistence-service-ref-app
-                image: {{.Values.dockerRegistry }}/persistence-service-ref-app{{ .Values.containerImageSuffix }}:{{ required "A valid value is required for containerImageVersion" .Values.containerImageVersion }}
+                image: {{ required "A valid value is required for dockerRegistry" .Values.dockerRegistry }}/persistence-service-ref-app{{ .Values.containerImageSuffix }}:{{ required "A valid value is required for containerImageVersion" .Values.containerImageVersion }}
                 imagePullPolicy: {{ required "A valid value is required for imagePullPolicy." .Values.imagePullPolicy }}
                 env:
                   - name: LOG_LEVEL

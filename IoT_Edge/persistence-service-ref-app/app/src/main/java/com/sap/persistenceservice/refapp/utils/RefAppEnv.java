@@ -29,6 +29,8 @@ public class RefAppEnv {
 
     public static final int SERVER_PORT = getEnvInt("SERVER_PORT", 8080);
 
+    public static final String DEFAULT_SCHEMA = getEnvAsString("DEFAULT_SCHEMA", "psrefapp");
+
     public static Properties getApplicationProperties() {
         Properties appProperties = new Properties();
         addWebServerConfiguration(appProperties);

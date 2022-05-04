@@ -86,6 +86,19 @@ public class MeasureController {
 
     }
 
+    @GetMapping(value = "/measureCount", produces = { MediaType.APPLICATION_ATOM_XML_VALUE,
+        MediaType.APPLICATION_JSON_VALUE })
+    @Operation(description = "Returns the measure count")
+    public ResponseEntity<String> getMeasureCount(HttpServletRequest httpServletRequest) {
+
+        HttpGet get = new HttpGet(Constants.ODATA_COUNT_QUERY);
+
+        ResponseEntity<String> data = HttpRequestUtil.getData(get, connectionPoolManager.getConnectionPoolManager());
+
+        return data;
+
+    }
+
     @DeleteMapping(value = "/measures")
     @Operation(description = "Delete all measures")
     public ResponseEntity<String> deleteAllMeasures() {

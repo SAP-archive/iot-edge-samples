@@ -7,14 +7,16 @@
 		<artifactId>persistence-ref-app-parent</artifactId>
 		<version>${project.version}</version>
 	</parent>
-	
+
 	<artifactId>assemble</artifactId>
 	<packaging>pom</packaging>
 
 	<modules>
 		<module>helm</module>
+		<module>clm</module>
+		<module>custom-helm</module>
 	</modules>
-	
+
 	<properties>
 		<buildVersion>${project.version}</buildVersion>
 		<imageSuffix></imageSuffix>
@@ -24,7 +26,7 @@
 			<id>dev</id>
 			<properties>
 				<buildVersion>${project.version}-${maven.build.timestamp}</buildVersion>
-				<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+				<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
 				<imageSuffix>-dev</imageSuffix>
 			</properties>
 		</profile>

@@ -30,6 +30,9 @@
         <fileSet>
             <directory>persistence-ref-app/templates</directory>
             <outputDirectory>persistence-ref-app/templates</outputDirectory>
+            <excludes>
+                <exclude>dev/**</exclude>
+            </excludes>
         </fileSet>
     </fileSets>
 
