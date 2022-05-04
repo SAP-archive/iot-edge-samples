@@ -4,14 +4,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -20,26 +20,30 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.sap.persistenceservice.refapp.bean.SchemaBean;
-import com.sap.persistenceservice.refapp.entity.LoadTestConfig;
+import com.sap.persistenceservice.refapp.defaultds.entity.PurchaseOrder;
 import com.sap.persistenceservice.refapp.utils.Constants;
 import com.sap.persistenceservice.refapp.utils.RefAppEnv;
 
 @Configuration
+@ConditionalOnProperty(name = "CUSTOM_EXTENSION", havingValue = "false")
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {
-    "com.sap.persistenceservice.refapp.repository" }, entityManagerFactoryRef = "refAppEntityManager", transactionManagerRef = "refAppTransactionManager")
-public class DatabaseConfiguration {
+    "com.sap.persistenceservice.refapp.defaultds.repository" }, entityManagerFactoryRef = "refAppDefaultEntityManager", transactionManagerRef = "refAppDefaultTransactionManager")
+public class DefaultDatabaseConfiguration {
 
-    private static final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultDatabaseConfiguration.class);
 
-    @Primary
-    @Lazy(false)
-    @Bean(name = "refAppDatasource")
-    public DataSource refAppDatasource(SchemaGenerator schemaGenerator) throws SQLException {
+    @PostConstruct
+    public void init() {
+        log.info("DefaultDatabaseConfiguration is loaded");
+    }
+
+    @Bean(name = "refAppDefaultDatasource")
+    public DataSource refAppDefaultDatasource(SchemaGenerator schemaGenerator) throws SQLException {
 
         org.apache.tomcat.jdbc.pool.DataSource dataSource = new org.apache.tomcat.jdbc.pool.DataSource();
 
-        SchemaBean schemaBean = schemaGenerator.getSchemaBean();
+        SchemaBean schemaBean = schemaGenerator.getDefaultSchema();
 
         if (RefAppEnv.LOCAL_TEST) {
             dataSource.setDriverClassName("org.h2.Driver");
@@ -54,7 +58,7 @@ public class DatabaseConfiguration {
             dataSource.setUsername(schemaBean.getConfig().getUser());
             dataSource.setPassword(schemaBean.getConfig().getPassword());
             dataSource.setValidationQuery(Constants.POSTGRES_VALIDATION_QUERY);
-            dataSource.setUrl(schemaBean.getConfig().getUri() + "?currentSchema=" + schemaBean.getName());
+            dataSource.setUrl(schemaBean.getConfig().getUri() + "?currentSchema=" + RefAppEnv.DEFAULT_SCHEMA);
         }
 
         dataSource.setInitialSize(Constants.CONNECTION_POOL_INITIAL_SIZE);
@@ -75,27 +79,23 @@ public class DatabaseConfiguration {
         return dataSource;
     }
 
-    @Primary
-    @Lazy(false)
-    @Bean(name = "refAppEntityManager")
-    public LocalContainerEntityManagerFactoryBean refAppEntityManager(SchemaGenerator schemaGenerator)
+    @Bean(name = "refAppDefaultEntityManager")
+    public LocalContainerEntityManagerFactoryBean refAppDefaultEntityManager(SchemaGenerator schemaGenerator)
         throws SQLException {
 
         LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
-        entityManager.setDataSource(refAppDatasource(schemaGenerator));
-        entityManager.setPackagesToScan(LoadTestConfig.class.getPackage().getName());
+        entityManager.setDataSource(refAppDefaultDatasource(schemaGenerator));
+        entityManager.setPackagesToScan(PurchaseOrder.class.getPackage().getName());
         entityManager.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManager.setJpaProperties(getJpaProperties(schemaGenerator));
         return entityManager;
     }
 
-    @Primary
-    @Lazy(false)
-    @Bean(name = "refAppTransactionManager")
-    public PlatformTransactionManager refAppTransactionManager(SchemaGenerator schemaGenerator)
+    @Bean(name = "refAppDefaultTransactionManager")
+    public PlatformTransactionManager refAppDefaultTransactionManager(SchemaGenerator schemaGenerator)
         throws SQLException {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(refAppEntityManager(schemaGenerator).getObject());
+        transactionManager.setEntityManagerFactory(refAppDefaultEntityManager(schemaGenerator).getObject());
         return transactionManager;
     }
 
@@ -112,7 +112,7 @@ public class DatabaseConfiguration {
             jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         } else {
             jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL82Dialect");
-            jpaProperties.put("hibernate.default_schema", schemaGenerator.getSchemaBean().getName());
+            jpaProperties.put("hibernate.default_schema", RefAppEnv.DEFAULT_SCHEMA);
         }
 
         if (log.isDebugEnabled()) {
@@ -123,4 +123,5 @@ public class DatabaseConfiguration {
 
         return jpaProperties;
     }
+
 }

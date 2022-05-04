@@ -11,5 +11,6 @@ spec:
       targetPort: 9090
       name: ps-ref-app
   selector:
+    app: ps-ref-app
     service: persistence-service-ref-app
   type: LoadBalancer

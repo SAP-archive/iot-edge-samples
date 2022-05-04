@@ -35,6 +35,8 @@ public class Constants {
     public static final String PURCHASE_ORDER = "PURCHASE_ORDER";
     public static final String METRIC = "METRIC";
     public static final String LOAD_TEST_CONFIG = "LOAD_TEST_CONFIG";
+    public static final String TEST_RUN_CONFIG = "LOAD_TEST_RESULTS";
+    public static final String MEASURE = "MEASURE";
 
     public static final String CONFIG = "TEST_CONFIG";
     public static final String TEST_PROPERTY = "TEST_PROPERTY";
@@ -50,4 +52,14 @@ public class Constants {
     public static final String MQTT = "MQTT";
 
     public static final String TOKEN_PATH = "/var/run/secrets/kubernetes.io/serviceaccount/token";
+
+    public static final int LOAD_TEST_POLLING_TIMEOUT_ITERATIONS = 10;
+    public static final int SECONDS_BETWEEN_LOAD_TESTS = 10;
+
+    public static final String ODATA_COUNT_QUERY = RefAppEnv.PERSISTENCE_SERVICE_MEASURE_URL
+        + "measures?$count=true&$top=0";
+
+    public static final String RETENTION_API_URL = RefAppEnv.PERSISTENCE_SERVICE_MEASURE_URL + "retention/cleanUp";
+
+    public static final String PREPROCESSING_MQTT_TOPIC = "iot/edge/v1/sap-iot-gateway/measures/preprocessing";
 }

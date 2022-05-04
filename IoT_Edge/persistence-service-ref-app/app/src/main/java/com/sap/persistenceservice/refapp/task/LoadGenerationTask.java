@@ -17,7 +17,7 @@ public abstract class LoadGenerationTask implements Runnable {
     protected String capabilityAlternateId;
     protected String sensorAlternateId;
 
-    protected double maxMessages;
+    protected long maxMessages;
 
     private Random random = new Random();
 
@@ -25,7 +25,7 @@ public abstract class LoadGenerationTask implements Runnable {
     public LoadGenerationTask(ObjectMapper objectMapper, DeviceMessagePojo deviceMessagePojo, double maxMessages){
         this.objectMapper = objectMapper;
         this.deviceMessagePojo = deviceMessagePojo;
-        this.maxMessages = maxMessages;
+        this.maxMessages = Math.round(maxMessages);
         this.capabilityAlternateId = deviceMessagePojo.getCapability().getAlternateId();
         this.sensorAlternateId = deviceMessagePojo.getSensorAlternateId();
     }
@@ -37,7 +37,6 @@ public abstract class LoadGenerationTask implements Runnable {
     /**
      * This method returns device message
      * 
-     * @param config
      * @return
      */
     protected DeviceMessage createDeviceMessage() {
