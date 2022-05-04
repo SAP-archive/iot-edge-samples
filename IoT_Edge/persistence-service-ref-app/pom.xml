@@ -17,9 +17,9 @@
 
 	<properties>
 		<project.version>1.0.0</project.version>
-        <java.version>1.8</java.version>
-        <version.postgres>42.3.3</version.postgres>
-		<version.spring>2.3.11.RELEASE</version.spring>
+		<java.version>1.8</java.version>
+		<version.postgres>42.3.3</version.postgres>
+		<version.spring>2.5.12</version.spring>
 		<version.apache.httpcore>4.5.13</version.apache.httpcore>
 		<version.tomcat>9.0.41</version.tomcat>
 		<version.h2>1.4.200</version.h2>
