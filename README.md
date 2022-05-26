@@ -17,6 +17,7 @@ Multiple samples for [SAP IoT](https://www.sap.com/products/iot-data-services.ht
 
 Take a look at the list below for links to all the separate samples for your version.
 
+# [SAP IoT Edge Samples](https://github.com/SAP-samples/sap-iot-samples/tree/main/iot-edge-samples) has been moved to the [SAP IoT Samples](https://github.com/SAP-samples/sap-iot-samples) repository.
 
 ## Edge Version
 
