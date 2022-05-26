@@ -1,5 +1,7 @@
 # SAP IoT Edge Samples
 
+# DEPRECATED: SAMPLES MOVED TO [SAP IoT Samples](https://github.com/SAP-samples/sap-iot-samples/tree/main/iot-edge-samples)
+
 This folder contains all the [SAP IoT](https://help.sap.com/viewer/p/SAP_IoT) Edge Samples for the Containerized Edge Services
 
 
